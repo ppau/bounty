@@ -1,0 +1,80 @@
+{% extends "../base.html" %}
+
+{% block title %}{{ fundraiser['title'] }} - Bounty{% end %}
+{% block extra_js %}<script src='https://test-api.pin.net.au/pin.js' type='text/javascript'></script>
+<script type="text/javascript" src="{{ static_url("js/vendor/pin_submit.js") }}"></script>{% end %}
+
+{% block body %}
+<div class="row">
+    <div class="span6 offset2">
+        <h2>Back {{ fundraiser['title'] }}</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="span6 offset2">
+        <div class='pin-errors' style='display:none'>
+            <h3></h3>
+            <ul></ul>
+        </div>
+    </div>
+</div>
+<form action='' class='pin' method='post'>
+    {% raw xsrf_form_html() %}
+    <div class="row">
+        <div class="span3 offset2">
+            <label>How much?</label>
+            <div class='input-prepend'>
+                <span class='add-on'>$</span>
+                <input type='number' name='amount' required>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span3 offset2">
+          <fieldset>
+            <legend>Billing</legend>
+            <!--
+              The lack of 'name' attributes on these inputs prevents
+              the browser from submitting them to your server
+            -->
+            <label for='address-line1'>Address 1</label>
+            <input id='address-line1' required/>
+            <label for='address-line2'>Address 2</label>
+            <input id='address-line2' required/>
+            <label for='address-city'>City</label>
+            <input id='address-city' required/>
+            <label for='address-state'>State</label>
+            <input id='address-state' required/>
+            <label for='address-postcode'>Postcode</label>
+            <input id='address-postcode' required/>
+            <label for='address-country'>Country</label>
+            <input id='address-country' required/>
+          </fieldset>
+        </div>
+        <div class="span3 offset2">
+          <fieldset>
+            <legend>Payment</legend>
+            <!--
+              The lack of 'name' attributes on these inputs prevents
+              the browser from submitting them to your server
+            -->
+            <label for='cc-number'>Credit Card Number</label>
+            <input id='cc-number' type='text' required/>
+            <label for='cc-name'>Name on Card</label>
+            <input id='cc-name' type='text' required/>
+            <label for='cc-expiry-month'>Expiry Month</label>
+            <input id='cc-expiry-month' required/>
+            <label for='cc-expiry-year'>Expiry Year</label>
+            <input id='cc-expiry-year' required/>
+            <label for='cc-cvc'>CVC</label>
+            <input id='cc-cvc' required/>
+          </fieldset>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span3 offset5">
+              <input type='submit' value='Pay now' />
+        </div>
+    </div>
+</form>
+{% end %}

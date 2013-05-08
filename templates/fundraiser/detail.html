@@ -1,0 +1,18 @@
+{% extends "../base.html" %}
+
+{% block title %}{{ fundraiser['title'] }} - Bounty{% end %}
+
+{% block body %}
+<div class="row">
+    <div class="span6 offset2">
+        <h2>{{ fundraiser['title'] }}</h2>
+        <p>Launched: {{ fundraiser['launched'] }}</p>
+        <p>Deadline: {{ fundraiser['deadline'] }}</p>
+        <p>Goal: {{ fundraiser['goal'] }}</p>
+        <p>Current Funding: {{ fundraiser['current_funding'] }}</p>
+        <p>Backers: {{ fundraiser['backers_count'] }}</p>
+        <p>{{ fundraiser['description'] }}</p>
+		<h4><a href="/fundraiser/back/{{fundraiser['slug']}}">Back this Fundraiser</a></h4>
+	</div>
+</div>
+{% end %}

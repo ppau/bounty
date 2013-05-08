@@ -1,0 +1,39 @@
+{% extends '../base.html' %}
+
+{% block title %}Create a new Fundraiser{% end %}
+
+{% block body %}
+<div class='row'>
+    <div class='span6 offset2'>
+        <form class='create_fundraiser' method='post' action=''>
+            {% raw xsrf_form_html() %}
+            <legend>New Fundraiser</legend>
+            <div>
+                <label>Title</label>
+                <input type='text' name='title' {% if fundraiser and fundraiser['title'] %}value="{{ fundraiser['title'] }}"{% end %} placeholder='Example Title' required>
+                <label>Slug</label>
+                <input type='text' name='slug' placeholder='example_slug' required>
+                <label>Goal</label>
+                <div class='input-prepend'>
+                    <span class='add-on'>$</span>
+                    <input type='number' name='goal' required>
+                </div>
+                <label>Deadline</label>
+                <div id="datetimepicker1" name='deadline' class="input-append date">
+                    <input data-format="dd/MM/yyyy" type="text" required></input>
+                    <span class="add-on">
+                        <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+                        </i>
+                    </span>
+                </div>
+                <input type='text' id='deadline' name='deadline' >
+                <label>Description</label>
+                <textarea class="span5" rows="8" name='description' required></textarea>
+            </div>
+            <div class='form-actions'>
+                <button type='submit' class='btn btn-primary'>Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% end %}
