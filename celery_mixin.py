@@ -17,6 +17,10 @@ from chip.tasks import fundraiser_countdown
 
 class CeleryHandler(BaseHandler):
 
+    # Based off this http://stackoverflow.com/a/8214009
+    # And a blog post that's dead
+    # Might be worth making it more generic so it can be re-used
+
     @asynchronous
     def fundraiser_deadline(self, _id, deadline):
 
@@ -27,7 +31,6 @@ class CeleryHandler(BaseHandler):
 
         def check_celery_task():
             if deadline_task.ready():
-                #self.write({'success':True} )
                 #do something to mark our success here somewhere
                 self.finish()
             else:

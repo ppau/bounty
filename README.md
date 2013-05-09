@@ -3,6 +3,9 @@
 
 Not much here yet.
 
+Something to keep in mind;
+- If a card token is not used within 1 month it is automatically expired.
+
 TO DO:
 
 Each project will have:
