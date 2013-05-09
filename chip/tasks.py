@@ -2,6 +2,7 @@ from __future__ import absolute_import
 
 from datetime import datetime
 from time import sleep
+#import socket
 import pymongo
 
 from chip.celery import celery
@@ -20,6 +21,7 @@ def fundraiser_countdown(fundraiser_id, finish_time):
     while finish_time > datetime.utcnow():
         sleep(1)
     #do charges
+    sleep(30)
     conn = pymongo.Connection()
     db = conn.bounty
     fundraisers = db.fundraisers
@@ -28,3 +30,10 @@ def fundraiser_countdown(fundraiser_id, finish_time):
     fundraisers.save(fundraiser)
 
     return True
+
+# @celery.task
+# def celery_notify(sock_no):
+
+#     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#     sock.connect(('', sock_no))
+#     sock.close()

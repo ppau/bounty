@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 from tornado.web import HTTPError
-from tornado.escape import json_decode
+#from tornado.web import asynchronous
+#import tornado.ioloop
+
+#from tornado.escape import json_decode
 import datetime
 import json
 import unicodedata
@@ -8,8 +11,10 @@ import re
 import logging
 
 from base import BaseHandler
+from celery_mixin import CeleryHandler
 
-from chip.tasks import fundraiser_countdown
+#from chip.tasks import fundraiser_countdown
+#from chip.celery import celery
 
 
 class FundraiserBase(BaseHandler):
@@ -27,13 +32,14 @@ class FundraiserIndexHandler(FundraiserBase):
         self.render('index.html', recent=recent)
 
 
-class FundraiserCreateHandler(FundraiserBase):
+class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
 
     def get(self):
         self.render('fundraiser/create.html',
                     fundraiser=None,
                     error=None)
 
+    #@asynchronous
     def post(self):
         title = self.get_argument('title', None)
         slug = self.get_argument('slug', None)
@@ -47,7 +53,7 @@ class FundraiserCreateHandler(FundraiserBase):
 
         #deadline = datetime.datetime.strptime(deadline, '%a, %d %B %Y %H:%M:%S %Z')
         ## TESTING ONLY
-        deadline = datetime.datetime.utcnow() + datetime.timedelta(minutes=2)
+        deadline = datetime.datetime.utcnow() + datetime.timedelta(minutes=1)
         ##
 
         fundraiser = {'title': title, 'slug': slug,
@@ -72,7 +78,10 @@ class FundraiserCreateHandler(FundraiserBase):
 
         self.fundraisers.save(fundraiser)
         saved_fundraiser = self.fundraisers.find_one({'slug': fundraiser['slug']})
-        fundraiser_countdown(saved_fundraiser['_id'], deadline)
+        self.fundraiser_deadline(saved_fundraiser['_id'], deadline)
+        #fundraiser_countdown(saved_fundraiser['_id'], deadline)
+        #tornado.ioloop.IOLoop().instance().add_callback(fundraiser_countdown(saved_fundraiser['_id'], deadline))
+        #self.add_task(fundraiser_countdown, saved_fundraiser['_id'], deadline, callback=self._on_result)
         self.redirect('{}'.format(slug))
 
 
@@ -162,3 +171,20 @@ class FundraiserDetailJSONHandler(FundraiserBase):
             self.write(json.dumps(fundraiser, default=datetime_handler))
         else:
             raise HTTPError(404)
+
+
+# class AsyncHandler(FundraiserBase):
+
+#     @asynchronous
+#     def get(self, _id, deadline):
+
+#         tcelery.setup_nonblocking_producer()
+
+#         fundraiser_countdown.apply_async(args=[_id, deadline],
+#             callback=self.on_result)
+#         self.redirect('{}'.format(slug))
+#         #tasks.echo.apply_async(args=['Hello world!'], callback=self.on_result)
+
+#     def on_result(self, response):
+#         self.write(str(response.result))
+#         self.finish()
