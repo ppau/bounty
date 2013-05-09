@@ -16,6 +16,7 @@ $(function() {
         var full_date = new Date(picker_date.getFullYear(), picker_date.getMonth(), picker_date.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
         var utcDate = full_date.toUTCString();
         $('#deadline').val(utcDate);
+        $create_form.get(0).submit();
         //console.log(utcDate);
         //picker.setDate(utcDate);
 

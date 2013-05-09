@@ -9,6 +9,8 @@ import logging
 
 from base import BaseHandler
 
+from chip.tasks import fundraiser_countdown
+
 
 class FundraiserBase(BaseHandler):
 
@@ -43,6 +45,11 @@ class FundraiserCreateHandler(FundraiserBase):
         slug = re.sub(r'[^\w]+', ' ', slug)
         slug = slug.replace(' ', '_').lower().strip()
 
+        #deadline = datetime.datetime.strptime(deadline, '%a, %d %B %Y %H:%M:%S %Z')
+        ## TESTING ONLY
+        deadline = datetime.datetime.utcnow() + datetime.timedelta(minutes=2)
+        ##
+
         fundraiser = {'title': title, 'slug': slug,
                       'goal': goal, 'deadline': deadline,
                       'description': description}
@@ -64,6 +71,8 @@ class FundraiserCreateHandler(FundraiserBase):
         fundraiser['backers_count'] = 0
 
         self.fundraisers.save(fundraiser)
+        saved_fundraiser = self.fundraisers.find_one({'slug': fundraiser['slug']})
+        fundraiser_countdown(saved_fundraiser['_id'], deadline)
         self.redirect('{}'.format(slug))
 
 
@@ -121,7 +130,7 @@ class FundraiserBackHandler(FundraiserBase):
             card_token = self.get_argument('card_token', None)
             ip_address = self.get_argument('ip_address', None)
             amount = self.get_argument('amount', None)
-            fundraiser['current_funding'] = fundraiser['current_funding'] + int(amount)
+            fundraiser['current_funding'] += int(amount)
             fundraiser['backers_count'] += 1
             self.fundraisers.save(fundraiser)
             #self.set_header('Content-Type', 'application/json')
