@@ -24,6 +24,11 @@ class FundraiserBase(BaseHandler):
         fundraisers = self.db.fundraisers
         return fundraisers
 
+    @property
+    def backers(self):
+        backers = self.db.backers
+        return backers
+
 
 class FundraiserIndexHandler(FundraiserBase):
 
@@ -73,6 +78,7 @@ class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
                         error=3)
 
         fundraiser['launched'] = datetime.datetime.utcnow()
+        fundraiser['status'] = 'Live'
         fundraiser['current_funding'] = 0
         fundraiser['backers_count'] = 0
 
@@ -138,10 +144,19 @@ class FundraiserBackHandler(FundraiserBase):
             fundraiser_id = fundraiser['_id']
             card_token = self.get_argument('card_token', None)
             ip_address = self.get_argument('ip_address', None)
+            #user id as well
             amount = self.get_argument('amount', None)
             fundraiser['current_funding'] += int(amount)
             fundraiser['backers_count'] += 1
             self.fundraisers.save(fundraiser)
+            backer = {'fundraiser': fundraiser_id,
+                      # user details
+                      'card_token': card_token,
+                      'ip_address': ip_address,
+                      'amount': amount,
+                      'created_at': datetime.datetime.utcnow(),
+                      'status': 'Pending'}
+            self.backers.save(backer)
             #self.set_header('Content-Type', 'application/json')
             #self.write(json.dumps({'card': card_token, 'ip': ip_address, 'amount': amount}))
             self.redirect('/fundraiser/{}/success'.format(fundraiser_slug))
