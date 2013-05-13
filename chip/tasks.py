@@ -4,10 +4,13 @@ from datetime import datetime
 from time import sleep
 import requests
 import pymongo
+from celery.utils.log import get_task_logger
 
 from chip.celery import celery
 
 from secret import charge_url, priv_key
+
+logger = get_task_logger(__name__)
 
 
 @celery.task
@@ -22,7 +25,7 @@ def fundraiser_countdown(fundraiser_id, finish_time):
 
     while finish_time > datetime.utcnow():
         sleep(1)
-    #do charges fundraiser
+    #before doing charges, check to see if funding goal reached?
     conn = pymongo.Connection()
     db = conn.bounty
     backers_db = db.backers
@@ -31,10 +34,13 @@ def fundraiser_countdown(fundraiser_id, finish_time):
         payload = {'description': 'test charge',  # get this description from the fundraiser?
                    'ip': i['ip_address'],
                    'currency': 'AUD',
-                   'amount': i['amount']*100,  # need to send it in cents
+                   'amount': int(i['amount'])*100,  # need to send it in cents
                    'card_token': i['card_token'],
                    'email': 'test@test.com'}  # get the user email from the user
+        logger.debug(payload)
         r = requests.post(charge_url, auth=(priv_key, ''), data=payload)
+        logger.debug(r.status_code)
+        logger.debug(r.content)
         if r.status_code == 201:
             r_json = r.json()
             if r_json['response']['success'] is True:

@@ -9,6 +9,11 @@ class AdminBase(BaseHandler):
         fundraisers = self.db.fundraisers
         return fundraisers
 
+    @property
+    def backers(self):
+        backers = self.db.backers
+        return backers
+
 
 class AdminHandler(AdminBase):
 

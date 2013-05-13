@@ -34,9 +34,9 @@ class CeleryHandler(BaseHandler):
                 #do something to mark our success here somewhere
                 fundraisers = self.db.fundraisers
                 fundraiser = self.fundraisers.find_one({'_id': _id})
-                fundraiser['description'] = 'Finished!'
+                fundraiser['status'] = 'Finished'
                 fundraisers.save(fundraiser)
-                self.finish()
+                #self.finish()
             else:
                 tornado.ioloop.IOLoop.instance().add_timeout(datetime.timedelta(0.00001), check_celery_task)
 

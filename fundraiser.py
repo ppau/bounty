@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from tornado.web import HTTPError
-#from tornado.web import asynchronous
+from tornado.web import asynchronous
 #import tornado.ioloop
 
 #from tornado.escape import json_decode
@@ -44,7 +44,7 @@ class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
                     fundraiser=None,
                     error=None)
 
-    #@asynchronous
+    #@asynchronous  # do I need async on this?
     def post(self):
         title = self.get_argument('title', None)
         slug = self.get_argument('slug', None)
