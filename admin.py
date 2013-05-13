@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from base import BaseHandler
+from tornado.web import HTTPError
 
 
 class AdminBase(BaseHandler):
@@ -26,8 +27,10 @@ class AdminFundraiserHandler(AdminBase):
 
     def get(self, fundraiser_slug):
         fundraiser = self.fundraisers.find_one({'slug': fundraiser_slug})
+        fundraiser_backers = self.backers.find({'fundraiser': fundraiser['_id']})
         if fundraiser:
             self.render('admin/fundraiser.html',
-                        fundraiser=fundraiser)
+                        fundraiser=fundraiser,
+                        fundraiser_backers=fundraiser_backers)
         else:
             raise HTTPError(404)

@@ -34,7 +34,7 @@ def fundraiser_countdown(fundraiser_id, finish_time):
         payload = {'description': 'test charge',  # get this description from the fundraiser?
                    'ip': i['ip_address'],
                    'currency': 'AUD',
-                   'amount': int(i['amount'])*100,  # need to send it in cents
+                   'amount': float(i['amount'])*100,  # need to send it in cents
                    'card_token': i['card_token'],
                    'email': 'test@test.com'}  # get the user email from the user
         logger.debug(payload)
