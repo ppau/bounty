@@ -6,6 +6,12 @@
 <div class="row">
     <div class="span6 offset2">
         <h2>{{ fundraiser['title'] }}</h2>
+        {% try %}
+            {% if success %}
+        <p>You've successfully backed this fundraiser!</p>
+            {% end %}
+        {% except %}
+        {% end %}
         <p>Launched: {{ fundraiser['launched'] }}</p>
         <p>Deadline: {{ fundraiser['deadline'] }}</p>
         <p>Goal: {{ fundraiser['goal'] }}</p>

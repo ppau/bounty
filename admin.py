@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from base import BaseHandler
 from tornado.web import HTTPError
+from tornado.web import authenticated
 
 
 class AdminBase(BaseHandler):
@@ -18,6 +19,7 @@ class AdminBase(BaseHandler):
 
 class AdminHandler(AdminBase):
 
+    @authenticated
     def get(self):
         recent = self.fundraisers.find().sort('-launched').limit(30)
         self.render('admin/admin.html', recent=recent)
@@ -25,6 +27,7 @@ class AdminHandler(AdminBase):
 
 class AdminFundraiserHandler(AdminBase):
 
+    @authenticated
     def get(self, fundraiser_slug):
         fundraiser = self.fundraisers.find_one({'slug': fundraiser_slug})
         fundraiser_backers = self.backers.find({'fundraiser': fundraiser['_id']})
