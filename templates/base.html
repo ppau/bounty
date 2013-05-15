@@ -4,17 +4,27 @@
     <title>{% block title %}Bounty{% end %}</title>
     <link rel="stylesheet" href="{{ static_url("css/vendor/bootstrap.min.css") }}" type="text/css">
     <link rel="stylesheet" href="{{ static_url("css/vendor/bootstrap-datetimepicker.min.css") }}" type="text/css">
-    <script type="text/javascript" src="{{ static_url("js/vendor/jquery-1.9.1.min.js") }}"></script>
-    <script type="text/javascript" src="{{ static_url("js/vendor/bootstrap.min.js") }}"></script>
-    <script type="text/javascript" src="{{ static_url("js/vendor/bootstrap-datetimepicker.min.js") }}"></script>
-    <script type="text/javascript" src="{{ static_url("js/bounty.js") }}"></script>
+
     {% block extra_js %}
     {% end %}
   </head>
   <body>
     <div class="container">
+      <div class='row'>
+        <div class='span2 offset8'>
+        {% if current_user %}
+        <a href="/logout">Sign out</a>
+        {% else %}
+        <a href="{{ '/login?next=' + url_escape(request.uri) }}">Sign in</a>
+        {% end %}
+        </div>
+      </div>
     {% block body %}
     {% end %}
     </div>
+    <script type="text/javascript" src="{{ static_url("js/vendor/jquery-1.9.1.min.js") }}"></script>
+    <script type="text/javascript" src="{{ static_url("js/vendor/bootstrap.min.js") }}"></script>
+    <script type="text/javascript" src="{{ static_url("js/vendor/bootstrap-datetimepicker.min.js") }}"></script>
+    <script type="text/javascript" src="{{ static_url("js/bounty.js") }}"></script>
   </body>
 </html>

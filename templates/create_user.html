@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Create User{% end %}
+
+{% block body %}
+<div class='row'>
+    <div class='span6 offset2'>
+        <form class='' method='post' action=''>
+            {% module xsrf_form_html() %}
+            <label>Username</label>
+            <input type='text' name='username' required>
+            <label>Password</label>
+            <input type='password' name='password' required>
+            <div class='form-actions'>
+                <button type='submit' class='btn btn-primary'>Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% end %}
