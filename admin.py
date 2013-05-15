@@ -3,6 +3,8 @@ from base import BaseHandler
 from tornado.web import HTTPError
 from tornado.web import authenticated
 
+from auth import require_rank
+
 
 class AdminBase(BaseHandler):
 
@@ -20,6 +22,7 @@ class AdminBase(BaseHandler):
 class AdminHandler(AdminBase):
 
     @authenticated
+    @require_rank('admin')
     def get(self):
         recent = self.fundraisers.find().sort('-launched').limit(30)
         self.render('admin/admin.html', recent=recent)

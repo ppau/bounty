@@ -53,7 +53,8 @@ class LoginHandler(BaseHandler):
             if logging_in_user:
                 if pbkdf2_sha256.verify(password, logging_in_user['password']):
                     self.set_secure_cookie('bounty',
-                                           tornado.escape.json_encode(username),
+                                           tornado.escape.json_encode({'username': username,
+                                                                       'rank': logging_in_user['rank']}),
                                            httponly=True)
                     self.redirect('/')
                     return
@@ -81,14 +82,16 @@ class CreateUserHandler(BaseHandler):
         password = pbkdf2_sha256.encrypt(password)
         if username is not None and password is not None:
             if self.users_db.find_one({'username': username}):
-                error_msg = u"?error=" + tornado.escape.url_escape("Login name already taken")
+                error_msg = u"?error=" + tornado.escape.url_escape("Login name already exists")
                 self.redirect('/create' + error_msg)
             user = {'username': username,
                     'password': password,
-                    'created_at': datetime.datetime.utcnow()}
+                    'created_at': datetime.datetime.utcnow(),
+                    'rank': 'user'}
             self.users_db.save(user)
             self.set_secure_cookie('bounty',
-                                   tornado.escape.json_encode(username),
+                                   tornado.escape.json_encode({'username': username,
+                                                               'rank': user['rank']}),
                                    httponly=True)
             self.redirect("/")
 

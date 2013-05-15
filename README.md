@@ -33,3 +33,4 @@ Each project will have:
 
     Categories?
 
+Needs pagination too

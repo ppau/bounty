@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from tornado.web import HTTPError
-from tornado.web import asynchronous
+#from tornado.web import asynchronous
+from tornado.web import authenticated
 #import tornado.ioloop
 
 #from tornado.escape import json_decode
@@ -39,12 +40,14 @@ class FundraiserIndexHandler(FundraiserBase):
 
 class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
 
+    @authenticated
     def get(self):
         self.render('fundraiser/create.html',
                     fundraiser=None,
                     error=None)
 
     #@asynchronous  # do I need async on this?
+    @authenticated
     def post(self):
         title = self.get_argument('title', None)
         slug = self.get_argument('slug', None)
@@ -93,6 +96,7 @@ class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
 
 class FundraiserEditHandler(FundraiserBase):
 
+    @authenticated
     def get(self, fundraiser_slug):
         fundraiser = self.fundraisers.find_one({'slug': fundraiser_slug})
         if fundraiser:
@@ -104,6 +108,7 @@ class FundraiserEditHandler(FundraiserBase):
 
 class FundraiserDeleteHandler(FundraiserBase):
 
+    @authenticated
     def get(self, fundraiser_slug):
         fundraiser = self.fundraisers.find_one({'slug': fundraiser_slug})
         if fundraiser:
@@ -129,6 +134,7 @@ class FundraiserDetailHandler(FundraiserBase):
 
 class FundraiserBackHandler(FundraiserBase):
 
+    @authenticated
     def get(self, fundraiser_slug):
         fundraiser = self.fundraisers.find_one({'slug': fundraiser_slug})
         if fundraiser:
@@ -137,6 +143,7 @@ class FundraiserBackHandler(FundraiserBase):
         else:
             raise HTTPError(404)
 
+    @authenticated
     def post(self, fundraiser_slug):
 
         #self.json_args.get("foo")
@@ -152,6 +159,7 @@ class FundraiserBackHandler(FundraiserBase):
             fundraiser['backers_count'] += 1
             self.fundraisers.save(fundraiser)
             backer = {'fundraiser': fundraiser_id,
+                      'user': self.current_user,
                       # user details
                       'card_token': card_token,
                       'ip_address': ip_address,
@@ -166,16 +174,16 @@ class FundraiserBackHandler(FundraiserBase):
             raise HTTPError(404)
 
 
-class FundraiserBackSuccessHandler(FundraiserBase):
+# class FundraiserBackSuccessHandler(FundraiserBase):
 
-    def get(self, fundraiser_slug):
-        fundraiser = self.fundraisers.find_one({'slug': fundraiser_slug})
-        if fundraiser:
-            self.render('fundraiser/detail.html',
-                        fundraiser=fundraiser,
-                        success=True)
-        else:
-            raise HTTPError(404)
+#     def get(self, fundraiser_slug):
+#         fundraiser = self.fundraisers.find_one({'slug': fundraiser_slug})
+#         if fundraiser:
+#             self.render('fundraiser/detail.html',
+#                         fundraiser=fundraiser,
+#                         success=True)
+#         else:
+#             raise HTTPError(404)
 
 
 class FundraiserDetailJSONHandler(FundraiserBase):
