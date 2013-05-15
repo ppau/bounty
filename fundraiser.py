@@ -118,9 +118,11 @@ class FundraiserDetailHandler(FundraiserBase):
     def get(self, fundraiser_slug):
         logging.info('Detail')
         fundraiser = self.fundraisers.find_one({'slug': fundraiser_slug})
+        message = self.get_argument('message', None)
         if fundraiser:
             self.render('fundraiser/detail.html',
-                        fundraiser=fundraiser)
+                        fundraiser=fundraiser,
+                        message=message)
         else:
             raise HTTPError(404)
 
@@ -159,7 +161,7 @@ class FundraiserBackHandler(FundraiserBase):
             self.backers.save(backer)
             #self.set_header('Content-Type', 'application/json')
             #self.write(json.dumps({'card': card_token, 'ip': ip_address, 'amount': amount}))
-            self.redirect('/fundraiser/{}/success'.format(fundraiser_slug))
+            self.redirect('/fundraiser/{}'.format(fundraiser_slug), + u'?message=success')
         else:
             raise HTTPError(404)
 

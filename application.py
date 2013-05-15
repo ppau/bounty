@@ -26,7 +26,7 @@ from fundraiser import FundraiserEditHandler
 from fundraiser import FundraiserDeleteHandler
 from fundraiser import FundraiserDetailHandler
 from fundraiser import FundraiserBackHandler
-from fundraiser import FundraiserBackSuccessHandler
+#from fundraiser import FundraiserBackSuccessHandler
 from fundraiser import FundraiserDetailJSONHandler
 
 
@@ -71,7 +71,9 @@ class LogoutHandler(BaseHandler):
 class CreateUserHandler(BaseHandler):
 
     def get(self):
-        self.render('create_user.html')
+        error = self.get_argument('error', None)
+        self.render('create_user.html',
+                    error=error)
 
     def post(self):
         username = self.get_argument('username', None)
@@ -108,7 +110,7 @@ class Application(tornado.web.Application):
                     (r'/fundraiser/([^/]+)/delete', FundraiserDeleteHandler),
                     (r'/fundraiser/([^/]+)', FundraiserDetailHandler),
                     (r'/fundraiser/back/([^/]+)', FundraiserBackHandler),
-                    (r'/fundraiser/([^/]+)/success', FundraiserBackSuccessHandler),
+                    #(r'/fundraiser/([^/]+)/success', FundraiserBackSuccessHandler),
                     (r'/fundraiser/([^/]+)/json', FundraiserDetailJSONHandler),
                    ]
         settings = dict(
