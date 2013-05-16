@@ -15,6 +15,8 @@ from base import BaseHandler
 from celery_mixin import CeleryHandler
 from auth import require_staff
 
+from config import FUNDRAISERS_PER_PAGE
+
 #from chip.tasks import fundraiser_countdown
 #from chip.celery import celery
 
@@ -36,9 +38,20 @@ class FundraiserIndexHandler(FundraiserBase):
 
     def get(self):
         fundraisers_all = self.fundraisers.find()
-        recent = fundraisers_all.sort('-launched').limit(30)
+        recent = fundraisers_all.sort('-launched').limit(FUNDRAISERS_PER_PAGE)
         total = fundraisers_all.count()
         self.render('index.html', recent=recent,
+                    total=total)
+
+
+class FundraiserPaginationHandler(FundraiserBase):
+
+    def get(self, page):
+        fundraisers_all = self.fundraisers.find()
+        paginated = fundraisers_all.sort('-launched'). \
+            skip(FUNDRAISERS_PER_PAGE*(page-1)).limit(FUNDRAISERS_PER_PAGE)
+        total = fundraisers_all.count()
+        self.render('index.html', recent=paginated,
                     total=total)
 
 
