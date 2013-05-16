@@ -34,3 +34,4 @@ Each project will have:
     Categories?
 
 Needs pagination too
+Finish fundraiser editing handler

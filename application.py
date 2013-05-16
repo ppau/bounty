@@ -40,7 +40,9 @@ class IndexHandler(BaseHandler):
 class LoginHandler(BaseHandler):
 
     def get(self):
-        self.render('login.html')
+        error = self.get_argument('error', None)
+        self.render('login.html',
+                    error=error)
 
     @tornado.web.asynchronous
     #@gen.coroutine

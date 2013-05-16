@@ -13,6 +13,7 @@ import logging
 
 from base import BaseHandler
 from celery_mixin import CeleryHandler
+from auth import require_staff
 
 #from chip.tasks import fundraiser_countdown
 #from chip.celery import celery
@@ -34,13 +35,17 @@ class FundraiserBase(BaseHandler):
 class FundraiserIndexHandler(FundraiserBase):
 
     def get(self):
-        recent = self.fundraisers.find().sort('-launched').limit(30)
-        self.render('index.html', recent=recent)
+        fundraisers_all = self.fundraisers.find()
+        recent = fundraisers_all.sort('-launched').limit(30)
+        total = fundraisers_all.count()
+        self.render('index.html', recent=recent,
+                    total=total)
 
 
 class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
 
     @authenticated
+    @require_staff
     def get(self):
         self.render('fundraiser/create.html',
                     fundraiser=None,
@@ -48,6 +53,7 @@ class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
 
     #@asynchronous  # do I need async on this?
     @authenticated
+    @require_staff
     def post(self):
         title = self.get_argument('title', None)
         slug = self.get_argument('slug', None)
@@ -97,6 +103,7 @@ class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
 class FundraiserEditHandler(FundraiserBase):
 
     @authenticated
+    @require_staff
     def get(self, fundraiser_slug):
         fundraiser = self.fundraisers.find_one({'slug': fundraiser_slug})
         if fundraiser:
@@ -109,6 +116,7 @@ class FundraiserEditHandler(FundraiserBase):
 class FundraiserDeleteHandler(FundraiserBase):
 
     @authenticated
+    @require_staff
     def get(self, fundraiser_slug):
         fundraiser = self.fundraisers.find_one({'slug': fundraiser_slug})
         if fundraiser:
