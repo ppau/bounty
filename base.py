@@ -20,3 +20,11 @@ class BaseHandler(RequestHandler):
         if not user_json:
             return None
         return tornado.escape.json_decode(user_json)
+
+    # def is_staff(self):
+    #     user_info = self.get_current_user()
+    #     if user_info is None:
+    #         return None
+    #     if user_info['rank'] in ('staff', 'admin'):
+    #         return True
+    #     return None
