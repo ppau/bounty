@@ -9,9 +9,11 @@ import datetime
 import os
 
 #from tornado import gen
+from math import ceil
 from passlib.hash import pbkdf2_sha256
 
 from secret import cookie_secret
+from config import FUNDRAISERS_PER_PAGE
 
 #Admin views
 from admin import AdminHandler
@@ -33,8 +35,12 @@ from fundraiser import FundraiserDetailJSONHandler
 class IndexHandler(BaseHandler):
 
     def get(self):
-        recent = self.db.fundraisers.find().sort('-launched').limit(15)
-        self.render('index.html', recent=recent)
+        fundraisers_all = self.db.fundraisers.find()
+        recent = fundraisers_all.sort('-launched').limit(FUNDRAISERS_PER_PAGE)
+        total = fundraisers_all.count()
+        total = int(ceil(float(total)/float(FUNDRAISERS_PER_PAGE)))
+        self.render('index.html', recent=recent,
+                    total=total)
 
 
 class LoginHandler(BaseHandler):

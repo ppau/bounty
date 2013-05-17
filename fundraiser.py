@@ -49,7 +49,7 @@ class FundraiserPaginationHandler(FundraiserBase):
     def get(self, page):
         fundraisers_all = self.fundraisers.find()
         paginated = fundraisers_all.sort('-launched'). \
-            skip(FUNDRAISERS_PER_PAGE*(page-1)).limit(FUNDRAISERS_PER_PAGE)
+            skip(FUNDRAISERS_PER_PAGE*(int(page)-1)).limit(FUNDRAISERS_PER_PAGE)
         total = fundraisers_all.count()
         self.render('index.html', recent=paginated,
                     total=total)
