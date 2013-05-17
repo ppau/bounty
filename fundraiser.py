@@ -36,23 +36,40 @@ class FundraiserBase(BaseHandler):
 
 class FundraiserIndexHandler(FundraiserBase):
 
+    """
+        At this stage this is an exact duplicate of the IndexHandler.
+        Maybe change them, so front page has less per page
+        and has other info too or remove this one?
+    """
+
     def get(self):
+        page = self.get_argument('page', None)
+        if page:
+            page = int(page)
+        else:
+            page = 1
         fundraisers_all = self.fundraisers.find()
-        recent = fundraisers_all.sort('-launched').limit(FUNDRAISERS_PER_PAGE)
+        if page > 1:
+            recent = fundraisers_all.sort('-launched') \
+                .skip(FUNDRAISERS_PER_PAGE*(int(page)-1)).limit(FUNDRAISERS_PER_PAGE)
+        else:
+            recent = fundraisers_all.sort('-launched').limit(FUNDRAISERS_PER_PAGE)
         total = fundraisers_all.count()
+        #total = int(ceil(float(total)/float(FUNDRAISERS_PER_PAGE)))
         self.render('index.html', recent=recent,
-                    total=total)
+                    total=total, page=page,
+                    page_size=FUNDRAISERS_PER_PAGE)
 
 
-class FundraiserPaginationHandler(FundraiserBase):
+# class FundraiserPaginationHandler(FundraiserBase):
 
-    def get(self, page):
-        fundraisers_all = self.fundraisers.find()
-        paginated = fundraisers_all.sort('-launched'). \
-            skip(FUNDRAISERS_PER_PAGE*(int(page)-1)).limit(FUNDRAISERS_PER_PAGE)
-        total = fundraisers_all.count()
-        self.render('index.html', recent=paginated,
-                    total=total)
+#     def get(self, page):
+#         fundraisers_all = self.fundraisers.find()
+#         paginated = fundraisers_all.sort('-launched'). \
+#             skip(FUNDRAISERS_PER_PAGE*(int(page)-1)).limit(FUNDRAISERS_PER_PAGE)
+#         total = fundraisers_all.count()
+#         self.render('index.html', recent=paginated,
+#                     total=total)
 
 
 class FundraiserCreateHandler(FundraiserBase, CeleryHandler):

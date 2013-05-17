@@ -26,7 +26,10 @@ class AdminHandler(AdminBase):
     @require_staff
     def get(self):
         recent = self.fundraisers.find().sort('-launched').limit(30)
-        self.render('admin/admin.html', recent=recent)
+        #Depending on rank, show users of below your rank only?
+        users = self.users_db.find().sort('-created_at').limit(30)
+        self.render('admin/admin.html', recent=recent,
+                    users=users)
 
 
 class AdminFundraiserHandler(AdminBase):

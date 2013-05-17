@@ -33,5 +33,6 @@ Each project will have:
 
     Categories?
 
-Needs pagination too
+Needs pagination too √
+Add in user pages for Admin
 Finish fundraiser editing handler

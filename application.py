@@ -28,19 +28,30 @@ from fundraiser import FundraiserEditHandler
 from fundraiser import FundraiserDeleteHandler
 from fundraiser import FundraiserDetailHandler
 from fundraiser import FundraiserBackHandler
-from fundraiser import FundraiserPaginationHandler
 from fundraiser import FundraiserDetailJSONHandler
+
+import uimodules.pagination
 
 
 class IndexHandler(BaseHandler):
 
     def get(self):
+        page = self.get_argument('page', None)
+        if page:
+            page = int(page)
+        else:
+            page = 1
         fundraisers_all = self.db.fundraisers.find()
-        recent = fundraisers_all.sort('-launched').limit(FUNDRAISERS_PER_PAGE)
+        if page > 1:
+            recent = fundraisers_all.sort('-launched') \
+                .skip(FUNDRAISERS_PER_PAGE*(int(page)-1)).limit(FUNDRAISERS_PER_PAGE)
+        else:
+            recent = fundraisers_all.sort('-launched').limit(FUNDRAISERS_PER_PAGE)
         total = fundraisers_all.count()
-        total = int(ceil(float(total)/float(FUNDRAISERS_PER_PAGE)))
+        #total = int(ceil(float(total)/float(FUNDRAISERS_PER_PAGE)))
         self.render('index.html', recent=recent,
-                    total=total)
+                    total=total, page=page,
+                    page_size=FUNDRAISERS_PER_PAGE)
 
 
 class LoginHandler(BaseHandler):
@@ -121,7 +132,6 @@ class Application(tornado.web.Application):
                     (r'/fundraiser/([^/]+)/delete', FundraiserDeleteHandler),
                     (r'/fundraiser/([^/]+)', FundraiserDetailHandler),
                     (r'/fundraiser/back/([^/]+)', FundraiserBackHandler),
-                    (r'/fundraiser/page/([^/]+)', FundraiserPaginationHandler),
                     (r'/fundraiser/([^/]+)/json', FundraiserDetailJSONHandler),
                    ]
         settings = dict(
@@ -132,6 +142,7 @@ class Application(tornado.web.Application):
             #generate secret cookie: print base64.b64encode(uuid.uuid4().bytes + uuid.uuid4().bytes)
             cookie_secret=cookie_secret,
             login_url='/login',
+            ui_modules=uimodules.pagination,
             )
 
         tornado.web.Application.__init__(self, handlers, **settings)
