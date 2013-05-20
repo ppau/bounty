@@ -77,7 +77,10 @@ class AdminUserEditHander(AdminBase):
         else:
             raise HTTPError(404)
 
+
+class AdminBackerDeleteHandler(AdminBase):
+
     @authenticated
     @require_staff
-    def post(self, username):
-        user = self.users_db.find_one({'username': username})
+    def get(self, _id):
+        backer = self.backers.find({'_id': _id})

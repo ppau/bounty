@@ -21,22 +21,29 @@
         {% if backed %}
             {% for item in backed %}
                 {% if item['fundraiser'] in backed_fundraisers %}
-            <div class="row">
-                <div class="span7">
-                    <a href="/admin/fundraiser/{{ backed_fundraisers[item['fundraiser']]['slug'] }}"><strong>{{ backed_fundraisers[item['fundraiser']]['title'] }}</strong></a>
+            <div class="item">
+                <div class="row">
+                    <div class="span7">
+                        <a href="/admin/fundraiser/{{ backed_fundraisers[item['fundraiser']]['slug'] }}"><strong>{{ backed_fundraisers[item['fundraiser']]['title'] }}</strong></a>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="span3">
-                    <strong>Amount</strong>: ${{ item['amount'] }}
+                <div class="row">
+                    <div class="span3">
+                        <strong>Amount</strong>: ${{ item['amount'] }}
+                    </div>
+                    <div class="span3">
+                        <strong>When</strong>: {{ item['created_at'] }}
+                    </div>
                 </div>
-                <div class="span3">
-                    <strong>When</strong>: {{ item['created_at'] }}
+                <div class="row">
+                    <div class="span3">
+                        <strong>Status</strong>: {{ item['status'] }}
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="span3">
-                    <strong>Status</strong>: {{ item['status'] }}
+                <div class="row">
+                    <div class="span3">
+                        <a href="/admin/backers/{{ item['_id'] }}/delete"><button>Delete Record</button></a>
+                    </div>
                 </div>
             </div>
                 {% end %}
