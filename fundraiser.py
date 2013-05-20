@@ -119,7 +119,7 @@ class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
 
         fundraiser['launched'] = datetime.datetime.utcnow()
         fundraiser['status'] = 'Live'
-        fundraiser['current_funding'] = 0
+        fundraiser['current_funding'] = 0.0
         fundraiser['backers_count'] = 0
         # generate the primary key manually
         # the below method of querying it from the db sometimes failed as it hadn't been
@@ -197,7 +197,7 @@ class FundraiserBackHandler(FundraiserBase):
             ip_address = self.get_argument('ip_address', None)
             #user id as well
             amount = self.get_argument('amount', None)
-            fundraiser['current_funding'] += int(amount)
+            fundraiser['current_funding'] += float(amount)
             fundraiser['backers_count'] += 1
             self.fundraisers.save(fundraiser)
             backer = {'fundraiser': fundraiser_id,
