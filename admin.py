@@ -64,14 +64,15 @@ class AdminUserEditHander(AdminBase):
     def get(self, username):
         user = self.users_db.find_one({'username': username})
         if user:
-            backed = self.backers.find({'username': username})
+            backed = self.backers.find({'user': username})
             backed_fundraisers = {}
             if backed:
                 for i in backed:
-                    backed_fundraisers[i['fundraiser']] = self.fundraisers.find_one({'_id': i['fundraiser']})
+                    if self.fundraisers.find_one({'_id': i['fundraiser']}):
+                        backed_fundraisers[i['fundraiser']] = self.fundraisers.find_one({'_id': i['fundraiser']})
             self.render('admin/user.html',
                         user=user,
-                        backed=backed,
+                        backed=self.backers.find({'user': username}),
                         backed_fundraisers=backed_fundraisers)
         else:
             raise HTTPError(404)

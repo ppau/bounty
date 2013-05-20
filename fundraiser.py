@@ -51,10 +51,10 @@ class FundraiserIndexHandler(FundraiserBase):
             page = 1
         fundraisers_all = self.fundraisers.find()
         if page > 1:
-            recent = fundraisers_all.sort('-launched') \
+            recent = fundraisers_all.sort([('launched', -1)]) \
                 .skip(FUNDRAISERS_PER_PAGE*(int(page)-1)).limit(FUNDRAISERS_PER_PAGE)
         else:
-            recent = fundraisers_all.sort('-launched').limit(FUNDRAISERS_PER_PAGE)
+            recent = fundraisers_all.sort([('launched', -1)]).limit(FUNDRAISERS_PER_PAGE)
         total = fundraisers_all.count()
         #total = int(ceil(float(total)/float(FUNDRAISERS_PER_PAGE)))
         self.render('index.html', recent=recent,
