@@ -42,7 +42,7 @@
                 {% for i, backer in enumerate(fundraiser_backers) %}
                 <div class="row" {% if i % 2 != 0 %}style="background-color: #F7F7F7"{% end %}>
                     <div class="span3">
-                      <p>{{ backer['card_token'] }}</p>
+                      <strong>{{ backer['user'] }}</strong>
                       <p>IP - {{ backer['ip_address'] }}</p>
                     </div>
                     <div class="span3">

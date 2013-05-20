@@ -55,3 +55,28 @@ class AdminUserListHandler(AdminBase):
         user_list = self.users_db.find().sort('-created_at').limit(30)
         self.render('admin/users.html',
                     user_list=user_list)
+
+
+class AdminUserEditHander(AdminBase):
+
+    @authenticated
+    @require_staff
+    def get(self, username):
+        user = self.users_db.find_one({'username': username})
+        if user:
+            backed = self.backers.find({'username': username})
+            backed_fundraisers = {}
+            if backed:
+                for i in backed:
+                    backed_fundraisers[i['fundraiser']] = self.fundraisers.find_one({'_id': i['fundraiser']})
+            self.render('admin/user.html',
+                        user=user,
+                        backed=backed,
+                        backed_fundraisers=backed_fundraisers)
+        else:
+            raise HTTPError(404)
+
+    @authenticated
+    @require_staff
+    def post(self, username):
+        user = self.users_db.find_one({'username': username})

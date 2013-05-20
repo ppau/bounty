@@ -34,7 +34,7 @@ def fundraiser_countdown(fundraiser_id, finish_time):
         payload = {'description': 'test charge',  # get this description from the fundraiser?
                    'ip': i['ip_address'],
                    'currency': 'AUD',
-                   'amount': float(i['amount'])*100,  # need to send it in cents
+                   'amount': int(i['amount']*100),  # need to send it in cents
                    'card_token': i['card_token'],
                    'email': 'test@test.com'}  # get the user email from the user
         logger.debug(payload)
@@ -46,13 +46,13 @@ def fundraiser_countdown(fundraiser_id, finish_time):
             if r_json['response']['success'] is True:
                 i['status'] = 'Charged'
                 backers_db.save(i)
-            else:
-                i['status'] = 'Error'
-                if r_json['response']['status_message']:
-                    i['status_message'] = r_json['response']['status_message']
-                if r_json['response']['error_message']:
-                    i['error_message'] = r_json['response']['error_message']
-                backers_db.save(i)
+        else:
+            i['status'] = 'Error'
+            if r_json['response']['status_message']:
+                i['status_message'] = r_json['response']['status_message']
+            if r_json['response']['error_message']:
+                i['error_message'] = r_json['response']['error_message']
+            backers_db.save(i)
         """
         Example response
         '{"response":{"token":"ch_9Ef6EWj1eSs-84OA-K8OlA","success":true,

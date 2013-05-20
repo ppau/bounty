@@ -5,8 +5,7 @@
     <link rel="stylesheet" href="{{ static_url("css/vendor/bootstrap.min.css") }}" type="text/css">
     <link rel="stylesheet" href="{{ static_url("css/vendor/bootstrap-datetimepicker.min.css") }}" type="text/css">
     <link rel="stylesheet" href="{{ static_url("css/bounty.css") }}" type="text/css">
-    {% block extra_js %}
-    {% end %}
+
   </head>
   <body>
     <div class="navbar navbar-fixed-top">
@@ -53,5 +52,7 @@
     <script type="text/javascript" src="{{ static_url("js/vendor/bootstrap.min.js") }}"></script>
     <script type="text/javascript" src="{{ static_url("js/vendor/bootstrap-datetimepicker.min.js") }}"></script>
     <script type="text/javascript" src="{{ static_url("js/bounty.js") }}"></script>
+    {% block extra_js %}
+    {% end %}
   </body>
 </html>

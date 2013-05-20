@@ -1,0 +1,28 @@
+{% extends "../base.html" %}
+
+{% block title %}{{ user['username'] }} - Bounty Admin{% end %}
+
+{% block body %}
+<div class="row">
+    <div class="span7 offset2">
+        <div class="row">
+            <div class="span7">
+            <h3>{{ user['username'] }}</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span3">
+                <strong>Joined</strong>: {{ user['created_at'] }}
+            </div>
+            <div class="span3">
+                <strong>Rank</strong>: {{ user['rank'] }}
+            </div>
+        </div>
+        {% if backed %}
+            {% for item in backed %}
+
+            {% end %}
+        {% end %}
+    </div>
+</div>
+{% end %}

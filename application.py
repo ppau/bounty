@@ -9,7 +9,7 @@ import datetime
 import os
 
 #from tornado import gen
-from math import ceil
+#from math import ceil
 from passlib.hash import pbkdf2_sha256
 
 from secret import cookie_secret
@@ -18,6 +18,7 @@ from config import FUNDRAISERS_PER_PAGE
 #Admin views
 from admin import AdminHandler
 from admin import AdminFundraiserHandler
+from admin import AdminUserEditHander
 
 from base import BaseHandler
 
@@ -125,6 +126,7 @@ class Application(tornado.web.Application):
                     (r'/logout', LogoutHandler),
                     (r'/create', CreateUserHandler),
                     (r'/admin', AdminHandler),
+                    (r'/admin/user/([^/]+)', AdminUserEditHander),
                     (r'/admin/fundraiser/([^/]+)', AdminFundraiserHandler),
                     (r'/fundraiser', FundraiserIndexHandler),
                     (r'/fundraiser/create', FundraiserCreateHandler),

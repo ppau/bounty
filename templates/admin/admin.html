@@ -20,7 +20,7 @@
         <h3>Users</h3>
         {% for user in users %}
         <div class="row">
-            <strong>{{ user['username'] }}</strong> | <a href="">Edit</a>
+            <strong>{{ user['username'] }}</strong> | <a href="/admin/user/{{ user['username'] }}">Edit</a>
         </div>
         {% end %}
     </div>

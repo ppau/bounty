@@ -3,6 +3,7 @@ from tornado.web import HTTPError
 #from tornado.web import asynchronous
 from tornado.web import authenticated
 #import tornado.ioloop
+from bson.objectid import ObjectId
 
 #from tornado.escape import json_decode
 import datetime
@@ -97,7 +98,7 @@ class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
 
         #deadline = datetime.datetime.strptime(deadline, '%a, %d %B %Y %H:%M:%S %Z')
         ## TESTING ONLY
-        deadline = datetime.datetime.utcnow() + datetime.timedelta(minutes=1)
+        deadline = datetime.datetime.utcnow() + datetime.timedelta(minutes=2)
         ##
 
         fundraiser = {'title': title, 'slug': slug,
@@ -120,10 +121,14 @@ class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
         fundraiser['status'] = 'Live'
         fundraiser['current_funding'] = 0
         fundraiser['backers_count'] = 0
+        # generate the primary key manually
+        # the below method of querying it from the db sometimes failed as it hadn't been
+        # saved before the query
+        fundraiser['_id'] = ObjectId.from_datetime(fundraiser['launched'])
 
         self.fundraisers.save(fundraiser)
-        saved_fundraiser = self.fundraisers.find_one({'slug': fundraiser['slug']})
-        self.fundraiser_deadline(saved_fundraiser['_id'], deadline)
+        #saved_fundraiser = self.fundraisers.find_one({'slug': fundraiser['slug']})
+        self.fundraiser_deadline(fundraiser['_id'], deadline)
         #fundraiser_countdown(saved_fundraiser['_id'], deadline)
         #tornado.ioloop.IOLoop().instance().add_callback(fundraiser_countdown(saved_fundraiser['_id'], deadline))
         #self.add_task(fundraiser_countdown, saved_fundraiser['_id'], deadline, callback=self._on_result)
@@ -159,7 +164,6 @@ class FundraiserDeleteHandler(FundraiserBase):
 class FundraiserDetailHandler(FundraiserBase):
 
     def get(self, fundraiser_slug):
-        logging.info('Detail')
         fundraiser = self.fundraisers.find_one({'slug': fundraiser_slug})
         message = self.get_argument('message', None)
         if fundraiser:
@@ -197,17 +201,17 @@ class FundraiserBackHandler(FundraiserBase):
             fundraiser['backers_count'] += 1
             self.fundraisers.save(fundraiser)
             backer = {'fundraiser': fundraiser_id,
-                      'user': self.current_user,
+                      'user': self.current_user['username'],
                       # user details
                       'card_token': card_token,
                       'ip_address': ip_address,
-                      'amount': amount,
+                      'amount': float(amount),
                       'created_at': datetime.datetime.utcnow(),
                       'status': 'Pending'}
             self.backers.save(backer)
             #self.set_header('Content-Type', 'application/json')
             #self.write(json.dumps({'card': card_token, 'ip': ip_address, 'amount': amount}))
-            self.redirect('/fundraiser/{}'.format(fundraiser_slug), + u'?message=success')
+            self.redirect(u'/fundraiser/{}?message=success'.format(fundraiser_slug))
         else:
             raise HTTPError(404)
 
