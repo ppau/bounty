@@ -19,6 +19,7 @@ from config import FUNDRAISERS_PER_PAGE
 from admin import AdminHandler
 from admin import AdminFundraiserHandler
 from admin import AdminUserEditHander
+from admin import AdminBackerDeleteHandler
 
 from base import BaseHandler
 
@@ -127,6 +128,7 @@ class Application(tornado.web.Application):
                     (r'/create', CreateUserHandler),
                     (r'/admin', AdminHandler),
                     (r'/admin/user/([^/]+)', AdminUserEditHander),
+                    (r'/admin/backers/([^/]+)/delete', AdminBackerDeleteHandler),
                     (r'/admin/fundraiser/([^/]+)', AdminFundraiserHandler),
                     (r'/fundraiser', FundraiserIndexHandler),
                     (r'/fundraiser/create', FundraiserCreateHandler),

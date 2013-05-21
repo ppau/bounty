@@ -9,9 +9,8 @@
         {% for fundraiser in recent %}
         <div class="row">
             <strong><a href="/admin/fundraiser/{{fundraiser['slug']}}">{{ fundraiser['title'] }}</a></strong> | <a href="/fundraiser/{{ fundraiser['slug'] }}/edit">Edit</a> | <a href="/fundraiser/{{ fundraiser['slug'] }}/delete"> Delete</a>
-            <p>
-            ${{ fundraiser['goal'] }}
-            </p>
+            <p>Goal: ${{ fundraiser['goal'] }}</p>
+            <p>Current Funding: ${{ fundraiser['current_funding'] }} | Deadline: {{ fundraiser['deadline'] }}</p>
         </div>
         {% end %}
         <div class="row">

@@ -2,6 +2,7 @@
 from base import BaseHandler
 from tornado.web import HTTPError
 from tornado.web import authenticated
+from bson.objectid import ObjectId
 
 from auth import require_staff
 #from auth import require_admin
@@ -25,9 +26,9 @@ class AdminHandler(AdminBase):
     @authenticated
     @require_staff
     def get(self):
-        recent = self.fundraisers.find().sort('-launched').limit(30)
+        recent = self.fundraisers.find().sort([('launched', -1)]).limit(30)
         #Depending on rank, show users of below your rank only?
-        users = self.users_db.find().sort('-created_at').limit(30)
+        users = self.users_db.find().sort([('created_at', -1)]).limit(30)
         self.render('admin/admin.html', recent=recent,
                     users=users)
 
@@ -83,4 +84,10 @@ class AdminBackerDeleteHandler(AdminBase):
     @authenticated
     @require_staff
     def get(self, _id):
-        backer = self.backers.find({'_id': _id})
+        backer = self.backers.find_one({'_id': ObjectId(_id)})
+        if backer:
+            user = backer['user']
+            self.backers.remove(backer)
+            self.redirect(u'/admin/user/{}?message=success'.format(user))
+        else:
+            raise HTTPError(404)

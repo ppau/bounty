@@ -45,6 +45,7 @@ def fundraiser_countdown(fundraiser_id, finish_time):
             r_json = r.json()
             if r_json['response']['success'] is True:
                 i['status'] = 'Charged'
+                i['charged_when'] = datetime.utcnow()
                 backers_db.save(i)
         else:
             i['status'] = 'Error'
