@@ -53,7 +53,7 @@ class AdminUserListHandler(AdminBase):
     @authenticated
     @require_staff
     def get(self):
-        user_list = self.users_db.find().sort('-created_at').limit(30)
+        user_list = self.users_db.find().sort([('created_at', -1)]).limit(30)
         self.render('admin/users.html',
                     user_list=user_list)
 

@@ -100,13 +100,16 @@ class CreateUserHandler(BaseHandler):
     def post(self):
         username = self.get_argument('username', None)
         password = self.get_argument('password', None)
+        #validate email?
+        email = self.get_argument('email', None)
         password = pbkdf2_sha256.encrypt(password)
-        if username is not None and password is not None:
+        if username is not None and password is not None and email is not None:
             if self.users_db.find_one({'username': username}):
                 error_msg = u"?error=" + tornado.escape.url_escape("Login name already exists")
                 self.redirect('/create' + error_msg)
             user = {'username': username,
                     'password': password,
+                    'email': email,
                     'created_at': datetime.datetime.utcnow(),
                     'rank': 'user'}
             self.users_db.save(user)

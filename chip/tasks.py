@@ -13,9 +13,9 @@ from secret import charge_url, priv_key
 logger = get_task_logger(__name__)
 
 
-@celery.task
-def add(x, y):
-    return x + y
+#@celery.task
+#def add(x, y):
+#    return x + y
 
 
 @celery.task
@@ -29,14 +29,19 @@ def fundraiser_countdown(fundraiser_id, finish_time):
     conn = pymongo.Connection()
     db = conn.bounty
     backers_db = db.backers
+    fundraisers = db.fundraisers
+    users = db.users
     backers = backers_db.find({'fundraiser': fundraiser_id})
+    fundraiser = fundraisers.find_one({'_id': fundraiser_id})
+    description = 'Bounty - {}'.format(fundraiser['title'])
     for i in backers:
-        payload = {'description': 'test charge',  # get this description from the fundraiser?
+        user = users.find_one({'username': i['user']})
+        payload = {'description': description,
                    'ip': i['ip_address'],
                    'currency': 'AUD',
                    'amount': int(i['amount']*100),  # need to send it in cents
                    'card_token': i['card_token'],
-                   'email': 'test@test.com'}  # get the user email from the user
+                   'email': user['email']}  # get the user email from the user
         logger.debug(payload)
         r = requests.post(charge_url, auth=(priv_key, ''), data=payload)
         logger.debug(r.status_code)

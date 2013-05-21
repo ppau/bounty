@@ -11,8 +11,8 @@
         {% end %}
         <p>Launched: {{ fundraiser['launched'] }}</p>
         <p>Deadline: {{ fundraiser['deadline'] }}</p>
-        <p>Goal: {{ fundraiser['goal'] }}</p>
-        <p>Current Funding: {{ fundraiser['current_funding'] }}</p>
+        <p>Goal: ${{ fundraiser['goal'] }}</p>
+        <p>Current Funding: ${{ fundraiser['current_funding'] }}</p>
         <p>Backers: {{ fundraiser['backers_count'] }}</p>
         <p>{{ fundraiser['description'] }}</p>
         {% if fundraiser['status'] == 'Live' %}

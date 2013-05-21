@@ -35,6 +35,6 @@ Each project will have:
 
 Needs pagination too √
 
-Add in user pages for Admin
+Add in user pages for Admin √
 
 Finish fundraiser editing handler

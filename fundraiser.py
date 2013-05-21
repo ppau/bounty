@@ -150,6 +150,7 @@ class FundraiserEditHandler(FundraiserBase):
 
 class FundraiserDeleteHandler(FundraiserBase):
 
+    #when we delete, maybe clean up the backers table too?
     @authenticated
     @require_staff
     def get(self, fundraiser_slug):
@@ -188,8 +189,6 @@ class FundraiserBackHandler(FundraiserBase):
     @authenticated
     def post(self, fundraiser_slug):
 
-        #self.json_args.get("foo")
-        #self.write(self.json_args)
         fundraiser = self.fundraisers.find_one({'slug': fundraiser_slug})
         if fundraiser:
             fundraiser_id = fundraiser['_id']
@@ -202,30 +201,15 @@ class FundraiserBackHandler(FundraiserBase):
             self.fundraisers.save(fundraiser)
             backer = {'fundraiser': fundraiser_id,
                       'user': self.current_user['username'],
-                      # user details
                       'card_token': card_token,
                       'ip_address': ip_address,
                       'amount': float(amount),
                       'created_at': datetime.datetime.utcnow(),
                       'status': 'Pending'}
             self.backers.save(backer)
-            #self.set_header('Content-Type', 'application/json')
-            #self.write(json.dumps({'card': card_token, 'ip': ip_address, 'amount': amount}))
             self.redirect(u'/fundraiser/{}?message=success'.format(fundraiser_slug))
         else:
             raise HTTPError(404)
-
-
-# class FundraiserBackSuccessHandler(FundraiserBase):
-
-#     def get(self, fundraiser_slug):
-#         fundraiser = self.fundraisers.find_one({'slug': fundraiser_slug})
-#         if fundraiser:
-#             self.render('fundraiser/detail.html',
-#                         fundraiser=fundraiser,
-#                         success=True)
-#         else:
-#             raise HTTPError(404)
 
 
 class FundraiserDetailJSONHandler(FundraiserBase):
