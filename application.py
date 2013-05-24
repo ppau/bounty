@@ -7,6 +7,7 @@ import tornado.httpserver
 import logging
 import datetime
 import os
+import re
 
 #from tornado import gen
 #from math import ceil
@@ -99,6 +100,7 @@ class CreateUserHandler(BaseHandler):
 
     def post(self):
         username = self.get_argument('username', None)
+        username = re.sub('[^a-zA-Z0-9_\.]', '', username)
         password = self.get_argument('password', None)
         #validate email?
         email = self.get_argument('email', None)

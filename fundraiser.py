@@ -147,6 +147,33 @@ class FundraiserEditHandler(FundraiserBase):
         else:
             raise HTTPError(404)
 
+    @authenticated
+    @require_staff
+    def post(self):
+        _id = self.get_argument('_id', None)
+        title = self.get_argument('title', None)
+        slug = self.get_argument('slug', None)
+        goal = self.get_argument('goal', None)
+        #Should people be allowed to change the deadline?
+        #deadline = self.get_argument('deadline', None)
+        description = self.get_argument('description', None)
+        status = self.get_argument('status', None)
+
+        slug = unicodedata.normalize('NFKD', slug).encode('ascii', 'ignore')
+        slug = re.sub(r'[^\w]+', ' ', slug)
+        slug = slug.replace(' ', '_').lower().strip()
+
+        fundraiser = self.fundraisers.find_one({'_id': _id})
+        if fundraiser:
+            fundraiser = {'_id': _id, 'title': title, 'slug': slug,
+                          'goal': goal, 'status': status,
+                          'description': description}
+
+            self.fundraisers.save(fundraiser)
+            self.redirect('{}'.format(slug))
+        else:
+            raise HTTPError(404)
+
 
 class FundraiserDeleteHandler(FundraiserBase):
 
