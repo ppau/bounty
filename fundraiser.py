@@ -49,7 +49,7 @@ class FundraiserIndexHandler(FundraiserBase):
             page = int(page)
         else:
             page = 1
-        fundraisers_all = self.fundraisers.find()
+        fundraisers_all = self.fundraisers.find({'status': 'Live'})
         if page > 1:
             recent = fundraisers_all.sort([('launched', -1)]) \
                 .skip(FUNDRAISERS_PER_PAGE*(int(page)-1)).limit(FUNDRAISERS_PER_PAGE)
@@ -57,7 +57,7 @@ class FundraiserIndexHandler(FundraiserBase):
             recent = fundraisers_all.sort([('launched', -1)]).limit(FUNDRAISERS_PER_PAGE)
         total = fundraisers_all.count()
         #total = int(ceil(float(total)/float(FUNDRAISERS_PER_PAGE)))
-        self.render('index.html', recent=recent,
+        self.render('fundraiser/list.html', recent=recent,
                     total=total, page=page,
                     page_size=FUNDRAISERS_PER_PAGE)
 
@@ -91,6 +91,7 @@ class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
         goal = self.get_argument('goal', None)
         deadline = self.get_argument('deadline', None)
         description = self.get_argument('description', None)
+        status = self.get_argument('statusRadios', None)
 
         slug = unicodedata.normalize('NFKD', slug).encode('ascii', 'ignore')
         slug = re.sub(r'[^\w]+', ' ', slug)
@@ -103,7 +104,8 @@ class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
 
         fundraiser = {'title': title, 'slug': slug,
                       'goal': goal, 'deadline': deadline,
-                      'description': description}
+                      'description': description,
+                      'status': status}
 
         if None in fundraiser.values():
             self.render('fundraiser/create.html', fundraiser=fundraiser,
@@ -118,7 +120,7 @@ class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
                         error=3)
 
         fundraiser['launched'] = datetime.datetime.utcnow()
-        fundraiser['status'] = 'Live'
+        #fundraiser['status'] = 'Live'
         fundraiser['current_funding'] = 0.0
         fundraiser['backers_count'] = 0
         # generate the primary key manually
@@ -128,7 +130,8 @@ class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
 
         self.fundraisers.save(fundraiser)
         #saved_fundraiser = self.fundraisers.find_one({'slug': fundraiser['slug']})
-        self.fundraiser_deadline(fundraiser['_id'], deadline)
+        if status == 'Live':
+            self.fundraiser_deadline(fundraiser['_id'], deadline)
         #fundraiser_countdown(saved_fundraiser['_id'], deadline)
         #tornado.ioloop.IOLoop().instance().add_callback(fundraiser_countdown(saved_fundraiser['_id'], deadline))
         #self.add_task(fundraiser_countdown, saved_fundraiser['_id'], deadline, callback=self._on_result)

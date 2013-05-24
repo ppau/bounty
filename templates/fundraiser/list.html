@@ -1,14 +1,8 @@
-{% extends "base.html" %}
+{% extends "../base.html" %}
 
-{% block title %}Welcome to Bounty{% end %}
+{% block title %}Fundraisers - Bounty{% end %}
 
 {% block body %}
-<div class="row">
-    <div class="span6 offset2">
-        <h1>Welcome</h1>
-        <p>Welcome to Bounty, the crowd source funding platform of the Australia Pirate Party.</p>
-    </div>
-</div>
 <div class="row">
     <div class="span6 offset2">
         <h3>Recently launched Fundraisers</h3>
@@ -17,7 +11,7 @@
             <p>Current Funding: {{ fundraiser['current_funding'] }} | Deadline: {{ fundraiser['deadline'] }}</p>
             <p>{{ fundraiser['description'] }}</p>
         {% end %}
-        <a href="/fundraiser">See more...</a>
+        {% module Paginator(page, page_size, total) %}
     </div>
 </div>
 {% end %}

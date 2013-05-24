@@ -44,7 +44,7 @@ class IndexHandler(BaseHandler):
             page = int(page)
         else:
             page = 1
-        fundraisers_all = self.db.fundraisers.find()
+        fundraisers_all = self.db.fundraisers.find({'status': 'Live'})
         if page > 1:
             recent = fundraisers_all.sort([('launched', -1)]) \
                 .skip(FUNDRAISERS_PER_PAGE*(int(page)-1)).limit(FUNDRAISERS_PER_PAGE)

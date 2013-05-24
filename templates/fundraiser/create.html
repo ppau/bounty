@@ -1,6 +1,6 @@
 {% extends '../base.html' %}
 
-{% block title %}Create a new Fundraiser{% end %}
+{% block title %}Create a new Fundraiser - Bounty{% end %}
 
 {% block body %}
 <div class='row'>
@@ -29,6 +29,16 @@
                 <input type='text' id='deadline' name='deadline' style='display:none'>
                 <label>Description</label>
                 <textarea class="span5" rows="8" name='description' required></textarea>
+                <div>
+                    <label class="radio inline">
+                        <input type="radio" name="statusRadios" id="statusRadios1" value="Live" checked>
+                        Live
+                    </label>
+                    <label class="radio inline">
+                        <input type="radio" name="statusRadios" id="statusRadios2" value="Draft">
+                        Draft
+                    </label>
+                </div>
             </div>
             <div class='form-actions'>
                 <button type='submit' class='btn btn-primary'>Submit</button>
