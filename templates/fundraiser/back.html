@@ -59,13 +59,33 @@
               the browser from submitting them to your server
             -->
             <label for='cc-number'>Credit Card Number</label>
-            <input id='cc-number' type='text' required/>
+            <div class='control-group'>
+              <div class='controls'>
+                <input type='text' id='cc-number' required>
+                <span id='cc-number-error' class='help-inline' style='display:none'>Please correct the error</span>
+              </div>
+            </div>
             <label for='cc-name'>Name on Card</label>
-            <input id='cc-name' type='text' required/>
+            <div class='control-group'>
+              <div class='controls'>
+                <input type='text' id='cc-name' required>
+                <span id='cc-name-error' class='help-inline' style='display:none'>Please correct the error</span>
+              </div>
+            </div>
             <label for='cc-expiry-month'>Expiry Month</label>
-            <input id='cc-expiry-month' required/>
+            <div class='control-group'>
+              <div class='controls'>
+                <input type='text' id='cc-expiry-month' required>
+                <span id='cc-month-error' class='help-inline' style='display:none'>Please correct the error</span>
+              </div>
+            </div>
             <label for='cc-expiry-year'>Expiry Year</label>
-            <input id='cc-expiry-year' required/>
+            <div class='control-group'>
+              <div class='controls'>
+                <input type='text' id='cc-expiry-year' required>
+                <span id='cc-year-error' class='help-inline' style='display:none'>Please correct the error</span>
+              </div>
+            </div>
             <label for='cc-cvc'>CVC</label>
             <input id='cc-cvc' required/>
           </fieldset>

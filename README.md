@@ -38,3 +38,5 @@ Needs pagination too √
 Add in user pages for Admin √
 
 Finish fundraiser editing handler
+
+CVC doesn't get tested by PIN?
