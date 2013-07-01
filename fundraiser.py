@@ -100,6 +100,7 @@ class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
         deadline = self.get_argument('deadline', None)
         description = self.get_argument('description', None)
         status = self.get_argument('statusRadios', None)
+        fundraiser_type = self.get_argument('fundraiser_type', None)
 
         slug = unicodedata.normalize('NFKD', slug).encode('ascii', 'ignore')
         slug = re.sub(r'[^\w]+', ' ', slug)
@@ -117,7 +118,8 @@ class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
         fundraiser = {'title': title, 'slug': slug,
                       'goal': goal, 'deadline': deadline,
                       'description': description,
-                      'status': status, 'template': template}
+                      'status': status, 'template': template,
+                      'type': fundraiser_type}
 
         if None in fundraiser.values():
             self.render('fundraiser/create.html', fundraiser=fundraiser,
@@ -142,7 +144,7 @@ class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
 
         self.fundraisers.save(fundraiser)
         #saved_fundraiser = self.fundraisers.find_one({'slug': fundraiser['slug']})
-        if status == 'Live' and deadline:
+        if status == 'Live' and fundraiser_type == 'Group Purchase':
             self.fundraiser_deadline(fundraiser['_id'], deadline)
         #fundraiser_countdown(saved_fundraiser['_id'], deadline)
         #tornado.ioloop.IOLoop().instance().add_callback(fundraiser_countdown(saved_fundraiser['_id'], deadline))

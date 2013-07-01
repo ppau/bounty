@@ -11,7 +11,7 @@
             <div class="row container-top">
                 <div class="span7 masthead">
 
-                    <div class="banner-bg" style="background-image: url(img/cand.jpg);">
+                    <div class="banner-bg" style="background-image: url({{ static_url("img/user_upload/cand.jpg") }});">
                         <div class="banner banner-opaq">
                             <h1 class="centre" style="margin: 15px 0;">We need your help to run candidates this election!</h1>
                             </div>
@@ -244,68 +244,16 @@
 
 
                     <h4>Recent donators</h4>
-
-                    {% for i, backer in enumerate(fundraiser_backers) %}
-                    <div class="row" {% if i % 2 != 0 %}style="background-color: #F7F7F7"{% end %}>
-                        <div class="span3">
-                          <p><i class="icon-user"></i> {{ backer['user'] }} {{ backer['city'] }}, {{ backer['state'] }}</p>
-                        </div>
-                    </div>
-                    {% end %}
                     <table class="table table-striped">
                         <tbody>
+                        {% for i, backer in enumerate(fundraiser_backers) %}
                             <tr>
-                                <th><i class="icon-user"></i> Joe B</th>
-                                <td>Hobart, TAS</td>
+                                <th><i class="icon-user"></i> {{ backer['user'] }}</th>
+                                <td>{{ backer['city'] }}, {{ backer['state'] }}</td>
                             </tr>
-                            <tr>
-                                <th><i class="icon-user"></i> Jane S</th>
-                                <td>Melbourne, VIC</td>
-                            </tr>
-                            <tr>
-                                <th><i class="icon-user"></i> Thomas R</th>
-                                <td>Sydney, NSW</td>
-                            </tr>
-                            <tr>
-                                <th><i class="icon-user"></i> Joe B</th>
-                                <td>Hobart, TAS</td>
-                            </tr>
-                            <tr>
-                                <th><i class="icon-user"></i> Jane S</th>
-                                <td>Melbourne, VIC</td>
-                            </tr>
-                            <tr>
-                                <th><i class="icon-user"></i> Thomas R</th>
-                                <td>Sydney, NSW</td>
-                            </tr>
-                            <tr>
-                                <th><i class="icon-user"></i> Joe B</th>
-                                <td>Hobart, TAS</td>
-                            </tr>
-                            <tr>
-                                <th><i class="icon-user"></i> Jane S</th>
-                                <td>Melbourne, VIC</td>
-                            </tr>
-                            <tr>
-                                <th><i class="icon-user"></i> Thomas R</th>
-                                <td>Sydney, NSW</td>
-                            </tr>
-                            <tr>
-                                <th><i class="icon-user"></i> Joe B</th>
-                                <td>Hobart, TAS</td>
-                            </tr>
-                            <tr>
-                                <th><i class="icon-user"></i> Jane S</th>
-                                <td>Melbourne, VIC</td>
-                            </tr>
-                            <tr>
-                                <th><i class="icon-user"></i> Thomas R</th>
-                                <td>Sydney, NSW</td>
-                            </tr>
-                        </tbody>
+                        {% end %}
+                         </tbody>
                     </table>
-
-
                 </div>
             </div>
     </div>
