@@ -50,10 +50,12 @@ class CeleryHandler(BaseHandler):
         def check_celery_task():
             if charge_task.ready():
                 #do something to mark our success here somewhere
+                #RuntimeError: Cannot write() after finish(). May be caused by using async operations
+                # without the @asynchronous decorator.
+                #self.write({'success': True})
+                #self.set_header("Content-Type", "application/json")
+                #self.finish()
                 pass
-                self.write({'success': True})
-                self.set_header("Content-Type", "application/json")
-                self.finish()
             else:
                 tornado.ioloop.IOLoop.instance().add_timeout(datetime.timedelta(0.00001), check_celery_task)
 

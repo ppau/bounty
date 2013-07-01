@@ -149,13 +149,13 @@
                             {% module xsrf_form_html() %}
                             <legend>Billing Details</legend>
                             <div class="controls">
-                                <input type="text" id="firstname" placeholder="First names" class="input-block-level">
+                                <input type="text" name="firstname" placeholder="First name" class="input-block-level">
                             </div>
                             <div class="controls">
-                                <input type="text" id="lastname" placeholder="Last name" class="input-block-level">
+                                <input type="text" name="lastname" placeholder="Last name" class="input-block-level">
                             </div>
                             <div class="controls">
-                                <input type="email" id="email" placeholder="Email" class="input-block-level">
+                                <input type="email" name="email" placeholder="Email" class="input-block-level">
                             </div>
                             <div class="controls">
                                 <input type="text" id='address-line1' placeholder="Address Line 1" class="input-block-level" required/>
@@ -164,10 +164,10 @@
                                 <input type="text" id='address-line2' placeholder="Address Line 2" class="input-block-level" required/>
                             </div>
                             <div class="controls">
-                                <input type="text" id='address-city' placeholder="City" class="input-block-level" required/>
+                                <input type="text" name='address-city' id='address-city' placeholder="City" class="input-block-level" required/>
                             </div>
                             <div class="controls">
-                                <input type="text" id='address-state' placeholder="State" class="input-block-level" required/>
+                                <input type="text" name='address-state' id='address-state' placeholder="State" class="input-block-level" required/>
                             </div>
                             <div class="controls">
                                 <input type="text" placeholder="Postcode" class="input-small" id='address-postcode' required/>
@@ -245,7 +245,13 @@
 
                     <h4>Recent donators</h4>
 
-
+                    {% for i, backer in enumerate(fundraiser_backers) %}
+                    <div class="row" {% if i % 2 != 0 %}style="background-color: #F7F7F7"{% end %}>
+                        <div class="span3">
+                          <p><i class="icon-user"></i> {{ backer['user'] }} {{ backer['city'] }}, {{ backer['state'] }}</p>
+                        </div>
+                    </div>
+                    {% end %}
                     <table class="table table-striped">
                         <tbody>
                             <tr>

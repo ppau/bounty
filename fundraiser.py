@@ -209,14 +209,17 @@ class FundraiserDetailHandler(FundraiserBase, CeleryHandler):
     def get(self, fundraiser_slug):
         fundraiser = self.fundraisers.find_one({'slug': fundraiser_slug})
         message = self.get_argument('message', None)
+        fundraiser_backers = self.backers.find({'fundraiser': fundraiser['_id']})
         if fundraiser:
             if 'template' in fundraiser:
                 self.render('fundraiser/user_templates/{}'.format(fundraiser['template']),
                             fundraiser=fundraiser,
+                            fundraiser_backers=fundraiser_backers,
                             message=message)
             else:
                 self.render('fundraiser/detail.html',
                             fundraiser=fundraiser,
+                            fundraiser_backers=fundraiser_backers,
                             message=message)
         else:
             raise HTTPError(404)
@@ -232,6 +235,8 @@ class FundraiserDetailHandler(FundraiserBase, CeleryHandler):
             last_name = self.get_argument('lastname', None)
             name = '{} {}'.format(first_name, last_name[0])
             email = self.get_argument('email', None)
+            state = self.get_argument('address-state', None)
+            city = self.get_argument('address-city', None)
             amount = self.get_argument('amount', None)
             fundraiser['current_funding'] += float(amount)
             fundraiser['backers_count'] += 1
@@ -239,6 +244,8 @@ class FundraiserDetailHandler(FundraiserBase, CeleryHandler):
             backer = {'fundraiser': fundraiser_id,
                       'user': name,
                       'email': email,
+                      'state': state,
+                      'city': city,
                       'card_token': card_token,
                       'ip_address': ip_address,
                       'amount': float(amount),
