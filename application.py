@@ -148,7 +148,7 @@ class Application(tornado.web.Application):
             static_path=os.path.join(os.path.dirname(__file__), 'static'),
             debug=True,
             xsrf_cookies=True,
-            #generate secret cookie: print base64.b64encode(uuid.uuid4().bytes + uuid.uuid4().bytes)
+            #generate cookie secret: print base64.b64encode(uuid.uuid4().bytes + uuid.uuid4().bytes)
             cookie_secret=cookie_secret,
             login_url='/login',
             ui_modules=uimodules.pagination,

@@ -2,10 +2,10 @@
 <html lang="en">
   <head>
     <title>{% block title %}Bounty{% end %}</title>
-    <link rel="stylesheet" href="{{ static_url("css/vendor/bootstrap.min_original.css") }}" type="text/css">
-    <link rel="stylesheet" href="{{ static_url("css/vendor/bootstrap-datetimepicker.min.css") }}" type="text/css">
+    <link rel="stylesheet" href="{{ static_url("css/bootstrap.min.css") }}" type="text/css">
+    <link rel="stylesheet" href="{{ static_url("css/bootstrap-datetimepicker.min.css") }}" type="text/css">
     <link rel="stylesheet" href="{{ static_url("css/bounty.css") }}" type="text/css">
-
+    <link rel='shortcut icon' type='image/x-icon' href='{{ static_url("img/favicon.ico") }}' />
   </head>
   <body>
     <div class="navbar navbar-fixed-top">
@@ -31,11 +31,14 @@
                 <a href="{{ '/login?next=' + url_escape(request.uri) }}">Login</a>
             </p>
             {% end %}
-            <ul class="nav">
+            <ul class="nav nav-tabs">
+              <li class="active">
+                <a href="/">Campaigns</a>
+              </li>
               <li class="">
                 <a href="/">Categories</a>
               </li>
-              {% if current_user['rank'] in ('staff', 'admin') %}
+              {% if current_user and current_user['rank'] in ('staff', 'admin') %}
               <li class="">
                 <a href="/admin">Admin Panel</a>
               </li>
@@ -50,6 +53,7 @@
     <script type="text/javascript" src="{{ static_url("js/vendor/jquery-1.9.1.min.js") }}"></script>
     <script type="text/javascript" src="{{ static_url("js/vendor/bootstrap.min.js") }}"></script>
     <script type="text/javascript" src="{{ static_url("js/vendor/bootstrap-datetimepicker.min.js") }}"></script>
+    <script type="text/javascript" src="{{ static_url("js/vendor/modernizr-2.6.2-respond-1.1.0.min.js") }}"></script>
     <script type="text/javascript" src="{{ static_url("js/bounty.js") }}"></script>
     {% block extra_js %}
     {% end %}

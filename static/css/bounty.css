@@ -7,3 +7,86 @@ body {
     padding-top: 20px;
     padding-bottom: 20px;
 }
+
+
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+
+
+
+
+.masthead {
+}
+
+
+
+.masthead .banner-bg {
+    color: #FFFFFF;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -khtml-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    background-size: 100%;
+}
+
+.masthead .banner-bg h1 {
+    margin: 0;
+}
+
+.masthead .banner {
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -khtml-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    padding: 15px;
+}
+
+.masthead .banner-opaq {
+    background-color: rgba(0,0,0,.75);
+}
+
+.masthead .banner .info, .masthead .banner .info ul li{
+    font-size: 18px;
+    line-height: 36px;
+    margin-top: 20px;
+    margin: 15px;
+}
+
+
+#campaigns .campaign {
+    width: 300px;
+    margin: 0 15px 15px 0;
+    float: left;
+    background-color: #F5F5F5;
+    border: 1px solid #E3E3E3;
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
+    margin-bottom: 20px;
+    min-height: 20px;
+}
+
+#campaigns .campaign .title {
+    padding: 15px;
+    font-size: 20px;
+    line-height: 24px;
+}
+#campaigns .campaign .title a {
+    height: 70px;
+    word-wrap: break-word;
+    display: block;
+}
+
+#campaigns .campaign .tail {
+    padding: 0 10px 10px 10px;
+}
+
+.centre, .center {
+    text-align: center;
+}
+.right {
+    text-align: right;
+}
+
