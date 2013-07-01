@@ -13,6 +13,12 @@
                 <input type='text' name='title' {% if fundraiser and fundraiser['title'] %}value="{{ fundraiser['title'] }}"{% end %} placeholder='Example Title' required>
                 <label>Slug</label>
                 <input type='text' name='slug' placeholder='example_slug' required>
+                <label>Template</label>
+                <select name='template' required>
+                 {% for i in template_list %}
+                  <option>{{ i }}</option>
+                 {% end %}
+                </select>
                 <label>Goal</label>
                 <div class='input-prepend'>
                     <span class='add-on'>$</span>

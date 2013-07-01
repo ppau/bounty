@@ -56,7 +56,7 @@ body {
 }
 
 
-#campaigns .campaign {
+.campaigns .campaign {
     width: 300px;
     margin: 0 15px 15px 0;
     float: left;
@@ -68,18 +68,18 @@ body {
     min-height: 20px;
 }
 
-#campaigns .campaign .title {
+.campaigns .campaign .title {
     padding: 15px;
     font-size: 20px;
     line-height: 24px;
 }
-#campaigns .campaign .title a {
+.campaigns .campaign .title a {
     height: 70px;
     word-wrap: break-word;
     display: block;
 }
 
-#campaigns .campaign .tail {
+.campaigns .campaign .tail {
     padding: 0 10px 10px 10px;
 }
 

@@ -21,4 +21,15 @@ $(function() {
         //picker.setDate(utcDate);
 
     });
+    if (window.location.pathname === "/")
+    {
+        $('li.active').removeClass();
+        $('#campaigns_tab').addClass('active');
+    }
+    if (window.location.pathname === "/admin")
+    {
+        $('li.active').removeClass();
+        $('#admin_tab').addClass('active');
+    }
+
 });

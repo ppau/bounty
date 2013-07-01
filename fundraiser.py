@@ -10,6 +10,7 @@ import datetime
 import json
 import unicodedata
 import re
+import os
 import logging
 
 from base import BaseHandler
@@ -78,8 +79,14 @@ class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
     @authenticated
     @require_staff
     def get(self):
+        template_list = []
+        for i in os.listdir(os.path.join(os.path.dirname(__file__), 'templates/fundraiser/user_templates'),):
+            if os.path.splitext(i)[1].lower() == '.html':
+                template_list.append(i)
+
         self.render('fundraiser/create.html',
                     fundraiser=None,
+                    template_list=template_list,
                     error=None)
 
     #@asynchronous  # do I need async on this?
@@ -89,6 +96,7 @@ class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
         title = self.get_argument('title', None)
         slug = self.get_argument('slug', None)
         goal = self.get_argument('goal', None)
+        template = self.get_argument('template', None)
         deadline = self.get_argument('deadline', None)
         description = self.get_argument('description', None)
         status = self.get_argument('statusRadios', None)
@@ -105,7 +113,7 @@ class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
         fundraiser = {'title': title, 'slug': slug,
                       'goal': goal, 'deadline': deadline,
                       'description': description,
-                      'status': status}
+                      'status': status, 'template': template}
 
         if None in fundraiser.values():
             self.render('fundraiser/create.html', fundraiser=fundraiser,
@@ -198,9 +206,14 @@ class FundraiserDetailHandler(FundraiserBase):
         fundraiser = self.fundraisers.find_one({'slug': fundraiser_slug})
         message = self.get_argument('message', None)
         if fundraiser:
-            self.render('fundraiser/detail.html',
-                        fundraiser=fundraiser,
-                        message=message)
+            if 'template' in fundraiser:
+                self.render('fundraiser/user_templates/{}'.format(fundraiser['template']),
+                            fundraiser=fundraiser,
+                            message=message)
+            else:
+                self.render('fundraiser/detail.html',
+                            fundraiser=fundraiser,
+                            message=message)
         else:
             raise HTTPError(404)
 

@@ -2,7 +2,9 @@
 <html lang="en">
   <head>
     <title>{% block title %}Bounty{% end %}</title>
+    <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="{{ static_url("css/bootstrap.min.css") }}" type="text/css">
+    <link rel="stylesheet" href="{{ static_url("css/bootstrap-responsive.min.css") }}" type="text/css">
     <link rel="stylesheet" href="{{ static_url("css/bootstrap-datetimepicker.min.css") }}" type="text/css">
     <link rel="stylesheet" href="{{ static_url("css/bounty.css") }}" type="text/css">
     <link rel='shortcut icon' type='image/x-icon' href='{{ static_url("img/favicon.ico") }}' />
@@ -32,14 +34,20 @@
             </p>
             {% end %}
             <ul class="nav nav-tabs">
-              <li class="active">
+              <li id="campaigns_tab" class="">
                 <a href="/">Campaigns</a>
               </li>
-              <li class="">
-                <a href="/">Categories</a>
+              <li id="fundraiser_tab" class="">
+                <a href="/">Fundraiser</a>
+              </li>
+              <li id="petition_tab" class="">
+                <a href="/">Petition</a>
+              </li>
+              <li id="grouppurchase_tab" class="">
+                <a href="/">Group Purchase</a>
               </li>
               {% if current_user and current_user['rank'] in ('staff', 'admin') %}
-              <li class="">
+              <li id="admin_tab" class="">
                 <a href="/admin">Admin Panel</a>
               </li>
               {% end %}

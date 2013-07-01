@@ -3,22 +3,34 @@
 {% block title %}Welcome to Bounty{% end %}
 
 {% block body %}
-<h2>All</h2>
-<hr>
+<div class="well" style="padding: 10px;">
+    <div class="btn-group">
+        <button class="btn active">All</button>
+        <button class="btn">Fundraisers</button>
+        <button class="btn">Petitions</button>
+        <button class="btn">Group Purchases</button>
+    </div>
+</div>
+<div class="row">
+    <div class="span11 offset1">
+        <h2>All</h2>
+        <hr>
 
-<div id="campaigns">
+        <div class="campaigns">
 
-    {% for i, fundraiser in enumerate(recent) %}
-    <div class="campaign">
-        <div class="title">
-            <a href="/fundraiser/{{fundraiser['slug']}}">{{ fundraiser['title'] }}</a>
-        </div>
-        <div class="tail">
-            <i class="icon-user"></i> <strong>{{ fundraiser['backers_count'] }}</strong> donors
+            {% for i, fundraiser in enumerate(recent) %}
+            <div class="campaign">
+                <div class="title">
+                    <a href="/fundraiser/{{fundraiser['slug']}}">{{ fundraiser['title'] }}</a>
+                </div>
+                <div class="tail">
+                    <i class="icon-user"></i> <strong>{{ fundraiser['backers_count'] }}</strong> donors
 
-            <a href="/fundraiser/{{fundraiser['slug']}}" class="btn btn-small pull-right">Read more <i class="icon-chevron-right"></i></a>
+                    <a href="/fundraiser/{{fundraiser['slug']}}" class="btn btn-small pull-right">Read more <i class="icon-chevron-right"></i></a>
+                </div>
+            </div>
+            {% end %}
         </div>
     </div>
-    {% end %}
 </div>
 {% end %}
