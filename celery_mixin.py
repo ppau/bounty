@@ -13,6 +13,7 @@ from base import BaseHandler
 
 #from chip.tasks import celery_notify
 from chip.tasks import fundraiser_countdown
+from chip.tasks import perform_charge
 
 
 class CeleryHandler(BaseHandler):
@@ -41,6 +42,22 @@ class CeleryHandler(BaseHandler):
                 tornado.ioloop.IOLoop.instance().add_timeout(datetime.timedelta(0.00001), check_celery_task)
 
         tornado.ioloop.IOLoop.instance().add_timeout(wait_time, check_celery_task)
+
+    @asynchronous
+    def fundraiser_charge(self, _id, description):
+        charge_task = perform_charge.delay(_id, description)
+
+        def check_celery_task():
+            if charge_task.ready():
+                #do something to mark our success here somewhere
+                pass
+                self.write({'success': True})
+                self.set_header("Content-Type", "application/json")
+                self.finish()
+            else:
+                tornado.ioloop.IOLoop.instance().add_timeout(datetime.timedelta(0.00001), check_celery_task)
+
+        tornado.ioloop.IOLoop.instance().add_timeout(datetime.timedelta(0.00001), check_celery_task)
 
     #@gen.engine
     # wait_time = deadline - datetime.datetime.utcnow()

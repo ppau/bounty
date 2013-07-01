@@ -26,10 +26,14 @@ $(function() {
         $('li.active').removeClass();
         $('#campaigns_tab').addClass('active');
     }
-    if (window.location.pathname === "/admin")
+    if (window.location.pathname.indexOf("admin") !== -1)
     {
         $('li.active').removeClass();
         $('#admin_tab').addClass('active');
     }
-
+    if (window.location.pathname.indexOf("fundraiser") !== -1)
+    {
+        $('li.active').removeClass();
+        $('#fundraiser_tab').addClass('active');
+    }
 });

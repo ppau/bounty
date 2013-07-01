@@ -13,9 +13,7 @@ from secret import charge_url, priv_key
 logger = get_task_logger(__name__)
 
 
-#@celery.task
-#def add(x, y):
-#    return x + y
+## NEED TO REFACTOR THIS STUFF
 
 
 @celery.task
@@ -75,9 +73,35 @@ def fundraiser_countdown(fundraiser_id, finish_time):
 
     return True
 
-# @celery.task
-# def celery_notify(sock_no):
 
-#     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-#     sock.connect(('', sock_no))
-#     sock.close()
+@celery.task
+def perform_charge(backer_id, description):
+    conn = pymongo.Connection()
+    db = conn.bounty
+    backers_db = db.backers
+    backer = backers_db.find_one({'_id': backer_id})
+    payload = {'description': description,
+               'ip': backer['ip_address'],
+               'currency': 'AUD',
+               'amount': int(backer['amount']*100),  # need to send it in cents
+               'card_token': backer['card_token'],
+               'email': backer['email']}  # get the user email from the user
+    logger.debug(payload)
+    r = requests.post(charge_url, auth=(priv_key, ''), data=payload)
+    logger.debug(r.status_code)
+    logger.debug(r.content)
+    if r.status_code == 201:
+        r_json = r.json()
+        if r_json['response']['success'] is True:
+            backer['status'] = 'Charged'
+            backer['charged_when'] = datetime.utcnow()
+            backers_db.save(backer)
+    else:
+        backer['status'] = 'Error'
+        if r_json['response']['status_message']:
+            backer['status_message'] = r_json['response']['status_message']
+        if r_json['response']['error_message']:
+            backer['error_message'] = r_json['response']['error_message']
+        backers_db.save(backer)
+
+    return True

@@ -109,6 +109,10 @@ class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
         ## TESTING ONLY
         deadline = datetime.datetime.utcnow() + datetime.timedelta(minutes=2)
         ##
+        template_list = []
+        for i in os.listdir(os.path.join(os.path.dirname(__file__), 'templates/fundraiser/user_templates'),):
+            if os.path.splitext(i)[1].lower() == '.html':
+                template_list.append(i)
 
         fundraiser = {'title': title, 'slug': slug,
                       'goal': goal, 'deadline': deadline,
@@ -117,15 +121,15 @@ class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
 
         if None in fundraiser.values():
             self.render('fundraiser/create.html', fundraiser=fundraiser,
-                        error=1)
+                        template_list=template_list, error=1)
 
         if self.fundraisers.find_one({'slug': fundraiser['slug']}):
             self.render('fundraiser/create.html', fundraiser=fundraiser,
-                        error=2)
+                        template_list=template_list, error=2)
 
         if self.fundraisers.find_one({'title': fundraiser['title']}):
             self.render('fundraiser/create.html', fundraiser=fundraiser,
-                        error=3)
+                        template_list=template_list, error=3)
 
         fundraiser['launched'] = datetime.datetime.utcnow()
         #fundraiser['status'] = 'Live'
@@ -138,7 +142,7 @@ class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
 
         self.fundraisers.save(fundraiser)
         #saved_fundraiser = self.fundraisers.find_one({'slug': fundraiser['slug']})
-        if status == 'Live':
+        if status == 'Live' and deadline:
             self.fundraiser_deadline(fundraiser['_id'], deadline)
         #fundraiser_countdown(saved_fundraiser['_id'], deadline)
         #tornado.ioloop.IOLoop().instance().add_callback(fundraiser_countdown(saved_fundraiser['_id'], deadline))
@@ -200,7 +204,7 @@ class FundraiserDeleteHandler(FundraiserBase):
             raise HTTPError(404)
 
 
-class FundraiserDetailHandler(FundraiserBase):
+class FundraiserDetailHandler(FundraiserBase, CeleryHandler):
 
     def get(self, fundraiser_slug):
         fundraiser = self.fundraisers.find_one({'slug': fundraiser_slug})
@@ -214,6 +218,38 @@ class FundraiserDetailHandler(FundraiserBase):
                 self.render('fundraiser/detail.html',
                             fundraiser=fundraiser,
                             message=message)
+        else:
+            raise HTTPError(404)
+
+    def post(self, fundraiser_slug):
+        fundraiser = self.fundraisers.find_one({'slug': fundraiser_slug})
+        if fundraiser:
+            fundraiser_id = fundraiser['_id']
+            card_token = self.get_argument('card_token', None)
+            ip_address = self.get_argument('ip_address', None)
+            #Some kind of profanity check or something?
+            first_name = self.get_argument('firstname', None)
+            last_name = self.get_argument('lastname', None)
+            name = '{} {}'.format(first_name, last_name[0])
+            email = self.get_argument('email', None)
+            amount = self.get_argument('amount', None)
+            fundraiser['current_funding'] += float(amount)
+            fundraiser['backers_count'] += 1
+            self.fundraisers.save(fundraiser)
+            backer = {'fundraiser': fundraiser_id,
+                      'user': name,
+                      'email': email,
+                      'card_token': card_token,
+                      'ip_address': ip_address,
+                      'amount': float(amount),
+                      'created_at': datetime.datetime.utcnow(),
+                      'status': 'Pending',
+                      '_id': ObjectId.from_datetime(datetime.datetime.utcnow())}
+            self.backers.save(backer)
+            description = 'Bounty - {}'.format(fundraiser['title'])
+            self.fundraiser_charge(backer['_id'], description)
+            #do charge here
+            self.redirect(u'/fundraiser/{}?message=success'.format(fundraiser_slug))
         else:
             raise HTTPError(404)
 
