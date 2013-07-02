@@ -9,7 +9,7 @@
 
 
             <div class="row container-top">
-                <div class="span8 masthead">
+                <div class="span7 masthead">
                     <div class="banner-bg" style="background-image: url({{ static_url("img/user_upload/3744953433_d64a448c96_o.jpg") }});margin-bottom:15px;">
                         <div class="banner banner-opaq">
                             <h1>National Security Inquiry Petition</h1>
@@ -42,23 +42,29 @@
                         <h3>{{ fundraiser['backers_count'] }} signatories</h3>
                         <div style="overflow: auto;">
                             <div class="progress" style="margin-bottom: 0;">
-                                <div class="bar" style="width: 73%;"></div>
+                                <div class="bar" style="width: {{ percentage }}%;"></div>
                             </div>
                             <p class="muted pull-right"><small>Next milestone in 135 signatures.</small></p>
                         </div>
 
 
 
-                        <form style="margin-bottom: 0px;">
+                        <form action='' style="margin-bottom: 0;" method='post'>
                             {% module xsrf_form_html() %}
                             <div class="controls">
-                                <input type="text" placeholder="First names" class="input-block-level">
+                                <input type="text" name="firstname" placeholder="First name" class="input-block-level">
                             </div>
                             <div class="controls">
-                                <input type="text" placeholder="Last name" class="input-block-level">
+                                <input type="text" name="lastname" placeholder="Last name" class="input-block-level">
                             </div>
                             <div class="controls">
-                                <input type="email" placeholder="Email" class="input-block-level">
+                                <input type="email" name="email" placeholder="Email" class="input-block-level">
+                            </div>
+                            <div class="controls">
+                                <input type="text" name='address-city' id='address-city' placeholder="City" class="input-block-level" required/>
+                            </div>
+                            <div class="controls">
+                                <input type="text" name='address-state' id='address-state' placeholder="State" class="input-block-level" required/>
                             </div>
                             <div class="controls">
                                 <input type="text" placeholder="Postcode" class="input-block-level">
@@ -74,10 +80,9 @@
                                     </label>
                                 </div>
                             </div>
-                            <div style="margin-top: 15px;">
+                            <div class='form-actions' style="margin-top: 15px;">
                                 <button type="submit" class="btn btn-primary btn-large btn-block">Sign petition</button>
                             </div>
-
                         </form>
                     </div>
 

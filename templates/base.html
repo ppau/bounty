@@ -38,14 +38,14 @@
               <li id="campaigns_tab" class="">
                 <a href="/">Campaigns</a>
               </li>
-              <li id="fundraiser_tab" class="">
-                <a href="/">Fundraiser</a>
+              <li id="fundraiser_tab" {% try %}{% if fundraiser_type and fundraiser_type=='Fundraiser' %}class="active"{% else %}class=""{% end %}{% except %} {% end %}>
+                <a href="/fundraiser">Fundraisers</a>
               </li>
-              <li id="petition_tab" class="">
-                <a href="/">Petition</a>
+              <li id="petition_tab" {% try %}{% if fundraiser_type and fundraiser_type=='Petition' %}class="active"{% else %}class=""{% end %}{% except %} {% end %}>
+                <a href="/petition">Petitions</a>
               </li>
-              <li id="grouppurchase_tab" class="">
-                <a href="/">Group Purchase</a>
+              <li id="grouppurchase_tab" {% try %}{% if fundraiser_type and fundraiser_type=='Group Purchase' %}class="active"{% else %}class=""{% end %}{% except %} {% end %}>
+                <a href="/">Group Purchases</a>
               </li>
               {% if current_user and current_user['rank'] in ('staff', 'admin') %}
               <li class="divider-vertical"></li>

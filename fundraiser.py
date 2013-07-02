@@ -37,22 +37,13 @@ class FundraiserBase(BaseHandler):
         backers = self.db.backers
         return backers
 
-
-class FundraiserIndexHandler(FundraiserBase):
-
-    """
-        At this stage this is an exact duplicate of the IndexHandler.
-        Maybe change them, so front page has less per page
-        and has other info too or remove this one?
-    """
-
-    def get(self):
+    def IndexHandler(self, fundraiser_type):
         page = self.get_argument('page', None)
         if page:
             page = int(page)
         else:
             page = 1
-        fundraisers_all = self.fundraisers.find({'status': 'Live'})
+        fundraisers_all = self.fundraisers.find({'status': 'Live', 'type': fundraiser_type})
         if page > 1:
             recent = fundraisers_all.sort([('launched', -1)]) \
                 .skip(FUNDRAISERS_PER_PAGE*(int(page)-1)).limit(FUNDRAISERS_PER_PAGE)
@@ -62,18 +53,22 @@ class FundraiserIndexHandler(FundraiserBase):
         #total = int(ceil(float(total)/float(FUNDRAISERS_PER_PAGE)))
         self.render('fundraiser/list.html', recent=recent,
                     total=total, page=page,
-                    page_size=FUNDRAISERS_PER_PAGE)
+                    page_size=FUNDRAISERS_PER_PAGE,
+                    fundraiser_type=fundraiser_type)
 
 
-# class FundraiserPaginationHandler(FundraiserBase):
+class FundraiserIndexHandler(FundraiserBase):
 
-#     def get(self, page):
-#         fundraisers_all = self.fundraisers.find()
-#         paginated = fundraisers_all.sort('-launched'). \
-#             skip(FUNDRAISERS_PER_PAGE*(int(page)-1)).limit(FUNDRAISERS_PER_PAGE)
-#         total = fundraisers_all.count()
-#         self.render('index.html', recent=paginated,
-#                     total=total)
+    def get(self):
+        fundraiser_type = 'Fundraiser'
+        self.IndexHandler(fundraiser_type)
+
+
+class PetitionIndexHandler(FundraiserBase):
+
+    def get(self):
+        fundraiser_type = 'Petition'
+        self.IndexHandler(fundraiser_type)
 
 
 class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
@@ -233,22 +228,29 @@ class FundraiserDetailHandler(FundraiserBase, CeleryHandler):
     def get(self, fundraiser_slug):
         fundraiser = self.fundraisers.find_one({'slug': fundraiser_slug})
         message = self.get_argument('message', None)
-        fundraiser_backers = self.backers.find({'fundraiser': fundraiser['_id']})
+
         if fundraiser:
+            fundraiser_backers = self.backers.find({'fundraiser': fundraiser['_id']})
+            fundraiser_type = fundraiser['type']
+
             percentage = None
-            if 'goal' in fundraiser:
+            if 'goal' in fundraiser and fundraiser_type == 'Fundraiser':
                 percentage = round((fundraiser['current_funding'] / fundraiser['goal']) * 100, 2)
+            elif fundraiser_type == 'Petition':
+                percentage = round((fundraiser['backers_count'] / fundraiser['goal']) * 100, 2)
             if 'template' in fundraiser:
                 self.render('fundraiser/user_templates/{}'.format(fundraiser['template']),
                             fundraiser=fundraiser,
                             fundraiser_backers=fundraiser_backers,
                             percentage=percentage,
+                            fundraiser_type=fundraiser_type,
                             message=message)
             else:
                 self.render('fundraiser/detail.html',
                             fundraiser=fundraiser,
                             fundraiser_backers=fundraiser_backers,
                             percentage=percentage,
+                            fundraiser_type=fundraiser_type,
                             message=message)
         else:
             raise HTTPError(404)
@@ -256,34 +258,57 @@ class FundraiserDetailHandler(FundraiserBase, CeleryHandler):
     def post(self, fundraiser_slug):
         fundraiser = self.fundraisers.find_one({'slug': fundraiser_slug})
         if fundraiser:
+            fundraiser_type = fundraiser['type']
+
             fundraiser_id = fundraiser['_id']
-            card_token = self.get_argument('card_token', None)
-            ip_address = self.get_argument('ip_address', None)
-            #Some kind of profanity check or something?
-            first_name = self.get_argument('firstname', None)
-            last_name = self.get_argument('lastname', None)
-            name = '{} {}'.format(first_name, last_name[0])
-            email = self.get_argument('email', None)
-            state = self.get_argument('address-state', None)
-            city = self.get_argument('address-city', None)
-            amount = self.get_argument('amount', None)
-            fundraiser['current_funding'] += float(amount)
-            fundraiser['backers_count'] += 1
-            self.fundraisers.save(fundraiser)
-            backer = {'fundraiser': fundraiser_id,
-                      'user': name,
-                      'email': email,
-                      'state': state,
-                      'city': city,
-                      'card_token': card_token,
-                      'ip_address': ip_address,
-                      'amount': float(amount),
-                      'created_at': datetime.datetime.utcnow(),
-                      'status': 'Pending',
-                      '_id': ObjectId.from_datetime(datetime.datetime.utcnow())}
-            self.backers.save(backer)
-            description = 'Bounty - {}'.format(fundraiser['title'])
-            self.fundraiser_charge(backer['_id'], description)
+
+            if fundraiser_type == 'Fundraiser':
+                card_token = self.get_argument('card_token', None)
+                ip_address = self.get_argument('ip_address', None)
+                #Some kind of profanity check or something?
+                first_name = self.get_argument('firstname', None)
+                last_name = self.get_argument('lastname', None)
+                name = '{} {}'.format(first_name, last_name[0])
+                email = self.get_argument('email', None)
+                state = self.get_argument('address-state', None)
+                city = self.get_argument('address-city', None)
+                amount = self.get_argument('amount', None)
+                fundraiser['current_funding'] += float(amount)
+                fundraiser['backers_count'] += 1
+                self.fundraisers.save(fundraiser)
+                backer = {'fundraiser': fundraiser_id,
+                          'user': name,
+                          'email': email,
+                          'state': state,
+                          'city': city,
+                          'card_token': card_token,
+                          'ip_address': ip_address,
+                          'amount': float(amount),
+                          'created_at': datetime.datetime.utcnow(),
+                          'status': 'Pending',
+                          '_id': ObjectId.from_datetime(datetime.datetime.utcnow())}
+                self.backers.save(backer)
+                description = 'Bounty - {}'.format(fundraiser['title'])
+                self.fundraiser_charge(backer['_id'], description)
+            elif fundraiser_type == 'Petition':
+                first_name = self.get_argument('firstname', None)
+                last_name = self.get_argument('lastname', None)
+                name = '{} {}'.format(first_name, last_name[0])
+                email = self.get_argument('email', None)
+                state = self.get_argument('address-state', None)
+                city = self.get_argument('address-city', None)
+                fundraiser['backers_count'] += 1
+                self.fundraisers.save(fundraiser)
+                backer = {'fundraiser': fundraiser_id,
+                          'user': name,
+                          'email': email,
+                          'state': state,
+                          'city': city,
+                          'ip_address': self.request.remote_ip,
+                          'created_at': datetime.datetime.utcnow(),
+                          'status': 'Petition',
+                          '_id': ObjectId.from_datetime(datetime.datetime.utcnow())}
+                self.backers.save(backer)
             #do charge here
             self.redirect(u'/fundraiser/{}?message=success'.format(fundraiser_slug))
         else:

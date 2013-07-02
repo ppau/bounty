@@ -31,9 +31,4 @@ $(function() {
         $('li.active').removeClass();
         $('#admin_tab').addClass('active');
     }
-    if (window.location.pathname.indexOf("fundraiser") !== -1 && window.location.pathname.indexOf("admin") === -1)
-    {
-        $('li.active').removeClass();
-        $('#fundraiser_tab').addClass('active');
-    }
 });
