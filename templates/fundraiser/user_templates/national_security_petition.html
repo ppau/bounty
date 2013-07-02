@@ -1,0 +1,119 @@
+{% extends "../../base.html" %}
+
+{% block title %}{{ fundraiser['title'] }} - Bounty{% end %}
+
+{% block body %}
+<div class="row">
+    <div class="span11 offset1">
+
+
+
+            <div class="row container-top">
+                <div class="span8 masthead">
+                    <div class="banner-bg" style="background-image: url({{ static_url("img/user_upload/3744953433_d64a448c96_o.jpg") }});margin-bottom:15px;">
+                        <div class="banner banner-opaq">
+                            <h1>National Security Inquiry Petition</h1>
+
+                            <div class="info">
+                                <p>Among the proposals are:</p>
+                                <ul>
+                                <li><strong>mandatory retention of data</strong> of all Internet, phone and mobile communications of all Australians for up to two years.</li>
+                                <li>creating criminal offences for refusing to <strong>refuse to provide authorities with passwords</strong>&nbsp;for encrypted communications, which could include your email, as well as your Facebook and other accounts.</li>
+                                <li>granting ASIO powers to hack suspects and non-suspects computers to <strong>add, modify or delete files.</strong></li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <p class="alert"><strong>This petition is now closed. Thanks for your support!</strong></p>
+                    <h2>To the Honourable President and members of the Senate in Parliament assembled:</h2>
+                    <div class="entry-content clearfix"><p>To the Honourable President and members of the Senate in Parliament assembled:</p><p>The petition of the undersigned shows that we object to the proposals of the National Security Inquiry, in particular, those proposals which would introduce:</p><ul><li>Provisions for warrants to last up to 6 months without review;</li><li>Penalties for failing to provide computer passwords;</li><li>Near unrestricted interception of communications;</li><li>Data retention of everyone’s Internet activity for a minimum of two years;</li><li>The commandeering in secret of unrelated, privately owned computer systems for surveillance purposes;</li><li>The ability of the Attorney-General to widen the scope of warrants without sufficient oversight; and</li><li>The ability to shield intelligence and security agents from abuse of powers and improper conduct penalties.</li></ul><p>We are critical of:</p><ul><li>Claims that Australians have a low expectation of the fundamental right to privacy in order to justify greater surveillance and erosion of privacy protections;</li><li>The expansion of the scope of interception warrants which would allow unrelated devices belonging to third parties to be accessed unknowingly; and</li><li>The lack of proper public consultation, including a small window of time for submissions to the Joint Parliamentary Committee on Intelligence and Security to be made.</li></ul><p>Your petitioners request that the Senate commits to:</p><ul><li>Only authorising surveillance where judicially sanctioned, and targetted at specific individuals for specific purpose, as opposed to indiscriminate and widescale surveillance;</li><li>Refraining from implementing mechanisms and structures of surveillance that violate fundamental human rights and freedoms by way of disproportionate and widescale data retention;</li><li>Expecting intelligence, law enforcement officials and lawmakers to respect the values of Australian citizens by respecting the fundamental right to privacy; and</li><li>Reject any legislation that would contravene any of the above requests.</li></ul></div>
+
+
+                </div>
+                <div class="span4">
+                    <div class="well">
+
+                        <h2>Sign the petition</h2>
+
+                        <h3>{{ fundraiser['backers_count'] }} signatories</h3>
+                        <div style="overflow: auto;">
+                            <div class="progress" style="margin-bottom: 0;">
+                                <div class="bar" style="width: 73%;"></div>
+                            </div>
+                            <p class="muted pull-right"><small>Next milestone in 135 signatures.</small></p>
+                        </div>
+
+
+
+                        <form style="margin-bottom: 0px;">
+                            {% module xsrf_form_html() %}
+                            <div class="controls">
+                                <input type="text" placeholder="First names" class="input-block-level">
+                            </div>
+                            <div class="controls">
+                                <input type="text" placeholder="Last name" class="input-block-level">
+                            </div>
+                            <div class="controls">
+                                <input type="email" placeholder="Email" class="input-block-level">
+                            </div>
+                            <div class="controls">
+                                <input type="text" placeholder="Postcode" class="input-block-level">
+                            </div>
+                            <div class="control-group">
+                                <label class="required control-label">Are you an Australian citizen?</label>
+                                <div class="controls" style="margin-left: 15px;">
+                                    <label class="radio inline">
+                                        <input type="radio" name="australian_citizen" id="australian_citizen_yes" value="yes" checked="checked"> Yes
+                                    </label>
+                                    <label class="radio inline">
+                                        <input type="radio" name="australian_citizen" id="australian_citizen_no" value="no"> No
+                                    </label>
+                                </div>
+                            </div>
+                            <div style="margin-top: 15px;">
+                                <button type="submit" class="btn btn-primary btn-large btn-block">Sign petition</button>
+                            </div>
+
+                        </form>
+                    </div>
+
+
+                    <div class="well">
+                        <form>
+                            <h3>Share this petition</h3>
+                            <h4>Email a friend</h4>
+                            <div class="controls">
+                                <input type="text" placeholder="Email" class="" style="margin:0 ">
+                                <button type="submit" class="btn btn-primary">send</button>
+                            </div>
+                        </form>
+
+                        <h4>URL</h4>
+                        <p><a href="http://campaigns.pirateparty.org.au/p/1">http://campaigns.pirateparty.org.au/p/1</a></p>
+
+
+                    </div>
+
+
+                    <h4>Recent signatories</h4>
+                    <table class="table table-striped">
+                        <tbody>
+                        {% for i, backer in enumerate(fundraiser_backers) %}
+                            <tr>
+                                <th><i class="icon-user"></i> {{ backer['user'] }}</th>
+                                <td>{{ backer['city'] }}, {{ backer['state'] }}</td>
+                            </tr>
+                        {% end %}
+                         </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+    </div>
+</div>
+{% end %}

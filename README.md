@@ -1,7 +1,7 @@
 ﻿Bounty
 ================================
 
-Not much here yet.
+A funding platform for PPAU
 
 Something to keep in mind;
 - "If a card token is not used within 1 month it is automatically expired."
