@@ -158,16 +158,22 @@ class FundraiserEditHandler(FundraiserBase):
     @require_staff
     def get(self, fundraiser_slug):
         fundraiser = self.fundraisers.find_one({'slug': fundraiser_slug})
+        template_list = []
+        for i in os.listdir(os.path.join(os.path.dirname(__file__), 'templates/fundraiser/user_templates'),):
+            if os.path.splitext(i)[1].lower() == '.html':
+                template_list.append(i)
         if fundraiser:
-            self.render('fundraiser/detail.html',
-                        fundraiser=fundraiser)
+            self.render('fundraiser/edit.html',
+                        fundraiser=fundraiser,
+                        template_list=template_list)
         else:
             raise HTTPError(404)
 
     @authenticated
     @require_staff
-    def post(self):
+    def post(self, fundraiser_slug):
         _id = self.get_argument('_id', None)
+        logging.info(_id)
         title = self.get_argument('title', None)
         slug = self.get_argument('slug', None)
         goal = self.get_argument('goal', None)
@@ -175,19 +181,33 @@ class FundraiserEditHandler(FundraiserBase):
         #deadline = self.get_argument('deadline', None)
         description = self.get_argument('description', None)
         status = self.get_argument('status', None)
+        template = self.get_argument('template', None)
+        status = self.get_argument('statusRadios', None)
+        fundraiser_type = self.get_argument('fundraiser_type', None)
 
         slug = unicodedata.normalize('NFKD', slug).encode('ascii', 'ignore')
         slug = re.sub(r'[^\w]+', ' ', slug)
         slug = slug.replace(' ', '_').lower().strip()
 
-        fundraiser = self.fundraisers.find_one({'_id': _id})
+        fundraiser = self.fundraisers.find_one({'_id': ObjectId(_id)})
         if fundraiser:
-            fundraiser = {'_id': _id, 'title': title, 'slug': slug,
-                          'goal': goal, 'status': status,
-                          'description': description}
+            if title:
+                fundraiser['title'] = title
+            if slug:
+                fundraiser['slug'] = slug
+            if goal:
+                fundraiser['goal'] = goal
+            if status:
+                fundraiser['status'] = status
+            if description:
+                fundraiser['description'] = description
+            if template:
+                fundraiser['template'] = template
+            if fundraiser_type:
+                fundraiser['type'] = fundraiser_type
 
             self.fundraisers.save(fundraiser)
-            self.redirect('{}'.format(slug))
+            self.redirect('/fundraiser/{}'.format(slug))
         else:
             raise HTTPError(404)
 

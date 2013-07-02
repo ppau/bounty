@@ -9,19 +9,41 @@
             {% module xsrf_form_html() %}
             <legend>Edit {{ fundraiser['title'] }}</legend>
             <div>
-                <input type='text' name='_id' value="{{ fundraiser['_id'] }}" disabled style='display:none'>
+                <input type='text' name='_id' value="{{ fundraiser['_id'] }}" style='display:none'>
                 <label>Title</label>
-                <input type='text' name='title' {% if fundraiser and fundraiser['title'] %}value="{{ fundraiser['title'] }}"{% end %} required>
+                <input type='text' name='title' {% if fundraiser and 'title' in fundraiser %}value="{{ fundraiser['title'] }}"{% end %} required>
                 <label>Slug</label>
-                <input type='text' name='slug' {% if fundraiser and fundraiser['slug'] %}value="{{ fundraiser['slug'] }}"{% end %}required>
+                <input type='text' name='slug' {% if fundraiser and 'slug' in fundraiser %}value="{{ fundraiser['slug'] }}"{% end %} required>
+                <label>Type of Fundraiser</label>
+                <select name='type' {% if fundraiser and 'type' in fundraiser %}value="{{ fundraiser['type'] }}"{% end %} required>
+                  <option>Fundraiser</option>
+                  <option>Group Purchase</option>
+                  <option>Petition</option>
+                </select>
+                <label>Template</label>
+                <select name='template' required>
+                 {% for i in template_list %}
+                  <option {% if fundraiser and 'template' in fundraiser %}{% if fundraiser['template'] == i %}selected="selected"{% end %}{% end %}>{{ i }}</option>
+                 {% end %}
+                </select>
                 <label>Goal</label>
                 <div class='input-prepend'>
                     <span class='add-on'>$</span>
-                    <input type='number' name='goal' {% if fundraiser and fundraiser['goal'] %}value="{{ fundraiser['goal'] }}"{% end %} required>
+                    <input type='number' name='goal' {% if fundraiser and 'goal' in fundraiser %}value="{{ fundraiser['goal'] }}"{% end %} required>
                 </div>
                 <input type='text' id='deadline' name='deadline' style='display:none'>
                 <label>Description</label>
-                <textarea class="span5" rows="8" name='description' {% if fundraiser and fundraiser['description'] %}value="{{ fundraiser['description'] }}"{% end %} required></textarea>
+                <textarea class="span5" rows="8" name='description' required>{% if fundraiser and 'description' in fundraiser %}{{ fundraiser['description'] }}{% end %}</textarea>
+                <div>
+                    <label class="radio inline">
+                        <input type="radio" name="statusRadios" id="statusRadios1" value="Live" {% if fundraiser and 'status' in fundraiser %}{% if fundraiser['status'] == 'Live' %}checked{% end %}{% end %}>
+                        Live
+                    </label>
+                    <label class="radio inline">
+                        <input type="radio" name="statusRadios" id="statusRadios2" value="Draft" {% if fundraiser and 'status' in fundraiser %}{% if fundraiser['status'] == 'Draft' %}checked{% end %}{% end %}>
+                        Draft
+                    </label>
+                </div>
             </div>
             <div class='form-actions'>
                 <button type='submit' class='btn btn-primary'>Submit</button>

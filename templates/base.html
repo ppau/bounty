@@ -11,15 +11,15 @@
     <link rel='shortcut icon' type='image/x-icon' href='{{ static_url("img/favicon.ico") }}' />
   </head>
   <body>
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
+    <!--<div class="navbar navbar-fixed-top">
+      <div class="navbar-inner"> -->
         <div class="container-fluid">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <!--<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-          </button>
-          <a class="brand" href="/"><img src="{{ static_url("img/logo.png") }}" width="19" height="19" alt="Bounty" /> Bounty</a>
+          </button> -->
+          <!-- <a class="brand" href="/">Bounty</a> -->
           <div class="nav-collapse collapse">
             {% if current_user %}
             <p class="navbar-text pull-right">
@@ -48,6 +48,7 @@
                 <a href="/">Group Purchase</a>
               </li>
               {% if current_user and current_user['rank'] in ('staff', 'admin') %}
+              <li class="divider-vertical"></li>
               <li id="admin_tab" class="">
                 <a href="/admin">Admin Panel</a>
               </li>
@@ -55,8 +56,8 @@
             </ul>
           </div>
         </div>
-      </div>
-    </div>
+    <!--  </div>
+    </div>  -->
     {% block body %}
     {% end %}
     <script type="text/javascript" src="{{ static_url("js/vendor/jquery-1.9.1.min.js") }}"></script>

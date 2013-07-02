@@ -10,7 +10,7 @@
         <div class="row">
             <strong><a href="/admin/fundraiser/{{fundraiser['slug']}}">{{ fundraiser['title'] }}</a></strong> | <a href="/fundraiser/{{ fundraiser['slug'] }}/edit">Edit</a> | <a href="/fundraiser/{{ fundraiser['slug'] }}/delete"> Delete</a>
             <p>Goal: ${{ fundraiser['goal'] }}</p>
-            <p>Current Funding: ${{ fundraiser['current_funding'] }} | Deadline: {{ fundraiser['deadline'] }}</p>
+            <p>{% if 'current_funding' in  fundraiser %}Current Funding: ${{ fundraiser['current_funding'] }} |{% end %} {% if 'deadline' in fundraiser %}Deadline: {{ fundraiser['deadline'] }}{% end %}</p>
         </div>
         {% end %}
         <div class="row">
