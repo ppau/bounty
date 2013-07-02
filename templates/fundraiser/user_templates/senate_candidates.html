@@ -6,6 +6,15 @@
 {% block title %}{{ fundraiser['title'] }} - Bounty{% end %}
 
 {% block body %}
+{% try %}
+    {% if message == 'success' %}
+    <div class="row">
+        <div class="span6 offset3">
+          <p class="alert alert-success"><strong>Success!</strong> You've successfully backed this fundraiser.</p>
+        </div>
+    </div>
+    {% end %}
+{% end %}
 <div class="row">
     <div class="span11 offset1">
             <div class="row container-top">
