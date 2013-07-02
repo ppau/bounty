@@ -7,7 +7,6 @@ Something to keep in mind;
 - "If a card token is not used within 1 month it is automatically expired."
 - Considering the merchant fee charged, increase the goal to absorb it?
 - PIN requires that pages be HTTPS?
-- Make new models for Petition and Group Purchase (or a new one for fundraiser)..
 
 TO DO:
 

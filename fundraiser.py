@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import division
+
 from tornado.web import HTTPError
 #from tornado.web import asynchronous
 from tornado.web import authenticated
@@ -116,7 +118,7 @@ class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
                 template_list.append(i)
 
         fundraiser = {'title': title, 'slug': slug,
-                      'goal': goal, 'deadline': deadline,
+                      'goal': float(goal), 'deadline': deadline,
                       'description': description,
                       'status': status, 'template': template,
                       'type': fundraiser_type}
@@ -196,7 +198,7 @@ class FundraiserEditHandler(FundraiserBase):
             if slug:
                 fundraiser['slug'] = slug
             if goal:
-                fundraiser['goal'] = goal
+                fundraiser['goal'] = float(goal)
             if status:
                 fundraiser['status'] = status
             if description:
@@ -233,15 +235,20 @@ class FundraiserDetailHandler(FundraiserBase, CeleryHandler):
         message = self.get_argument('message', None)
         fundraiser_backers = self.backers.find({'fundraiser': fundraiser['_id']})
         if fundraiser:
+            percentage = None
+            if 'goal' in fundraiser:
+                percentage = round((fundraiser['current_funding'] / fundraiser['goal']) * 100, 2)
             if 'template' in fundraiser:
                 self.render('fundraiser/user_templates/{}'.format(fundraiser['template']),
                             fundraiser=fundraiser,
                             fundraiser_backers=fundraiser_backers,
+                            percentage=percentage,
                             message=message)
             else:
                 self.render('fundraiser/detail.html',
                             fundraiser=fundraiser,
                             fundraiser_backers=fundraiser_backers,
+                            percentage=percentage,
                             message=message)
         else:
             raise HTTPError(404)
