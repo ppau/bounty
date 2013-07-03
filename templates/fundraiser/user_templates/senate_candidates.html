@@ -14,12 +14,13 @@
         </div>
     </div>
     {% end %}
+{% except %}
 {% end %}
 <div class="row">
     <div class="span11 offset1">
             <div class="row container-top">
                 <div class="span7 masthead">
-                    <div class="banner-bg" style="background-image: url({{ static_url("img/user_upload/cand.jpg") }});">
+                    <div class="banner-bg" style="background-image: url({{ static_url('img/user_upload/cand.jpg') }});">
                         <div class="banner banner-opaq">
                             <h1 class="centre" style="margin: 15px 0;">We need your help to run candidates this election!</h1>
                             </div>
@@ -157,10 +158,11 @@
                             {% module xsrf_form_html() %}
                             <legend>Billing Details</legend>
                             <div class="controls">
-                                <input type="text" name="firstname" placeholder="First name" class="input-block-level">
+                                <input type="text" name="firstname" placeholder="First name" class="input-small">
+                                <input type="text" name="lastname" placeholder="Last name" class="input-small">
                             </div>
                             <div class="controls">
-                                <input type="text" name="lastname" placeholder="Last name" class="input-block-level">
+
                             </div>
                             <div class="controls">
                                 <input type="email" name="email" placeholder="Email" class="input-block-level">
@@ -172,18 +174,22 @@
                                 <input type="text" id='address-line2' placeholder="Address Line 2" class="input-block-level" required/>
                             </div>
                             <div class="controls">
-                                <input type="text" name='address-city' id='address-city' placeholder="City" class="input-block-level" required/>
-                            </div>
-                            <div class="controls">
-                                <input type="text" name='address-state' id='address-state' placeholder="State" class="input-block-level" required/>
+                                <input type="text" name='address-city' id='address-city' placeholder="City" class="input-small" required/>
+                                <select name='address-state' id='address-state' class="input-small" required>
+                                    <option value="">State</option>
+                                    <option>ACT</option>
+                                    <option>NSW</option>
+                                    <option>QLD</option>
+                                    <option>SA</option>
+                                    <option>TAS</option>
+                                    <option>VIC</option>
+                                    <option>WA</option>
+                                </select>
                             </div>
                             <div class="controls">
                                 <input type="text" placeholder="Postcode" class="input-small" id='address-postcode' required/>
+                                <input type="text" placeholder="Country" id='address-country' class="input-small" required/>
                             </div>
-                            <div class="controls">
-                                <input type="text" placeholder="Country" id='address-country' class="input-block-level" required/>
-                            </div>
-
                             <div class="control-group">
                                 <label class="required control-label">Are you an Australian citizen?</label>
                                 <div class="controls" style="margin-left: 15px;">
@@ -210,7 +216,21 @@
                             </div>
                             <div class='control-group'>
                               <div class='controls'>
-                                <input type='text' placeholder="Expiry Month" id='cc-expiry-month' class="input-small" required>
+                                <select id="cc-expiry-month" class="input-small">
+                                  <option value="">Month</option>
+                                  <option value="01">01</option>
+                                  <option value="02">02</option>
+                                  <option value="03">03</option>
+                                  <option value="04">04</option>
+                                  <option value="05">05</option>
+                                  <option value="06">06</option>
+                                  <option value="07">07</option>
+                                  <option value="08">08</option>
+                                  <option value="09">09</option>
+                                  <option value="10">10</option>
+                                  <option value="11">11</option>
+                                  <option value="12">12</option>
+                                </select>
                                 <input type='text' placeholder="Expiry Year" id='cc-expiry-year' class="input-small" required>
                                 <span id='cc-month-error' class='help-inline' style='display:none'>Please correct the error</span>
                                 <span id='cc-year-error' class='help-inline' style='display:none'>Please correct the error</span>
@@ -222,14 +242,13 @@
                               </div>
                             </div>
 
-                            <div class="controls">
+                            <div class="control-group">
                                 <label for="quant" class="inline">Amount:</label>
-
-
                                 <div class="input-prepend">
                                     <span class="add-on"><span class="icon">$</span></span>
-                                    <input type="number" name='amount' placeholder="Amount" class="" required>
+                                    <input type="text" name='amount' id="amount" placeholder="Amount" class="" required>
                                 </div>
+                                <p><small>Minimum $5</small></p>
                             </div>
 
                             <div id='loading' class='modal hide fade'>

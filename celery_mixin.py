@@ -52,6 +52,7 @@ class CeleryHandler(BaseHandler):
                 #do something to mark our success here somewhere
                 #RuntimeError: Cannot write() after finish(). May be caused by using async operations
                 # without the @asynchronous decorator.
+                # redirect, render, and send_error all call finish() ?
                 #self.write({'success': True})
                 #self.set_header("Content-Type", "application/json")
                 #self.finish()
