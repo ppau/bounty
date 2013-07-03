@@ -1,3 +1,5 @@
+# By Jehiah Czebotar (https://github.com/jehiah)
+# https://gist.github.com/jehiah/398252#file-tornado_custom_errorhandler-py
 import os
 import httplib
 import tornado.web
@@ -26,6 +28,3 @@ class ErrorHandler(tornado.web.RequestHandler):
 
     def prepare(self):
         raise tornado.web.HTTPError(self._status_code)
-
-## override the tornado.web.ErrorHandler with our default ErrorHandler
-#tornado.web.ErrorHandler = ErrorHandler
