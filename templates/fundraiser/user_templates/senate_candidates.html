@@ -303,4 +303,141 @@
 
 
 
+
+
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <legend>Billing Details</legend>
+        </div>
+        <div id="collapseOne" class="accordion-body collapse in">
+            <div class="accordion-inner">
+                <div class="controls">
+                    <input type="text" name="firstname" placeholder="First name" class="input-small">
+                    <input type="text" name="lastname" placeholder="Last name" class="input-small">
+                </div>
+                <div class="controls">
+
+                </div>
+                <div class="controls">
+                    <input type="email" name="email" placeholder="Email" class="input-block-level">
+                </div>
+                <div class="controls">
+                    <input type="text" id='address-line1' placeholder="Address Line 1" class="input-block-level" required/>
+                </div>
+                <div class="controls">
+                    <input type="text" id='address-line2' placeholder="Address Line 2" class="input-block-level" required/>
+                </div>
+                <div class="controls">
+                    <input type="text" name='address-city' id='address-city' placeholder="City" class="input-small" required/>
+                    <select name='address-state' id='address-state' class="input-small" required>
+                        <option value="">State</option>
+                        <option>ACT</option>
+                        <option>NSW</option>
+                        <option>QLD</option>
+                        <option>SA</option>
+                        <option>TAS</option>
+                        <option>VIC</option>
+                        <option>WA</option>
+                    </select>
+                </div>
+                <div class="controls">
+                    <input type="text" placeholder="Postcode" class="input-small" id='address-postcode' required/>
+                    <input type="text" placeholder="Country" id='address-country' class="input-small" required/>
+                </div>
+                <div class="control-group">
+                    <label class="required control-label">Are you an Australian citizen?</label>
+                    <div class="controls" style="margin-left: 15px;">
+                        <label class="radio inline">
+                            <input type="radio" name="australian_citizen" id="australian_citizen_yes" value="yes" checked="checked"> Yes
+                        </label>
+                        <label class="radio inline">
+                            <input type="radio" name="australian_citizen" id="australian_citizen_no" value="no"> No
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-info" data-toggle="collapse" data-parent="#accordion2" data-target="#collapseTwo">
+                Next
+            </button>
+        </div>
+    </div>
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <legend>Payment</legend>
+        </div>
+        <div id="collapseTwo" class="accordion-body collapse">
+           <div class='control-group'>
+              <div class='controls'>
+                <input type='text' placeholder="Credit Card Number" id='cc-number' class="input-block-level" required>
+                <span id='cc-number-error' class='help-inline' style='display:none'>Please correct the error</span>
+              </div>
+            </div>
+            <div class='control-group'>
+              <div class='controls'>
+                <input type='text' placeholder="Name on the Card" id='cc-name' class="input-block-level" required>
+                <span id='cc-name-error' class='help-inline' style='display:none'>Please correct the error</span>
+              </div>
+            </div>
+            <div class='control-group'>
+              <div class='controls'>
+                <select id="cc-expiry-month" class="input-small">
+                  <option value="">Month</option>
+                  <option value="01">01</option>
+                  <option value="02">02</option>
+                  <option value="03">03</option>
+                  <option value="04">04</option>
+                  <option value="05">05</option>
+                  <option value="06">06</option>
+                  <option value="07">07</option>
+                  <option value="08">08</option>
+                  <option value="09">09</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                </select>
+                <select id="cc-expiry-year" class="input-small" required>
+                  <option value="">Year</option>
+                </select>
+                <span id='cc-month-error' class='help-inline' style='display:none'>Please correct the error</span>
+                <span id='cc-year-error' class='help-inline' style='display:none'>Please correct the error</span>
+              </div>
+            </div>
+            <div class='control-group'>
+              <div class='controls'>
+                <input type='text' placeholder="CVC" id='cc-cvc' class="input-small" required/>
+              </div>
+            </div>
+
+        {% if message %}
+            {% if message == 'amount' %}
+            <div class="control-group error">
+            {% end %}
+        {% else %}
+            <div class="control-group">
+        {% end %}
+                <label for="quant" class="inline">Amount:</label>
+                <div class="input-prepend">
+                    <span class="add-on"><span class="icon">$</span></span>
+                    <input type="text" name='amount' id="amount" placeholder="Amount" class="" required>
+                </div>
+                {% if message %}
+                    {% if message == 'amount' %}
+                    <span class="help-inline">Value needs to be $5 or more.</span>
+                    {% end %}
+                {% end %}
+                <p><small>Minimum $5</small></p>
+            </div>
+            <div class="accordion-inner">
+                <button type="button" class="btn btn-info" data-toggle="collapse" data-parent="#accordion2" data-target="#collapseOne">
+                    Previous
+                </button>
+                <p style="margin-top: 15px;"><button type="submit" class="btn btn-primary btn-large btn-block">Donate now <i class="icon-chevron-right icon-white"></i></button></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 {% end %}
