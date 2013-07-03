@@ -15,6 +15,7 @@ from passlib.hash import pbkdf2_sha256
 
 from secret import cookie_secret
 from config import FUNDRAISERS_PER_PAGE
+from config import DEBUG
 
 #Admin views
 from admin import AdminHandler
@@ -33,6 +34,8 @@ from fundraiser import FundraiserDeleteHandler
 from fundraiser import FundraiserDetailHandler
 from fundraiser import FundraiserBackHandler
 from fundraiser import FundraiserDetailJSONHandler
+
+from error_handler import ErrorHandler
 
 import uimodules.pagination
 
@@ -148,7 +151,7 @@ class Application(tornado.web.Application):
         settings = dict(
             template_path=os.path.join(os.path.dirname(__file__), 'templates'),
             static_path=os.path.join(os.path.dirname(__file__), 'static'),
-            debug=True,
+            debug=DEBUG,
             xsrf_cookies=True,
             #generate cookie secret: print base64.b64encode(uuid.uuid4().bytes + uuid.uuid4().bytes)
             cookie_secret=cookie_secret,
@@ -164,4 +167,5 @@ if __name__ == '__main__':
     http_server = tornado.httpserver.HTTPServer(Application())
     logging.info('Starting up')
     http_server.listen(8888)
+    tornado.web.ErrorHandler = ErrorHandler
     tornado.ioloop.IOLoop.instance().start()
