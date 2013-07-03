@@ -31,4 +31,13 @@ $(function() {
         $('li.active').removeClass();
         $('#admin_tab').addClass('active');
     }
+    if ($("#cc-expiry-year").length){
+        var thisYear = new Date().getFullYear(),
+        year_node = $("#cc-expiry-year");
+        for (var i = thisYear; i < thisYear + 12; ++i) {
+            $(document.createElement('option')).attr('value', i).text(i)
+                .appendTo(year_node);
+
+        }
+    }
 });
