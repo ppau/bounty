@@ -6,7 +6,7 @@
 {% block title %}{{ fundraiser['title'] }} - Bounty{% end %}
 
 {% block body %}
-{% try %}
+{% if message %}
     {% if message == 'success' %}
     <div class="row">
         <div class="span6 offset3">
@@ -14,7 +14,6 @@
         </div>
     </div>
     {% end %}
-{% except %}
 {% end %}
 <div class="row">
     <div class="span11 offset1">
@@ -53,6 +52,7 @@
                     <p class="centre muted">Candidates successfully funded</p>
 
                     <h2>Meet the candidates</h2>
+
 
                     <ul class="thumbnails">
                         <li class="span2 centre">
@@ -242,12 +242,23 @@
                               </div>
                             </div>
 
+                        {% if message %}
+                            {% if message == 'amount' %}
+                            <div class="control-group error">
+                            {% end %}
+                        {% else %}
                             <div class="control-group">
+                        {% end %}
                                 <label for="quant" class="inline">Amount:</label>
                                 <div class="input-prepend">
                                     <span class="add-on"><span class="icon">$</span></span>
                                     <input type="text" name='amount' id="amount" placeholder="Amount" class="" required>
                                 </div>
+                                {% if message %}
+                                    {% if message == 'amount' %}
+                                    <span class="help-inline">Value needs to be $5 or more.</span>
+                                    {% end %}
+                                {% end %}
                                 <p><small>Minimum $5</small></p>
                             </div>
 
@@ -276,7 +287,7 @@
                         {% for i, backer in enumerate(fundraiser_backers) %}
                             <tr>
                                 <th><i class="icon-user"></i> {{ backer['user'] }}</th>
-                                <td>{{ backer['city'] }}, {{ backer['state'] }}</td>
+                                <td>{{ backer['state'] }}</td>
                             </tr>
                         {% end %}
                          </tbody>

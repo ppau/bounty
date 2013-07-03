@@ -273,6 +273,13 @@ class FundraiserDetailHandler(FundraiserBase, CeleryHandler):
                 state = self.get_argument('address-state', None)
                 city = self.get_argument('address-city', None)
                 amount = self.get_argument('amount', None)
+                if float(amount) < 5.0:
+                    self.redirect(u'/fundraiser/{}?message=amount'.format(fundraiser_slug))
+
+                if card_token is None or ip_address is None:
+                    #redirect to 500?
+                    self.redirect(u'/fundraiser/{}'.format(fundraiser_slug))
+
                 fundraiser['current_funding'] += float(amount)
                 fundraiser['backers_count'] += 1
                 self.fundraisers.save(fundraiser)
