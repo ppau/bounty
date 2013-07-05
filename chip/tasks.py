@@ -7,6 +7,7 @@ import pymongo
 from celery.utils.log import get_task_logger
 
 from chip.celery import celery
+from chip.chip_email import send_receipt
 
 from secret import charge_url, priv_key
 
@@ -96,6 +97,7 @@ def perform_charge(backer_id, description):
             backer['status'] = 'Charged'
             backer['charged_when'] = datetime.utcnow()
             backers_db.save(backer)
+            send_receipt(backer['email'], description[9:], backer['amount'], backer['charged_when'])
     else:
         backer['status'] = 'Error'
         if r_json['response']['status_message']:

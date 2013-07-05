@@ -37,7 +37,6 @@ $(function() {
         for (var i = thisYear; i < thisYear + 12; ++i) {
             $(document.createElement('option')).attr('value', i).text(i)
                 .appendTo(year_node);
-
         }
     }
 });
