@@ -4,4 +4,4 @@ DEBUG = True
 
 #gmail for testing
 SMTP_SERVER = "smtp.gmail.com"
-SMTP_PORT = 465
+SMTP_PORT = 587

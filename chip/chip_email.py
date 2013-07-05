@@ -1,12 +1,13 @@
-from email.MIMEMultipart import MIMEMultipart
+#from email.MIMEMultipart import MIMEMultipart
 from email.MIMEText import MIMEText
-from email.MIMEImage import MIMEImage
+#from email.MIMEImage import MIMEImage
 import smtplib
+from datetime import timedelta
 
 from config import SMTP_SERVER, SMTP_PORT
 from secret import email_credentials
 
-FROM = 'helpdesk@myleadpoint.com'
+FROM = email_credentials['username']
 
 
 def send(to_address, from_address, message):
@@ -15,11 +16,14 @@ def send(to_address, from_address, message):
     server.ehlo()
     server.starttls()
     server.login(email_credentials['username'], email_credentials['password'])
-    server.sendmail(to_address, from_address, message)
+    server.sendmail(from_address, to_address, message)
     server.quit()
 
 
 def send_receipt(recepient, fundraiser_name, amount, donation_date):
+
+    # bit messy, make this cleaner
+    donation_date = (donation_date + timedelta(hours=10)).strftime('%H:%M:%S %Y-%m-%d  AEST')
 
     message = MIMEText("""
 The Australian Pirate Party - Bounty
@@ -32,9 +36,9 @@ Email: {}
 Fundraiser: {}
 Date: {}
 Donation ID:
-Amount: {}
+Amount: ${}
 
-""".format(recepient, fundraiser_name, donation_date, amount))
+""".format(recepient, fundraiser_name, donation_date, '{:.2f}'.format(amount)))
 
     message['Subject'] = '{} - Donation Receipt'.format(fundraiser_name)
     message['From'] = FROM
