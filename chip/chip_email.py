@@ -1,8 +1,9 @@
-#from email.MIMEMultipart import MIMEMultipart
+from email.MIMEMultipart import MIMEMultipart
 from email.MIMEText import MIMEText
 #from email.MIMEImage import MIMEImage
 import smtplib
 from datetime import timedelta
+from tornado.template import Template
 
 from config import SMTP_SERVER, SMTP_PORT
 from secret import email_credentials
@@ -41,6 +42,26 @@ Amount: ${}
 """.format(recepient, fundraiser_name, donation_date, '{:.2f}'.format(amount)))
 
     message['Subject'] = '{} - Donation Receipt'.format(fundraiser_name)
+    message['From'] = FROM
+    message['To'] = recepient
+
+    send(recepient, FROM, message.as_string())
+
+
+def send_thanks(recepient, fundraiser_name, amount, donation_date):
+
+    # bit messy, make this cleaner
+    donation_date = (donation_date + timedelta(hours=10)).strftime('%H:%M:%S %Y-%m-%d  AEST')
+
+    t = Template("<html>Thanks <span color='red'> from the Australia Pirate Party {{ myvalue }}</html>")
+    parsed_template = t.generate(myvalue=donation_date)
+
+    message = MIMEMultipart('related')
+    msg_html = MIMEText(parsed_template, 'html')
+
+    message.attach(msg_html)
+
+    message['Subject'] = '{} - Thank you'.format(fundraiser_name)
     message['From'] = FROM
     message['To'] = recepient
 
