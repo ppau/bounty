@@ -4,6 +4,7 @@ from email.MIMEText import MIMEText
 import smtplib
 from datetime import timedelta
 from tornado.template import Template
+import os
 
 from config import SMTP_SERVER, SMTP_PORT
 from secret import email_credentials
@@ -52,9 +53,16 @@ def send_thanks(recepient, fundraiser_name, amount, donation_date):
 
     # bit messy, make this cleaner
     donation_date = (donation_date + timedelta(hours=10)).strftime('%H:%M:%S %Y-%m-%d  AEST')
+    basepath = os.path.dirname(__file__)
+    filepath = os.path.join(basepath, 'email.html')
 
-    t = Template("<html>Thanks <span color='red'> from the Australia Pirate Party {{ myvalue }}</html>")
-    parsed_template = t.generate(myvalue=donation_date)
+    with open(filepath) as f:
+        raw_template = f.read()
+
+    t = Template(raw_template)
+    parsed_template = t.generate(title='{} - Thank you'.format(fundraiser_name),
+                                 donation_date=donation_date,
+                                 fundraiser_name=fundraiser_name)
 
     message = MIMEMultipart('related')
     msg_html = MIMEText(parsed_template, 'html')

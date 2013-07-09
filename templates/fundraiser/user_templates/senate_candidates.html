@@ -6,301 +6,299 @@
 {% block title %}{{ fundraiser['title'] }} - Bounty{% end %}
 
 {% block body %}
-{% if message %}
-    {% if message == 'success' %}
-    <div class="row">
-        <div class="span6 offset3">
-          <p class="alert alert-success"><strong>Success!</strong> You've successfully backed this fundraiser.Thank you for your contribution.</p>
-        </div>
-    </div>
+
+<div class="container-fluid">
+
+    <div class="row-fluid">
+        <div class="span7 offset1 masthead">
+    {% if message %}
+        {% if message == 'success' %}
+            <div class="row-fluid">
+                <p class="alert alert-success"><strong>Success!</strong> You've successfully backed this fundraiser.Thank you for your contribution.</p>
+            </div>
+        {% end %}
     {% end %}
-{% end %}
-<div class="row">
-    <div class="span11 offset1">
-            <div class="row container-top">
-                <div class="span7 masthead">
-                    <div class="banner-bg" style="background-image: url({{ static_url('img/user_upload/cand.jpg') }});">
-                        <div class="banner banner-opaq">
-                            <h1 class="centre" style="margin: 15px 0;">We need your help to run candidates this election!</h1>
-                            </div>
-                    </div>
-
-                    <hr>
-
-                    <h2>Senate candidates funded: 0 of 8</h2>
-
-                    <div style="overflow:auto; margin-right: 8px;">
-                        <div class="progress" style="margin-bottom: 0;">
-                            <div class="bar" style="width: {{ percentage }}%;"></div>
-                        </div>
-                    </div>
-
-                    <table class="right" style="width: 100%;">
-                        <tr>
-                            <td><i class="icon-chevron-up"></i></td>
-                            <td><i class="icon-chevron-up"></i></td>
-                            <td><i class="icon-chevron-up"></i></td>
-                            <td><i class="icon-chevron-up"></i></td>
-                            <td><i class="icon-chevron-up"></i></td>
-                            <td><i class="icon-chevron-up"></i></td>
-                            <td><i class="icon-chevron-up"></i></td>
-                            <td><i class="icon-chevron-up"></i></td>
-                        </tr>
-
-                    </table>
-
-                    <p class="centre muted">Candidates successfully funded</p>
-
-                    <h2>Meet the candidates</h2>
-
-
-                    <ul class="thumbnails">
-                        <li class="span2 centre">
-                            <div class="thumbnail" style="padding-top:15px;">
-                                <img src="http://placehold.it/125x125">
-
-                                <div class="caption">
-                                    <h4>Joe Blogs</h4>
-                                    <p>New South Wales</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="span2 centre">
-                            <div class="thumbnail" style="padding-top:15px;">
-                                <img src="http://placehold.it/125x125">
-
-                                <div class="caption">
-                                    <h4>Joe Blogs</h4>
-                                    <p>New South Wales</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="span2 centre">
-                            <div class="thumbnail" style="padding-top:15px;">
-                                <img src="http://placehold.it/125x125">
-
-                                <div class="caption">
-                                    <h4>Joe Blogs</h4>
-                                    <p>New South Wales</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="span2 centre">
-                            <div class="thumbnail" style="padding-top:15px;">
-                                <img src="http://placehold.it/125x125">
-
-                                <div class="caption">
-                                    <h4>Joe Blogs</h4>
-                                    <p>New South Wales</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="span2 centre">
-                            <div class="thumbnail" style="padding-top:15px;">
-                                <img src="http://placehold.it/125x125">
-
-                                <div class="caption">
-                                    <h4>Joe Blogs</h4>
-                                    <p>New South Wales</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="span2 centre">
-                            <div class="thumbnail" style="padding-top:15px;">
-                                <img src="http://placehold.it/125x125">
-
-                                <div class="caption">
-                                    <h4>Joe Blogs</h4>
-                                    <p>New South Wales</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="span2 centre">
-                            <div class="thumbnail" style="padding-top:15px;">
-                                <img src="http://placehold.it/125x125">
-
-                                <div class="caption">
-                                    <h4>Joe Blogs</h4>
-                                    <p>New South Wales</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="span2 centre">
-                            <div class="thumbnail" style="padding-top:15px;">
-                                <img src="http://placehold.it/125x125">
-
-                                <div class="caption">
-                                    <h4>Joe Blogs</h4>
-                                    <p>New South Wales</p>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-
-                </div>
-                <div class="span4">
-                    <div class="well">
-                        <h2><strong>{{ fundraiser['backers_count'] }}</strong></h2>
-
-                        <p>donors have funded</p>
-
-                        <h2><strong>${{ fundraiser['current_funding'] }}</strong></h2>
-
-                        <p>towards candidate registration expenses.</p>
-
-                        <div class='pin-errors' style='display:none'>
-                            <h3></h3>
-                            <ul></ul>
-                        </div>
-
-
-                        <form action='' style="margin-bottom: 0;" class='pin' method='post'>
-                            {% module xsrf_form_html() %}
-                            <legend>Billing Details</legend>
-                            <div class="controls">
-                                <input type="text" name="firstname" placeholder="First name" class="input-small">
-                                <input type="text" name="lastname" placeholder="Last name" class="input-small">
-                            </div>
-                            <div class="controls">
-
-                            </div>
-                            <div class="controls">
-                                <input type="email" name="email" placeholder="Email" class="input-block-level">
-                            </div>
-                            <div class="controls">
-                                <input type="text" id='address-line1' placeholder="Address Line 1" class="input-block-level" required/>
-                            </div>
-                            <div class="controls">
-                                <input type="text" id='address-line2' placeholder="Address Line 2" class="input-block-level" required/>
-                            </div>
-                            <div class="controls">
-                                <input type="text" name='address-city' id='address-city' placeholder="City" class="input-small" required/>
-                                <select name='address-state' id='address-state' class="input-small" required>
-                                    <option value="">State</option>
-                                    <option>ACT</option>
-                                    <option>NSW</option>
-                                    <option>QLD</option>
-                                    <option>SA</option>
-                                    <option>TAS</option>
-                                    <option>VIC</option>
-                                    <option>WA</option>
-                                </select>
-                            </div>
-                            <div class="controls">
-                                <input type="text" placeholder="Postcode" class="input-small" id='address-postcode' required/>
-                                <input type="text" placeholder="Country" id='address-country' class="input-small" required/>
-                            </div>
-                            <div class="control-group">
-                                <label class="required control-label">Are you an Australian citizen?</label>
-                                <div class="controls" style="margin-left: 15px;">
-                                    <label class="radio inline">
-                                        <input type="radio" name="australian_citizen" id="australian_citizen_yes" value="yes" checked="checked"> Yes
-                                    </label>
-                                    <label class="radio inline">
-                                        <input type="radio" name="australian_citizen" id="australian_citizen_no" value="no"> No
-                                    </label>
-                                </div>
-                            </div>
-                            <legend>Payment</legend>
-                            <div class='control-group'>
-                              <div class='controls'>
-                                <input type='text' placeholder="Credit Card Number" id='cc-number' class="input-block-level" required>
-                                <span id='cc-number-error' class='help-inline' style='display:none'>Please correct the error</span>
-                              </div>
-                            </div>
-                            <div class='control-group'>
-                              <div class='controls'>
-                                <input type='text' placeholder="Name on the Card" id='cc-name' class="input-block-level" required>
-                                <span id='cc-name-error' class='help-inline' style='display:none'>Please correct the error</span>
-                              </div>
-                            </div>
-                            <div class='control-group'>
-                              <div class='controls'>
-                                <select id="cc-expiry-month" class="input-small">
-                                  <option value="">Month</option>
-                                  <option value="01">01</option>
-                                  <option value="02">02</option>
-                                  <option value="03">03</option>
-                                  <option value="04">04</option>
-                                  <option value="05">05</option>
-                                  <option value="06">06</option>
-                                  <option value="07">07</option>
-                                  <option value="08">08</option>
-                                  <option value="09">09</option>
-                                  <option value="10">10</option>
-                                  <option value="11">11</option>
-                                  <option value="12">12</option>
-                                </select>
-                                <select id="cc-expiry-year" class="input-small" required>
-                                  <option value="">Year</option>
-                                </select>
-                                <span id='cc-month-error' class='help-inline' style='display:none'>Please correct the error</span>
-                                <span id='cc-year-error' class='help-inline' style='display:none'>Please correct the error</span>
-                              </div>
-                            </div>
-                            <div class='control-group'>
-                              <div class='controls'>
-                                <input type='text' placeholder="CVC" id='cc-cvc' class="input-small" required/>
-                              </div>
-                            </div>
-
-                        {% if message %}
-                            {% if message == 'amount' %}
-                            <div class="control-group error">
-                            {% end %}
-                        {% else %}
-                            <div class="control-group">
-                        {% end %}
-                                <label for="quant" class="inline">Amount:</label>
-                                <div class="input-prepend">
-                                    <span class="add-on"><span class="icon">$</span></span>
-                                    <input type="text" name='amount' id="amount" placeholder="Amount" class="" required>
-                                </div>
-                                {% if message %}
-                                    {% if message == 'amount' %}
-                                    <span class="help-inline">Value needs to be $5 or more.</span>
-                                    {% end %}
-                                {% end %}
-                                <p><small>Minimum $5</small></p>
-                            </div>
-
-                            <div id='loading' class='modal hide fade'>
-                              <div class='modal-header'>
-                                <h3>Processing transaction...</h3>
-                              </div>
-                              <div class='modal-body'>
-                                <p><strong>Please wait.</strong> This can take up to 30 seconds, and may take even longer on mobile devices.</p>
-                                <div class="progress progress-striped active">
-                                  <div class="bar" style="width: 100%"></div>
-                                </div>
-                              </div>
-                            </div>
-
-                            <p style="margin-top: 15px;"><button type="submit" class="btn btn-primary btn-large btn-block">Donate now <i class="icon-chevron-right icon-white"></i></button></p>
-
-
-                        </form>
-                    </div>
-
-
-                    <h4>Recent donators</h4>
-                    <table class="table table-striped">
-                        <tbody>
-                        {% for i, backer in enumerate(fundraiser_backers) %}
-                            <tr>
-                                <th><i class="icon-user"></i> {{ backer['user'] }}</th>
-                                <td>{{ backer['state'] }}</td>
-                            </tr>
-                        {% end %}
-                         </tbody>
-                    </table>
+            <div class="banner-bg" style="background-image: url({{ static_url('img/user_upload/cand.jpg') }});">
+                <div class="banner banner-opaq">
+                    <h1 class="centre" style="margin: 15px 0;">We need your help to run candidates this election!</h1>
                 </div>
             </div>
+
+            <hr/>
+
+            <h2>Senate candidates funded: 0 of 8</h2>
+
+            <div style="overflow:auto; margin-right: 8px;">
+                <div class="progress" style="margin-bottom: 0;">
+                    <div class="bar" style="width: {{ percentage }}%;"></div>
+                </div>
+            </div>
+
+            <table class="right" style="width: 100%;">
+                <tr>
+                    <td><i class="icon-chevron-up"></i></td>
+                    <td><i class="icon-chevron-up"></i></td>
+                    <td><i class="icon-chevron-up"></i></td>
+                    <td><i class="icon-chevron-up"></i></td>
+                    <td><i class="icon-chevron-up"></i></td>
+                    <td><i class="icon-chevron-up"></i></td>
+                    <td><i class="icon-chevron-up"></i></td>
+                    <td><i class="icon-chevron-up"></i></td>
+                </tr>
+
+            </table>
+
+            <p class="centre muted">Candidates successfully funded</p>
+
+            <h2>Meet the candidates</h2>
+
+
+            <ul class="thumbnails">
+                <li class="span2 centre">
+                    <div class="thumbnail" style="padding-top:15px;">
+                        <img src="http://placehold.it/125x125">
+
+                        <div class="caption">
+                            <h4>Joe Blogs</h4>
+                            <p>New South Wales</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="span2 centre">
+                    <div class="thumbnail" style="padding-top:15px;">
+                        <img src="http://placehold.it/125x125">
+
+                        <div class="caption">
+                            <h4>Joe Blogs</h4>
+                            <p>New South Wales</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="span2 centre">
+                    <div class="thumbnail" style="padding-top:15px;">
+                        <img src="http://placehold.it/125x125">
+
+                        <div class="caption">
+                            <h4>Joe Blogs</h4>
+                            <p>New South Wales</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="span2 centre">
+                    <div class="thumbnail" style="padding-top:15px;">
+                        <img src="http://placehold.it/125x125">
+
+                        <div class="caption">
+                            <h4>Joe Blogs</h4>
+                            <p>New South Wales</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="span2 centre">
+                    <div class="thumbnail" style="padding-top:15px;">
+                        <img src="http://placehold.it/125x125">
+
+                        <div class="caption">
+                            <h4>Joe Blogs</h4>
+                            <p>New South Wales</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="span2 centre">
+                    <div class="thumbnail" style="padding-top:15px;">
+                        <img src="http://placehold.it/125x125">
+
+                        <div class="caption">
+                            <h4>Joe Blogs</h4>
+                            <p>New South Wales</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="span2 centre">
+                    <div class="thumbnail" style="padding-top:15px;">
+                        <img src="http://placehold.it/125x125">
+
+                        <div class="caption">
+                            <h4>Joe Blogs</h4>
+                            <p>New South Wales</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="span2 centre">
+                    <div class="thumbnail" style="padding-top:15px;">
+                        <img src="http://placehold.it/125x125">
+
+                        <div class="caption">
+                            <h4>Joe Blogs</h4>
+                            <p>New South Wales</p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+
+        <div class="span3">
+            <div class="row-fluid well">
+                <h2><strong>{{ fundraiser['backers_count'] }}</strong></h2>
+
+                <p>donors have funded</p>
+
+                <h2><strong>${{ fundraiser['current_funding'] }}</strong></h2>
+
+                <p>towards candidate registration expenses.</p>
+
+                <div class='pin-errors' style='display:none'>
+                    <h3></h3>
+                    <ul></ul>
+                </div>
+
+
+                <form action='' style="margin-bottom: 0;" class='pin' method='post'>
+                    {% module xsrf_form_html() %}
+                    <legend>Billing Details</legend>
+                    <div class="controls">
+                        <input type="text" name="firstname" placeholder="First name" class="input-small">
+                        <input type="text" name="lastname" placeholder="Last name" class="input-small">
+                    </div>
+                    <div class="controls">
+                        <input type="email" name="email" placeholder="Email" class="input-block-level">
+                    </div>
+                    <div class="controls">
+                        <input type="text" id='address-line1' placeholder="Address Line 1" class="input-block-level" required/>
+                    </div>
+                    <div class="controls">
+                        <input type="text" id='address-line2' placeholder="Address Line 2" class="input-block-level" required/>
+                    </div>
+                    <div class="controls">
+                        <input type="text" name='address-city' id='address-city' placeholder="City" class="input-small" required/>
+                        <select name='address-state' id='address-state' class="input-small" required>
+                            <option value="">State</option>
+                            <option>ACT</option>
+                            <option>NSW</option>
+                            <option>QLD</option>
+                            <option>SA</option>
+                            <option>TAS</option>
+                            <option>VIC</option>
+                            <option>WA</option>
+                        </select>
+                    </div>
+                    <div class="controls">
+                        <input type="text" placeholder="Postcode" class="input-small" id='address-postcode' required/>
+                        <input type="text" placeholder="Country" id='address-country' class="input-small" required/>
+                    </div>
+                    <div class="control-group">
+                        <label class="required control-label">Are you an Australian citizen?</label>
+                        <div class="controls" style="margin-left: 15px;">
+                            <label class="radio inline">
+                                <input type="radio" name="australian_citizen" id="australian_citizen_yes" value="yes" checked="checked"> Yes
+                            </label>
+                            <label class="radio inline">
+                                <input type="radio" name="australian_citizen" id="australian_citizen_no" value="no"> No
+                            </label>
+                        </div>
+                    </div>
+                    <legend>Payment</legend>
+                    <div class='control-group'>
+                      <div class='controls'>
+                        <input type='text' placeholder="Credit Card Number" id='cc-number' class="input-block-level" required>
+                        <span id='cc-number-error' class='help-inline' style='display:none'>Please correct the error</span>
+                      </div>
+                    </div>
+                    <div class='control-group'>
+                      <div class='controls'>
+                        <input type='text' placeholder="Name on the Card" id='cc-name' class="input-block-level" required>
+                        <span id='cc-name-error' class='help-inline' style='display:none'>Please correct the error</span>
+                      </div>
+                    </div>
+                    <div class='control-group'>
+                      <div class='controls'>
+                        <select id="cc-expiry-month" class="input-small">
+                          <option value="">Month</option>
+                          <option value="01">01</option>
+                          <option value="02">02</option>
+                          <option value="03">03</option>
+                          <option value="04">04</option>
+                          <option value="05">05</option>
+                          <option value="06">06</option>
+                          <option value="07">07</option>
+                          <option value="08">08</option>
+                          <option value="09">09</option>
+                          <option value="10">10</option>
+                          <option value="11">11</option>
+                          <option value="12">12</option>
+                        </select>
+                        <select id="cc-expiry-year" class="input-small" required>
+                          <option value="">Year</option>
+                        </select>
+                        <span id='cc-month-error' class='help-inline' style='display:none'>Please correct the error</span>
+                        <span id='cc-year-error' class='help-inline' style='display:none'>Please correct the error</span>
+                      </div>
+                    </div>
+                    <div class='control-group'>
+                      <div class='controls'>
+                        <input type='text' placeholder="CVC" id='cc-cvc' class="input-small" required/>
+                      </div>
+                    </div>
+
+                {% if message %}
+                    {% if message == 'amount' %}
+                    <div class="control-group error">
+                    {% end %}
+                {% else %}
+                    <div class="control-group">
+                {% end %}
+                        <label for="quant" class="inline">Amount:</label>
+                        <div class="input-prepend">
+                            <span class="add-on"><span class="icon">$</span></span>
+                            <input type="text" name='amount' id="amount" placeholder="Amount" class="" required>
+                        </div>
+                        {% if message %}
+                            {% if message == 'amount' %}
+                            <span class="help-inline">Value needs to be $5 or more.</span>
+                            {% end %}
+                        {% end %}
+                        <p><small>Minimum $5</small></p>
+                    </div>
+
+                    <div id='loading' class='modal hide fade'>
+                      <div class='modal-header'>
+                        <h3>Processing transaction...</h3>
+                      </div>
+                      <div class='modal-body'>
+                        <p><strong>Please wait.</strong> This can take up to 30 seconds, and may take even longer on mobile devices.</p>
+                        <div class="progress progress-striped active">
+                          <div class="bar" style="width: 100%"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <p style="margin-top: 15px;"><button type="submit" class="btn btn-primary btn-large btn-block">Donate now <i class="icon-chevron-right icon-white"></i></button></p>
+
+
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="row-fluid">
+        <div class="offset8 span3">
+            <h4>Recent donators</h4>
+            <table class="table table-striped">
+                <tbody>
+                {% for i, backer in enumerate(fundraiser_backers) %}
+                    <tr>
+                        <th><i class="icon-user"></i> {{ backer['user'] }}</th>
+                        <td>{{ backer['state'] }}</td>
+                    </tr>
+                {% end %}
+                 </tbody>
+            </table>
+        </div>
     </div>
 </div>
-
-
-
 
 
 
