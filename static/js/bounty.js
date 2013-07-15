@@ -39,4 +39,10 @@ $(function() {
                 .appendTo(year_node);
         }
     }
+    $('#collapseTwo').on('show', function () {
+        $('#collapseOne').collapse('hide');
+    });
+    $('#collapseOne').on('show', function () {
+        $('#collapseTwo').collapse('hide');
+    });
 });
