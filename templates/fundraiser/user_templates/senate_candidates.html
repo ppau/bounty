@@ -240,13 +240,7 @@
                       </div>
                     </div>
 
-                {% if message %}
-                    {% if message == 'amount' %}
-                    <div class="control-group error">
-                    {% end %}
-                {% else %}
-                    <div class="control-group">
-                {% end %}
+                    <div class="control-group {% if message %}{% if message == 'amount' %}error{% end %}{% end %}">
                         <label for="quant" class="inline">Amount:</label>
                         <div class="input-prepend">
                             <span class="add-on"><span class="icon">$</span></span>
@@ -277,13 +271,8 @@
 
                 </form>
             </div>
-        </div>
 
 
-    </div>
-
-    <div class="row-fluid">
-        <div class="offset8 span3">
             <h4>Recent donators</h4>
             <table class="table table-striped">
                 <tbody>
@@ -295,13 +284,12 @@
                 {% end %}
                  </tbody>
             </table>
+
         </div>
+
+
     </div>
+
 </div>
-
-
-
-
-
 
 {% end %}
