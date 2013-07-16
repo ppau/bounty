@@ -304,6 +304,7 @@
                 {% end %}
             </div>
 
+            {% if fundraiser_backers.count() > 0 %}
             <h4>Recent donators</h4>
             <table class="table table-striped">
                 <tbody>
@@ -315,6 +316,7 @@
                 {% end %}
                  </tbody>
             </table>
+            {% end %}
 
         </div>
 
