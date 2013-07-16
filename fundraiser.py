@@ -71,6 +71,13 @@ class PetitionIndexHandler(FundraiserBase):
         self.IndexHandler(fundraiser_type)
 
 
+class GroupPurchaseIndexHandler(FundraiserBase):
+
+    def get(self):
+        fundraiser_type = 'Group Purchase'
+        self.IndexHandler(fundraiser_type)
+
+
 class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
 
     @authenticated

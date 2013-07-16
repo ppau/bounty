@@ -1,5 +1,5 @@
 
-FUNDRAISERS_PER_PAGE = 2
+FUNDRAISERS_PER_PAGE = 5
 DEBUG = True
 
 #gmail for testing

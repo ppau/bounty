@@ -45,7 +45,7 @@
                 <a href="/petition">Petitions</a>
               </li>
               <li id="grouppurchase_tab" {% try %}{% if fundraiser_type and fundraiser_type=='Group Purchase' %}class="active"{% else %}class=""{% end %}{% except %} {% end %}>
-                <a href="/">Group Purchases</a>
+                <a href="/group_purchase">Group Purchases</a>
               </li>
               {% if current_user and current_user['rank'] in ('staff', 'admin') %}
               <li class="divider-vertical"></li>
