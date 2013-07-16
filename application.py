@@ -27,6 +27,7 @@ from base import BaseHandler
 
 #Fundraiser views
 from fundraiser import FundraiserIndexHandler
+from fundraiser import FundraiserInnerIndexHandler
 from fundraiser import PetitionIndexHandler
 from fundraiser import GroupPurchaseIndexHandler
 from fundraiser import FundraiserCreateHandler
@@ -141,6 +142,7 @@ class Application(tornado.web.Application):
                     (r'/admin/backers/([^/]+)/delete', AdminBackerDeleteHandler),
                     (r'/admin/fundraiser/([^/]+)', AdminFundraiserHandler),
                     (r'/fundraiser', FundraiserIndexHandler),
+                    (r'/a/fundraiser', FundraiserInnerIndexHandler),
                     (r'/petition', PetitionIndexHandler),
                     (r'/group_purchase', GroupPurchaseIndexHandler),
                     (r'/fundraiser/create', FundraiserCreateHandler),

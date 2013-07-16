@@ -37,7 +37,7 @@ class FundraiserBase(BaseHandler):
         backers = self.db.backers
         return backers
 
-    def IndexHandler(self, fundraiser_type):
+    def PageHandler(self, fundraiser_type):
         page = self.get_argument('page', None)
         if page:
             page = int(page)
@@ -50,8 +50,20 @@ class FundraiserBase(BaseHandler):
         else:
             recent = fundraisers_all.sort([('launched', -1)]).limit(FUNDRAISERS_PER_PAGE)
         total = fundraisers_all.count()
+
+        return page, recent, total
+
+    def IndexHandler(self, fundraiser_type):
+        page, recent, total = self.PageHandler(fundraiser_type)
         #total = int(ceil(float(total)/float(FUNDRAISERS_PER_PAGE)))
         self.render('fundraiser/list.html', recent=recent,
+                    total=total, page=page,
+                    page_size=FUNDRAISERS_PER_PAGE,
+                    fundraiser_type=fundraiser_type)
+
+    def InnerHandler(self, fundraiser_type):
+        page, recent, total = self.PageHandler(fundraiser_type)
+        self.render('fundraiser/list_inner.html', recent=recent,
                     total=total, page=page,
                     page_size=FUNDRAISERS_PER_PAGE,
                     fundraiser_type=fundraiser_type)
@@ -62,6 +74,13 @@ class FundraiserIndexHandler(FundraiserBase):
     def get(self):
         fundraiser_type = 'Fundraiser'
         self.IndexHandler(fundraiser_type)
+
+
+class FundraiserInnerIndexHandler(FundraiserBase):
+
+    def get(self):
+        fundraiser_type = 'Fundraiser'
+        self.InnerHandler(fundraiser_type)
 
 
 class PetitionIndexHandler(FundraiserBase):
@@ -110,6 +129,10 @@ class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
         slug = re.sub(r'[^\w]+', ' ', slug)
         slug = slug.replace(' ', '_').lower().strip()
 
+        #at the moment, remove description?
+        if description is None:
+            description = ''
+
         #deadline = datetime.datetime.strptime(deadline, '%a, %d %B %Y %H:%M:%S %Z')
         ## TESTING ONLY
         deadline = datetime.datetime.utcnow() + datetime.timedelta(minutes=2)
@@ -148,6 +171,7 @@ class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
 
         self.fundraisers.save(fundraiser)
         #saved_fundraiser = self.fundraisers.find_one({'slug': fundraiser['slug']})
+
         ## removed for the meantime
         ##if status == 'Live' and fundraiser_type == 'Group Purchase':
         ##    self.fundraiser_deadline(fundraiser['_id'], deadline)

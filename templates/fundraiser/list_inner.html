@@ -1,0 +1,17 @@
+<h2>{{ fundraiser_type }}s</h2>
+<hr>
+
+{% for i, fundraiser in enumerate(recent) %}
+<div class="campaign">
+    <div class="title">
+        <a href="/fundraiser/{{fundraiser['slug']}}">{{ fundraiser['title'] }}</a>
+    </div>
+    <div class="tail">
+        <i class="icon-user"></i> <strong>{{ fundraiser['backers_count'] }}</strong> donors
+        {% if fundraiser['status'] == 'Finished '%}
+        <i class="icon-stop"></i> <strong>Finished</strong>
+        {% end %}
+        <a href="/fundraiser/{{fundraiser['slug']}}" class="btn btn-small pull-right">Read more <i class="icon-chevron-right"></i></a>
+    </div>
+</div>
+{% end %}

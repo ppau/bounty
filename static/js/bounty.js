@@ -45,4 +45,7 @@ $(function() {
     $('#collapseOne').on('show', function () {
         $('#collapseTwo').collapse('hide');
     });
+    $('#load_fundraisers').on("click", function(){
+        $('#campaign_container').load('/a/fundraiser');
+    });
 });

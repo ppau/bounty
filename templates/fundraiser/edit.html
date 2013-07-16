@@ -32,8 +32,9 @@
                     <input type='number' name='goal' {% if fundraiser and 'goal' in fundraiser %}value="{{ fundraiser['goal'] }}"{% end %} required>
                 </div>
                 <input type='text' id='deadline' name='deadline' style='display:none'>
+                <!--
                 <label>Description</label>
-                <textarea class="span5" rows="8" name='description' required>{% if fundraiser and 'description' in fundraiser %}{{ fundraiser['description'] }}{% end %}</textarea>
+                <textarea class="span5" rows="8" name='description' required>{% if fundraiser and 'description' in fundraiser %}{{ fundraiser['description'] }}{% end %}</textarea> -->
                 <div>
                     <label class="radio inline">
                         <input type="radio" name="statusRadios" id="statusRadios1" value="Live" {% if fundraiser and 'status' in fundraiser %}{% if fundraiser['status'] == 'Live' %}checked{% end %}{% end %}>
@@ -42,6 +43,10 @@
                     <label class="radio inline">
                         <input type="radio" name="statusRadios" id="statusRadios2" value="Draft" {% if fundraiser and 'status' in fundraiser %}{% if fundraiser['status'] == 'Draft' %}checked{% end %}{% end %}>
                         Draft
+                    </label>
+                    <label class="radio inline">
+                        <input type="radio" name="statusRadios" id="statusRadios3" value="Finished" {% if fundraiser and 'status' in fundraiser %}{% if fundraiser['status'] == 'Finished' %}checked{% end %}{% end %}>
+                        Finished
                     </label>
                 </div>
             </div>

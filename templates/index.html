@@ -6,11 +6,11 @@
 <div class="row">
     <div class="span11 offset1">
         <div class="well" style="padding: 10px;">
-            <div class="btn-group">
-                <button class="btn active">All</button>
-                <button class="btn">Fundraisers</button>
-                <button class="btn">Petitions</button>
-                <button class="btn">Group Purchases</button>
+            <div id="nav_buttons" class="btn-group">
+                <button id="load_all" class="btn active">All</button>
+                <button id="load_fundraisers" class="btn">Fundraisers</button>
+                <button id="load_petitions" class="btn">Petitions</button>
+                <button id="load_group" class="btn">Group Purchases</button>
             </div>
         </div>
     </div>
@@ -18,10 +18,10 @@
 <div class="row">
     <div class="span11 offset1">
 
+        <div id="campaign_container" class="campaigns">
+
         <h2>All</h2>
         <hr>
-
-        <div class="campaigns">
 
             {% for i, fundraiser in enumerate(recent) %}
             <div class="campaign">
