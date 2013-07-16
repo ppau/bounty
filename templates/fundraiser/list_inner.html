@@ -1,4 +1,8 @@
+{% if fundraiser_type %}
 <h2>{{ fundraiser_type }}s</h2>
+{% else %}
+<h2>All</h2>
+{% end %}
 <hr>
 
 {% for i, fundraiser in enumerate(recent) %}

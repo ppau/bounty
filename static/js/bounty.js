@@ -47,5 +47,22 @@ $(function() {
     });
     $('#load_fundraisers').on("click", function(){
         $('#campaign_container').load('/a/fundraiser');
+        $('.btn.active').removeClass('active');
+        $('#load_fundraisers').addClass('active');
+    });
+    $('#load_petitions').on("click", function(){
+        $('#campaign_container').load('/a/petition');
+        $('.btn.active').removeClass('active');
+        $('#load_petitions').addClass('active');
+    });
+    $('#load_group').on("click", function(){
+        $('#campaign_container').load('/a/group_purchase');
+        $('.btn.active').removeClass('active');
+        $('#load_group').addClass('active');
+    });
+    $('#load_all').on("click", function(){
+        $('#campaign_container').load('/a/all');
+        $('.btn.active').removeClass('active');
+        $('#load_all').addClass('active');
     });
 });

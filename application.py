@@ -26,10 +26,14 @@ from admin import AdminBackerDeleteHandler
 from base import BaseHandler
 
 #Fundraiser views
+from fundraiser import FundraiserAllHandler
+from fundraiser import FundraiserInnerAllHandler
 from fundraiser import FundraiserIndexHandler
 from fundraiser import FundraiserInnerIndexHandler
 from fundraiser import PetitionIndexHandler
+from fundraiser import PetitionInnerIndexHandler
 from fundraiser import GroupPurchaseIndexHandler
+from fundraiser import GroupPurchaseInnerIndexHandler
 from fundraiser import FundraiserCreateHandler
 from fundraiser import FundraiserEditHandler
 from fundraiser import FundraiserDeleteHandler
@@ -42,25 +46,25 @@ from error_handler import ErrorHandler
 import uimodules.pagination
 
 
-class IndexHandler(BaseHandler):
+# class IndexHandler(BaseHandler):
 
-    def get(self):
-        page = self.get_argument('page', None)
-        if page:
-            page = int(page)
-        else:
-            page = 1
-        fundraisers_all = self.db.fundraisers.find({'status': 'Live'})
-        if page > 1:
-            recent = fundraisers_all.sort([('launched', -1)]) \
-                .skip(FUNDRAISERS_PER_PAGE*(int(page)-1)).limit(FUNDRAISERS_PER_PAGE)
-        else:
-            recent = fundraisers_all.sort([('launched', -1)]).limit(FUNDRAISERS_PER_PAGE)
-        total = fundraisers_all.count()
-        #total = int(ceil(float(total)/float(FUNDRAISERS_PER_PAGE)))
-        self.render('index.html', recent=recent,
-                    total=total, page=page,
-                    page_size=FUNDRAISERS_PER_PAGE)
+#     def get(self):
+#         page = self.get_argument('page', None)
+#         if page:
+#             page = int(page)
+#         else:
+#             page = 1
+#         fundraisers_all = self.db.fundraisers.find({'status': 'Live'})
+#         if page > 1:
+#             recent = fundraisers_all.sort([('launched', -1)]) \
+#                 .skip(FUNDRAISERS_PER_PAGE*(int(page)-1)).limit(FUNDRAISERS_PER_PAGE)
+#         else:
+#             recent = fundraisers_all.sort([('launched', -1)]).limit(FUNDRAISERS_PER_PAGE)
+#         total = fundraisers_all.count()
+#         #total = int(ceil(float(total)/float(FUNDRAISERS_PER_PAGE)))
+#         self.render('index.html', recent=recent,
+#                     total=total, page=page,
+#                     page_size=FUNDRAISERS_PER_PAGE)
 
 
 class LoginHandler(BaseHandler):
@@ -133,7 +137,7 @@ class Application(tornado.web.Application):
     def __init__(self):
 
         handlers = [
-                    (r'/', IndexHandler),
+                    (r'/', FundraiserAllHandler),
                     (r'/login', LoginHandler),
                     (r'/logout', LogoutHandler),
                     (r'/create', CreateUserHandler),
@@ -141,10 +145,13 @@ class Application(tornado.web.Application):
                     (r'/admin/user/([^/]+)', AdminUserEditHander),
                     (r'/admin/backers/([^/]+)/delete', AdminBackerDeleteHandler),
                     (r'/admin/fundraiser/([^/]+)', AdminFundraiserHandler),
+                    (r'/a/all', FundraiserInnerAllHandler),
                     (r'/fundraiser', FundraiserIndexHandler),
                     (r'/a/fundraiser', FundraiserInnerIndexHandler),
                     (r'/petition', PetitionIndexHandler),
+                    (r'/a/petition', PetitionInnerIndexHandler),
                     (r'/group_purchase', GroupPurchaseIndexHandler),
+                    (r'/a/group_purchase', GroupPurchaseInnerIndexHandler),
                     (r'/fundraiser/create', FundraiserCreateHandler),
                     (r'/fundraiser/([^/]+)/edit', FundraiserEditHandler),
                     (r'/fundraiser/([^/]+)/delete', FundraiserDeleteHandler),

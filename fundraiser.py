@@ -43,7 +43,10 @@ class FundraiserBase(BaseHandler):
             page = int(page)
         else:
             page = 1
-        fundraisers_all = self.fundraisers.find({'status': 'Live', 'type': fundraiser_type})
+        if fundraiser_type:
+            fundraisers_all = self.fundraisers.find({'status': 'Live', 'type': fundraiser_type})
+        else:
+            fundraisers_all = self.fundraisers.find({'status': 'Live'})
         if page > 1:
             recent = fundraisers_all.sort([('launched', -1)]) \
                 .skip(FUNDRAISERS_PER_PAGE*(int(page)-1)).limit(FUNDRAISERS_PER_PAGE)
@@ -53,20 +56,36 @@ class FundraiserBase(BaseHandler):
 
         return page, recent, total
 
-    def IndexHandler(self, fundraiser_type):
+    def IndexHandler(self, fundraiser_type=None):
         page, recent, total = self.PageHandler(fundraiser_type)
         #total = int(ceil(float(total)/float(FUNDRAISERS_PER_PAGE)))
-        self.render('fundraiser/list.html', recent=recent,
+        if fundraiser_type:
+            html_file = 'fundraiser/list.html'
+        else:
+            html_file = 'index.html'
+        self.render(html_file, recent=recent,
                     total=total, page=page,
                     page_size=FUNDRAISERS_PER_PAGE,
                     fundraiser_type=fundraiser_type)
 
-    def InnerHandler(self, fundraiser_type):
+    def InnerHandler(self, fundraiser_type=None):
         page, recent, total = self.PageHandler(fundraiser_type)
         self.render('fundraiser/list_inner.html', recent=recent,
                     total=total, page=page,
                     page_size=FUNDRAISERS_PER_PAGE,
                     fundraiser_type=fundraiser_type)
+
+
+class FundraiserAllHandler(FundraiserBase):
+
+    def get(self):
+        self.IndexHandler()
+
+
+class FundraiserInnerAllHandler(FundraiserBase):
+
+    def get(self):
+        self.InnerHandler()
 
 
 class FundraiserIndexHandler(FundraiserBase):
@@ -90,11 +109,25 @@ class PetitionIndexHandler(FundraiserBase):
         self.IndexHandler(fundraiser_type)
 
 
+class PetitionInnerIndexHandler(FundraiserBase):
+
+    def get(self):
+        fundraiser_type = 'Petition'
+        self.InnerHandler(fundraiser_type)
+
+
 class GroupPurchaseIndexHandler(FundraiserBase):
 
     def get(self):
         fundraiser_type = 'Group Purchase'
         self.IndexHandler(fundraiser_type)
+
+
+class GroupPurchaseInnerIndexHandler(FundraiserBase):
+
+    def get(self):
+        fundraiser_type = 'Group Purchase'
+        self.InnerHandler(fundraiser_type)
 
 
 class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
