@@ -141,8 +141,9 @@ class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
 
         self.fundraisers.save(fundraiser)
         #saved_fundraiser = self.fundraisers.find_one({'slug': fundraiser['slug']})
-        if status == 'Live' and fundraiser_type == 'Group Purchase':
-            self.fundraiser_deadline(fundraiser['_id'], deadline)
+        ## removed for the meantime
+        ##if status == 'Live' and fundraiser_type == 'Group Purchase':
+        ##    self.fundraiser_deadline(fundraiser['_id'], deadline)
         #fundraiser_countdown(saved_fundraiser['_id'], deadline)
         #tornado.ioloop.IOLoop().instance().add_callback(fundraiser_countdown(saved_fundraiser['_id'], deadline))
         #self.add_task(fundraiser_countdown, saved_fundraiser['_id'], deadline, callback=self._on_result)
@@ -234,17 +235,28 @@ class FundraiserDetailHandler(FundraiserBase, CeleryHandler):
             fundraiser_type = fundraiser['type']
 
             percentage = None
-            if 'goal' in fundraiser and fundraiser_type == 'Fundraiser':
+            if 'goal' in fundraiser and (fundraiser_type == 'Fundraiser' or fundraiser_type == 'Group Purchase'):
                 percentage = round((fundraiser['current_funding'] / fundraiser['goal']) * 100, 2)
+                if fundraiser_type == 'Group Purchase':
+                    backers_remaining = int((fundraiser['goal'] - fundraiser['current_funding']) / 5)
             elif fundraiser_type == 'Petition':
                 percentage = round((fundraiser['backers_count'] / fundraiser['goal']) * 100, 2)
             if 'template' in fundraiser:
-                self.render('fundraiser/user_templates/{}'.format(fundraiser['template']),
-                            fundraiser=fundraiser,
-                            fundraiser_backers=fundraiser_backers,
-                            percentage=percentage,
-                            fundraiser_type=fundraiser_type,
-                            message=message)
+                if fundraiser_type == 'Group Purchase':
+                    self.render('fundraiser/user_templates/{}'.format(fundraiser['template']),
+                                fundraiser=fundraiser,
+                                fundraiser_backers=fundraiser_backers,
+                                percentage=percentage,
+                                backers_remaining=backers_remaining,
+                                fundraiser_type=fundraiser_type,
+                                message=message)
+                else:
+                    self.render('fundraiser/user_templates/{}'.format(fundraiser['template']),
+                                fundraiser=fundraiser,
+                                fundraiser_backers=fundraiser_backers,
+                                percentage=percentage,
+                                fundraiser_type=fundraiser_type,
+                                message=message)
             else:
                 self.render('fundraiser/detail.html',
                             fundraiser=fundraiser,

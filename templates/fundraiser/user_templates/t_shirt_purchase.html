@@ -19,7 +19,7 @@
         {% end %}
     {% end %}
 
-            <div class="banner-bg" style="height: 479px; background-image: url({{ static_url('img/user_upload/tshirt.jpg') }});">
+            <div class="banner-bg" style="height: 479px; background-image: url({{ static_url('img/user_upload/tshirt.png') }});">
                 <div class="banner">
                     <h1>Pirate Party T-Shirt</h1>
                     <h2>$10 each</h2>
@@ -43,11 +43,19 @@
             <div class="row-fluid well">
                 <h2><strong>{{ fundraiser['backers_count'] }}</strong></h2>
 
-                <p>donors have funded</p>
+                <p>backers</p>
 
-                <h2><strong>${{ fundraiser['current_funding'] }}</strong></h2>
+                <h2><strong>${{'{:.2f}'.format(fundraiser['current_funding'])}}</strong></h2>
 
-                <p>towards candidate registration expenses.</p>
+                <p>pledeged of ${{'{:.2f}'.format(fundraiser['goal'])}} target.</p>
+
+                <div style="overflow:auto;">
+                    <div class="progress" style="margin-bottom: 0;">
+                        <div class="bar" style="width: {{ percentage }}%;"></div>
+                    </div>
+
+                    <p class="muted pull-right"><small>{{ backers_remaining }} more backers needed</small></p>
+                </div>
 
                 <div class='pin-errors' style='display:none'>
                     <h3></h3>
@@ -178,7 +186,7 @@
                                         <span class="help-inline">Value needs to be $5 or more.</span>
                                         {% end %}
                                     {% end %}
-                                    <p><small>Minimum $5</small></p>
+                                    <p class="muted"><small>Minimum $5</small></p>
                                 </div>
                                 <div class="accordion-inner">
                                     <div class="centre">
@@ -186,7 +194,8 @@
                                             Previous
                                         </button>
                                     </div>
-                                    <p style="margin-top: 15px;"><button type="submit" class="btn btn-primary btn-large btn-block">Donate now <i class="icon-chevron-right icon-white"></i></button></p>
+                                    <p style="margin-top: 15px;"><button type="submit" class="btn btn-primary btn-large btn-block">Pledge now <i class="icon-chevron-right icon-white"></i></button></p>
+                                    <p class="muted">You will be charged at the time of pledging to ensure the product can be ordered and delivered as soon as the minimum number of backers are reached. Should the minimum backers not be reached you will be fully refunded.</p>
                                 </div>
                             </div>
                         </div>
