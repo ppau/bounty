@@ -11,6 +11,11 @@
 
     <div class="row-fluid">
         <div class="span7 offset1 masthead">
+    {% if fundraiser['status'] == 'Finished '%}
+            <div class="row-fluid">
+                <p class="alert"><strong>This fundraiser is now closed. Thanks for your support!</strong></p>
+            </div>
+    {% end %}
     {% if message %}
         {% if message == 'success' %}
             <div class="row-fluid">
@@ -152,6 +157,7 @@
 
                 <p>towards candidate registration expenses.</p>
 
+                {% if fundraiser['status'] != 'Finished '%}
                 <div class='pin-errors' style='display:none'>
                     <h3></h3>
                     <ul></ul>
@@ -295,6 +301,7 @@
                         </div>
                     </form>
                 </div>
+                {% end %}
             </div>
 
             <h4>Recent donators</h4>
