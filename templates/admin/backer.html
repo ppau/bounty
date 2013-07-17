@@ -1,0 +1,33 @@
+{% extends "../base.html" %}
+
+{% block title %}{{ backer['user'] }} - Bounty Admin{% end %}
+
+{% block body %}
+<div class="row">
+    <div class="span6 offset4">
+        <div class="row">
+            <h3>{{ backer['user'] }}</h3>
+            <p class="muted">Display Name: {{ backer['display_name'] }}</p>
+        </div>
+        <div class="row">
+            <p><strong style="text-decoration: underline">Billing Address</strong></p>
+            <address>
+                <strong>{{ backer['user'] }}</strong><br>
+                {{ backer['address_line1'] }}<br>
+                {{ backer['address_line2'] }}<br>
+                {{ backer['city'] }} {{ backer['state'] }} {{ backer['postcode'] }}<br>
+            </address>
+            <address>
+                <strong style="text-decoration: underline">Email</strong><br>
+                <a href="mailto:#">{{ backer['email'] }}</a>
+            </address>
+        </div>
+        <div class="row">
+            {% if 'amount' in backer %}
+            <strong>Donation Amount</strong>: ${{ '{:.2f}'.format(backer['amount']) }}
+            {% end %}
+        </div>
+
+    </div>
+</div>
+{% end %}

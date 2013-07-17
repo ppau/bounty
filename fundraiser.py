@@ -338,7 +338,7 @@ class FundraiserDetailHandler(FundraiserBase, CeleryHandler):
 
             fundraiser_id = fundraiser['_id']
 
-            if fundraiser_type == 'Fundraiser':
+            if fundraiser_type == 'Fundraiser' or fundraiser_type == 'Group Purchase':
                 card_token = self.get_argument('card_token', None)
                 ip_address = self.get_argument('ip_address', None)
                 #Some kind of profanity check or something?
@@ -364,7 +364,7 @@ class FundraiserDetailHandler(FundraiserBase, CeleryHandler):
                 self.fundraisers.save(fundraiser)
                 backer = {'fundraiser': fundraiser_id,
                           'user': '{} {}'.format(first_name, last_name),
-                          'display_user': name,
+                          'display_name': name,
                           'email': email,
                           'address_line1': address_line1,
                           'address_line2': address_line2,

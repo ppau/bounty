@@ -108,3 +108,16 @@ class AdminBackerDeleteHandler(AdminBase):
             self.redirect(u'/admin/user/{}?message=success'.format(user))
         else:
             raise HTTPError(404)
+
+
+class AdminBackerDetailHandler(AdminBase):
+
+    @authenticated
+    @require_staff
+    def get(self, _id):
+        backer = self.backers.find_one({'_id': ObjectId(_id)})
+        if backer:
+            self.render('admin/backer.html',
+                        backer=backer)
+        else:
+            raise HTTPError(404)

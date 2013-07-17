@@ -34,12 +34,6 @@
         </div>
         <div class="row">
             <div class="span7">
-                <strong>Description</strong>
-                <p>{{ fundraiser['description'] }}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="span7">
                 <strong>Current backers</strong>: {{ fundraiser['backers_count'] }}
             </div>
         </div>
@@ -63,7 +57,7 @@
                     {% for i, backer in enumerate(fundraiser_backers) %}
                     <tr {% if 'error_message' in backer %}class="error"{% end %}>
                       <td>{{ i }}</td>
-                      <td>{{ backer['user'] }}</td>
+                      <td><a href="/admin/backer/{{ backer['_id'] }}">{{ backer['user'] }}</a></td>
                       <td>{{ backer['ip_address'] }}</td>
                       {% if fundraiser['type'] != 'Petition' %}
                       <td>${{ backer['amount'] }}</td>

@@ -22,6 +22,7 @@ from admin import AdminHandler
 from admin import AdminFundraiserHandler
 from admin import AdminUserEditHander
 from admin import AdminBackerDeleteHandler
+from admin import AdminBackerDetailHandler
 
 from base import BaseHandler
 
@@ -143,6 +144,7 @@ class Application(tornado.web.Application):
                     (r'/create', CreateUserHandler),
                     (r'/admin', AdminHandler),
                     (r'/admin/user/([^/]+)', AdminUserEditHander),
+                    (r'/admin/backer/([^/]+)', AdminBackerDetailHandler),
                     (r'/admin/backers/([^/]+)/delete', AdminBackerDeleteHandler),
                     (r'/admin/fundraiser/([^/]+)', AdminFundraiserHandler),
                     (r'/a/all', FundraiserInnerAllHandler),
