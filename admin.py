@@ -6,6 +6,7 @@ from bson.objectid import ObjectId
 
 from auth import require_staff
 #from auth import require_admin
+from config import FUNDRAISERS_PER_PAGE
 
 
 class AdminBase(BaseHandler):
@@ -26,10 +27,26 @@ class AdminHandler(AdminBase):
     @authenticated
     @require_staff
     def get(self):
-        recent = self.fundraisers.find().sort([('launched', -1)]).limit(30)
+        page = self.get_argument('page', None)
+        if page:
+            page = int(page)
+        else:
+            page = 1
+
+        fundraisers_all = self.fundraisers.find()
+        if page > 1:
+            recent = fundraisers_all.sort([('launched', -1)]) \
+                .skip(FUNDRAISERS_PER_PAGE*(int(page)-1)).limit(FUNDRAISERS_PER_PAGE)
+        else:
+            recent = fundraisers_all.sort([('launched', -1)]).limit(FUNDRAISERS_PER_PAGE)
+        total = fundraisers_all.count()
+
+        #recent = self.fundraisers.find().sort([('launched', -1)]).limit(30)
         #Depending on rank, show users of below your rank only?
         users = self.users_db.find().sort([('created_at', -1)]).limit(30)
         self.render('admin/admin.html', recent=recent,
+                    total=total, page=page,
+                    page_size=FUNDRAISERS_PER_PAGE,
                     users=users)
 
 

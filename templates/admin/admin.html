@@ -18,7 +18,12 @@
             </div>
         </div>
         {% end %}
-        <a class="btn btn-info" href="/fundraiser/create">Create New</a>
+        <div class="row">
+            <a class="btn btn-info" href="/fundraiser/create">Create New</a>
+        </div>
+        <div class="row">
+            {% module Paginator(page, page_size, total) %}
+        </div>
         <h3>Users</h3>
         {% for user in users %}
         <div class="row">
