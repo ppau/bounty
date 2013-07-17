@@ -71,6 +71,8 @@
                         {% if 'error_message' in backer %}
                             <td>{{ backer['error_message'] }}</td>
                         {% end %}
+                      {% else %}
+                            <td></td>
                       {% end %}
                     </tr>
                     {% end %}
