@@ -209,11 +209,11 @@
                                         </select>
                                     </div>
                                     <div class="controls">
-                                        <input type="text" placeholder="Postcode" class="input-small" id='address-postcode' required>
+                                        <input type="text" id="postcode" placeholder="Postcode" class="input-small" id='address-postcode' required>
                                         <input type="text" placeholder="Country" id='address-country' class="input-small" required>
                                     </div>
                                     <div class="control-group">
-                                        <label class="required control-label">Are you an Australian citizen?</label>
+                                        <label class="required control-label">Are you an Australian citizen or Permanent Resident?</label>
                                         <div class="controls" style="margin-left: 15px;">
                                             <label class="radio inline">
                                                 <input type="radio" name="australian_citizen" id="australian_citizen_yes" value="yes" checked="checked"> Yes
@@ -310,7 +310,7 @@
                 <tbody>
                 {% for i, backer in enumerate(fundraiser_backers) %}
                     <tr>
-                        <th><i class="icon-user"></i> {{ backer['user'] }}</th>
+                        <th><i class="icon-user"></i> {{ backer['display_user'] }}</th>
                         <td>{{ backer['state'] }}</td>
                     </tr>
                 {% end %}

@@ -346,8 +346,11 @@ class FundraiserDetailHandler(FundraiserBase, CeleryHandler):
                 last_name = self.get_argument('lastname', None)
                 name = '{} {}'.format(first_name, last_name[0])
                 email = self.get_argument('email', None)
+                address_line1 = self.get_argument('address-line1', None)
+                address_line2 = self.get_argument('address-line2', None)
                 state = self.get_argument('address-state', None)
                 city = self.get_argument('address-city', None)
+                postcode = self.get_argument('postcode', None)
                 amount = self.get_argument('amount', None)
                 if float(amount) < 5.0:
                     self.redirect(u'/fundraiser/{}?message=amount'.format(fundraiser_slug))
@@ -360,10 +363,14 @@ class FundraiserDetailHandler(FundraiserBase, CeleryHandler):
                 fundraiser['backers_count'] += 1
                 self.fundraisers.save(fundraiser)
                 backer = {'fundraiser': fundraiser_id,
-                          'user': name,
+                          'user': '{} {}'.format(first_name, last_name),
+                          'display_user': name,
                           'email': email,
+                          'address_line1': address_line1,
+                          'address_line2': address_line2,
                           'state': state,
                           'city': city,
+                          'postcode': postcode,
                           'card_token': card_token,
                           'ip_address': ip_address,
                           'amount': float(amount),
