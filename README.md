@@ -7,7 +7,10 @@ Something to keep in mind;
 - "If a card token is not used within 1 month it is automatically expired."
 - Considering the merchant fee charged, increase the goal to absorb it?
 - PIN requires that pages be HTTPS?
-- Implement a donation ID?
+- Implement a donation ID? --- just use the db id?
+- Hide Country? Default to Australia
+- Remove requirement on Address line 2?
+- Add search for order ID
 
 TO DO:
 
