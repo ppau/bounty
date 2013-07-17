@@ -20,11 +20,17 @@
         </div>
         <div class="row">
             <div class="span3">
-                <strong>Goal</strong>: {{ fundraiser['goal'] }}
+                {% if fundraiser['type'] == 'Petition' %}
+                <strong>Goal</strong>: {{ int(fundraiser['goal']) }} signatures
+                {% else %}
+                <strong>Goal</strong>: ${{ '{:.2f}'.format(fundraiser['goal']) }}
+                {% end %}
             </div>
+            {% if fundraiser['type'] != 'Petition' %}
             <div class="span3">
-                <strong>Current Funding</strong>: {{ fundraiser['current_funding'] }}
+                <strong>Current Funding</strong>: ${{ '{:.2f}'.format(fundraiser['current_funding']) }}
             </div>
+            {% end %}
         </div>
         <div class="row">
             <div class="span7">
@@ -45,7 +51,9 @@
                           <th>#</th>
                           <th>Username</th>
                           <th>IP</th>
+                          {% if fundraiser['type'] != 'Petition' %}
                           <th>Amount</th>
+                          {% end %}
                           <th>Created at</th>
                           <th>Status</th>
                           <th>Message</th>
@@ -57,7 +65,9 @@
                       <td>{{ i }}</td>
                       <td>{{ backer['user'] }}</td>
                       <td>{{ backer['ip_address'] }}</td>
+                      {% if fundraiser['type'] != 'Petition' %}
                       <td>${{ backer['amount'] }}</td>
+                      {% end %}
                       <td>{{ backer['created_at'] }}</td>
                       <td>{{ backer['status'] }}</td>
                       {% if 'status_message' in backer or 'error_message' in backer %}
