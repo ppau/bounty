@@ -209,7 +209,7 @@
                                         </select>
                                     </div>
                                     <div class="controls">
-                                        <input type="text" name="postcode" id="postcode" placeholder="Postcode" class="input-small" id='address-postcode' required>
+                                        <input type="text" pattern="[0-9]{4}" name="postcode" id="postcode" placeholder="Postcode" class="input-small" id='address-postcode' required>
                                         <input type="text" placeholder="Country" id='address-country' class="input-small" value="Australia" required>
                                     </div>
                                     <div class="control-group">
@@ -236,7 +236,7 @@
                                 <h3>Payment</h3>
                                <div class='control-group'>
                                   <div class='controls'>
-                                    <input type='text' placeholder="Credit Card Number" id='cc-number' class="input-block-level" required>
+                                    <input type='text' pattern="[0-9]{13,16}" placeholder="Credit Card Number" id='cc-number' class="input-block-level" required>
                                     <span id='cc-number-error' class='help-inline' style='display:none'>Please correct the error</span>
                                   </div>
                                 </div>
@@ -280,7 +280,7 @@
                                     <label for="quant" class="inline">Amount:</label>
                                     <div class="input-prepend">
                                         <span class="add-on"><span class="icon">$</span></span>
-                                        <input type="text" name='amount' id="amount" placeholder="Amount" class="" required>
+                                        <input type="text" pattern="\d+(\.\d{2})?" name='amount' id="amount" placeholder="Amount" class="" required>
                                     </div>
                                     {% if message %}
                                         {% if message == 'amount' %}
