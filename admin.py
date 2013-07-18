@@ -116,8 +116,10 @@ class AdminBackerDetailHandler(AdminBase):
     @require_staff
     def get(self, _id):
         backer = self.backers.find_one({'_id': ObjectId(_id)})
+        fundraiser = self.fundraisers.find_one({'_id': ObjectId(backer['fundraiser'])})
         if backer:
             self.render('admin/backer.html',
-                        backer=backer)
+                        backer=backer,
+                        fundraiser=fundraiser)
         else:
             raise HTTPError(404)

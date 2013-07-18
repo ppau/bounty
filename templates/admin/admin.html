@@ -1,10 +1,10 @@
-{% extends "../base.html" %}
+{% extends "admin_base.html" %}
 
 {% block title %}Bounty - Admin{% end %}
 
-{% block body %}
-<div class="row">
-    <div class="span6 offset4">
+{% block admin_body %}
+
+    <div class="span6">
         <h3>Recently launched Fundraisers</h3>
         {% for fundraiser in recent %}
         <div class="row ">
@@ -31,5 +31,5 @@
         </div>
         {% end %}
     </div>
-</div>
+
 {% end %}

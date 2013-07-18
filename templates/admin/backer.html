@@ -11,6 +11,9 @@
             <p class="muted">ID: {{ backer['_id'] }}</p>
         </div>
         <div class="row">
+            <p>Backed Fundraiser: <a href="/admin/fundraiser/{{fundraiser['slug']}}">{{ fundraiser['title'] }}</a></p>
+        </div>
+        <div class="row">
             <p><strong style="text-decoration: underline">Billing Address</strong></p>
             <address>
                 <strong>{{ backer['user'] }}</strong><br>
