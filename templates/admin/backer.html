@@ -8,6 +8,7 @@
         <div class="row">
             <h3>{{ backer['user'] }}</h3>
             <p class="muted">Display Name: {{ backer['display_name'] }}</p>
+            <p class="muted">ID: {{ backer['_id'] }}</p>
         </div>
         <div class="row">
             <p><strong style="text-decoration: underline">Billing Address</strong></p>
@@ -25,11 +26,28 @@
             </address>
         </div>
         <div class="row">
+            {% if 'status' in backer %}
+            <p><strong>Status</strong>: {{ backer['status'] }}</p>
+            {% end %}
             {% if 'amount' in backer %}
-            <strong>Donation Amount</strong>: ${{ '{:.2f}'.format(backer['amount']) }}
+            <p><strong>Donation Amount</strong>: ${{ '{:.2f}'.format(backer['amount']) }}</p>
             {% end %}
             {% if 'created_at' in backer %}
-            <strong>Created at:</strong>: {{ backer[created_at] }}
+            <p><strong>Created at:</strong>: {{ backer['created_at'] }}</p>
+            {% end %}
+            {% if 'charged_when' in backer %}
+            <p><strong>Charged at:</strong>: {{ backer['charged_when'] }}</p>
+            {% end %}
+            {% if 'ip_address' in backer %}
+            <p><strong>Recorded IP</strong>: {{ backer['ip_address'] }}</p>
+            {% end %}
+            {% if 'status_message' in backer %}
+            <p><strong>Status Message:</strong>: {{ backer['status_message'] }}</p>
+            {% end %}
+            {% if 'error_message' in backer %}
+            <div class="alert alert-error">
+                <strong>Error Message:</strong>: {{ backer['error_message'] }}
+            </div>
             {% end %}
         </div>
 
