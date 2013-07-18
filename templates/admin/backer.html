@@ -14,7 +14,9 @@
             <address>
                 <strong>{{ backer['user'] }}</strong><br>
                 {{ backer['address_line1'] }}<br>
+                {% if backer['address_line2'] %}
                 {{ backer['address_line2'] }}<br>
+                {% end %}
                 {{ backer['city'] }} {{ backer['state'] }} {{ backer['postcode'] }}<br>
             </address>
             <address>
@@ -25,6 +27,9 @@
         <div class="row">
             {% if 'amount' in backer %}
             <strong>Donation Amount</strong>: ${{ '{:.2f}'.format(backer['amount']) }}
+            {% end %}
+            {% if 'created_at' in backer %}
+            <strong>Created at:</strong>: {{ backer[created_at] }}
             {% end %}
         </div>
 
