@@ -102,8 +102,14 @@ class AdminBackerListHandler(AdminBase):
     @require_staff
     def get(self):
         backer_list = self.backers.find().sort([('created_at', -1)]).limit(30)
+        fundraisers = self.fundraisers.find()
+        fundraiser_list = {}
+        for i in fundraisers:
+            fundraiser_list[str(i['_id'])] = {'title': i['title'], 'slug': i['slug']}
         self.render('admin/backer_list.html',
-                    backer_list=backer_list)
+                    backer_list=backer_list,
+                    fundraiser_list=fundraiser_list,
+                    tab='users')
 
 
 class AdminBackerDeleteHandler(AdminBase):

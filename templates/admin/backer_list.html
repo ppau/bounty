@@ -5,13 +5,32 @@
 {% block admin_body %}
     <div class="span6">
         <h3>Backers</h3>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Username</th>
+                          <th>Fundraiser</th>
+                          <th>Amount</th>
+                          <th>Created at</th>
+                          <th>Status</th>
+                          <th>Message</th>
+                        </tr>
+                    </thead>
+                    <tbody>
         {% for i, backer in enumerate(backer_list) %}
         <tr {% if 'error_message' in backer %}class="error"{% end %}>
           <td>{{ i }}</td>
           <td><a href="/admin/backer/{{ backer['_id'] }}">{{ backer['user'] }}</a></td>
-          <td>{{ backer['ip_address'] }}</td>
+          {% if str(backer['fundraiser']) in fundraiser_list.keys() %}
+          <td><a href="/admin/fundraiser/{{ fundraiser_list[str(backer['fundraiser'])]['slug'] }}">{{ fundraiser_list[str(backer['fundraiser'])]['title'] }}</a></td>
+          {% else %}
+          <td> - </td>
+          {% end %}
           {% if 'amount' in backer %}
           <td>${{ backer['amount'] }}</td>
+          {% else %}
+          <td>-</td>
           {% end %}
           <td>{{ backer['created_at'] }}</td>
           <td>{{ backer['status'] }}</td>
@@ -27,5 +46,7 @@
           {% end %}
         </tr>
         {% end %}
+                    </tbody>
+                </table>
     </div>
 {% end %}

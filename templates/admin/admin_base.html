@@ -1,25 +1,25 @@
 {% extends "../base.html" %}
 {% block body %}
 <div class="row">
-    <div class="span4">
+    <div class="span3">
         <div class="span2">
         <ul class="nav nav-tabs nav-stacked">
           <li id="campaigns_tab" class="">
             <a href="/admin">Campaigns All</a>
           </li>
-          <li id="fundraiser_tab" {% try %}{% if fundraiser_type and fundraiser_type=='Fundraiser' %}class="active"{% else %}class=""{% end %}{% except %} {% end %}>
-            <a href="/fundraiser">Fundraisers</a>
+          <li id="fundraiser_tab">
+            <a href="/admin/fundraiser">Fundraisers</a>
           </li>
-          <li id="petition_tab" {% try %}{% if fundraiser_type and fundraiser_type=='Petition' %}class="active"{% else %}class=""{% end %}{% except %} {% end %}>
-            <a href="/petition">Petitions</a>
+          <li id="petition_tab">
+            <a href="/admin/petition">Petitions</a>
           </li>
-          <li id="grouppurchase_tab" {% try %}{% if fundraiser_type and fundraiser_type=='Group Purchase' %}class="active"{% else %}class=""{% end %}{% except %} {% end %}>
-            <a href="/group_purchase">Group Purchases</a>
+          <li id="grouppurchase_tab">
+            <a href="/admin/group_purchase">Group Purchases</a>
           </li>
-          <li id="admin_backers" {% try %}{% if fundraiser_type and fundraiser_type=='Group Purchase' %}class="active"{% else %}class=""{% end %}{% except %} {% end %}>
+          <li id="admin_backers">
             <a href="/admin/backer_list">Backers</a>
           </li>
-          <li id="admin_users" {% try %}{% if fundraiser_type and fundraiser_type=='Group Purchase' %}class="active"{% else %}class=""{% end %}{% except %} {% end %}>
+          <li id="admin_users">
             <a href="/admin/user_list">Users</a>
           </li>
         </ul>
@@ -27,6 +27,5 @@
     </div>
     {% block admin_body %}
     {% end %}
-
 </div>
 {% end %}

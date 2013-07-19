@@ -1,10 +1,9 @@
-{% extends "../base.html" %}
+{% extends "admin_base.html" %}
 
 {% block title %}{{ backer['user'] }} - Bounty Admin{% end %}
 
-{% block body %}
-<div class="row">
-    <div class="span6 offset4">
+{% block admin_body %}
+    <div class="span6">
         <div class="row">
             <h3>{{ backer['user'] }}</h3>
             <p class="muted">Display Name: {{ backer['display_name'] }}</p>
@@ -55,5 +54,4 @@
         </div>
 
     </div>
-</div>
 {% end %}
