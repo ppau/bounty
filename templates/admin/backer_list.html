@@ -1,0 +1,31 @@
+{% extends "admin_base.html" %}
+
+{% block title %}Bounty - Admin - Backers{% end %}
+
+{% block admin_body %}
+    <div class="span6">
+        <h3>Backers</h3>
+        {% for i, backer in enumerate(backer_list) %}
+        <tr {% if 'error_message' in backer %}class="error"{% end %}>
+          <td>{{ i }}</td>
+          <td><a href="/admin/backer/{{ backer['_id'] }}">{{ backer['user'] }}</a></td>
+          <td>{{ backer['ip_address'] }}</td>
+          {% if 'amount' in backer %}
+          <td>${{ backer['amount'] }}</td>
+          {% end %}
+          <td>{{ backer['created_at'] }}</td>
+          <td>{{ backer['status'] }}</td>
+          {% if 'status_message' in backer or 'error_message' in backer %}
+            {% if 'status_message' in backer %}
+                <td>{{ backer['status_message'] }}</td>
+            {% end %}
+            {% if 'error_message' in backer %}
+                <td>{{ backer['error_message'] }}</td>
+            {% end %}
+          {% else %}
+                <td></td>
+          {% end %}
+        </tr>
+        {% end %}
+    </div>
+{% end %}

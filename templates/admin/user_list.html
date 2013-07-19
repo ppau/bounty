@@ -1,0 +1,14 @@
+{% extends "admin_base.html" %}
+
+{% block title %}Bounty - Admin - Users{% end %}
+
+{% block admin_body %}
+    <div class="span6">
+        <h3>Users</h3>
+        {% for user in user_list %}
+        <div class="row">
+            <strong>{{ user['username'] }}</strong> | <a href="/admin/user/{{ user['username'] }}">Edit</a>
+        </div>
+        {% end %}
+    </div>
+{% end %}

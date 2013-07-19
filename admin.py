@@ -71,7 +71,7 @@ class AdminUserListHandler(AdminBase):
     @require_staff
     def get(self):
         user_list = self.users_db.find().sort([('created_at', -1)]).limit(30)
-        self.render('admin/users.html',
+        self.render('admin/user_list.html',
                     user_list=user_list)
 
 
@@ -94,6 +94,16 @@ class AdminUserEditHander(AdminBase):
                         backed_fundraisers=backed_fundraisers)
         else:
             raise HTTPError(404)
+
+
+class AdminBackerListHandler(AdminBase):
+
+    @authenticated
+    @require_staff
+    def get(self):
+        backer_list = self.backers.find().sort([('created_at', -1)]).limit(30)
+        self.render('admin/backer_list.html',
+                    backer_list=backer_list)
 
 
 class AdminBackerDeleteHandler(AdminBase):
