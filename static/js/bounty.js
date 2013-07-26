@@ -70,12 +70,12 @@ $(function() {
         if ($('form input[type=radio]:checked').val() === 'no')
         {
             $('#citizen-error').show();
-            $('#to_payments_button').attr("disabled", true);
+            $('#to_payments_button').hide();
         }
         else if ($('#citizen-error').is(":visible") && $('form input[type=radio]:checked').val() === 'yes')
         {
             $('#citizen-error').hide();
-            $('#to_payments_button').removeAttr('disabled');
+            $('#to_payments_button').show();
         }
     });
 });
