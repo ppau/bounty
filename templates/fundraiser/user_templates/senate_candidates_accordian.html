@@ -214,7 +214,7 @@
                                     </div>
                                     <div class="control-group">
                                         <label class="required control-label">Are you an Australian citizen or Permanent Resident?</label>
-                                        <div class="controls" style="margin-left: 15px;">
+                                        <div id="citizen-status" class="controls" style="margin-left: 15px;">
                                             <label class="radio inline">
                                                 <input type="radio" name="australian_citizen" id="australian_citizen_yes" value="yes" checked="checked"> Yes
                                             </label>
@@ -222,6 +222,7 @@
                                                 <input type="radio" name="australian_citizen" id="australian_citizen_no" value="no"> No
                                             </label>
                                         </div>
+                                    <span id='citizen-error' class='help-inline' style='display:none'>At this stage donations can only be accepted by Australian citizens or Permanent Residents.</span>
                                     </div>
                                 </div>
                                 <div class="centre">
