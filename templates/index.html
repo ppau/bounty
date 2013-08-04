@@ -3,8 +3,6 @@
 {% block title %}Welcome to Bounty{% end %}
 
 {% block body %}
-<div class="row">
-    <div class="span11 offset1">
         <div class="well" style="padding: 10px;">
             <div id="nav_buttons" class="btn-group">
                 <button id="load_all" class="btn active">All</button>
@@ -13,10 +11,6 @@
                 <button id="load_group" class="btn">Group Purchases</button>
             </div>
         </div>
-    </div>
-</div>
-<div class="row">
-    <div class="span11 offset1">
 
         <div id="campaign_container" class="campaigns">
 
@@ -38,8 +32,7 @@
             </div>
             {% end %}
         </div>
-    </div>
-</div>
+
 <div class="row">
     {% module Paginator(page, page_size, total) %}
 </div>

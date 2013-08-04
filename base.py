@@ -1,6 +1,7 @@
 import pymongo
 from tornado.web import RequestHandler
 import tornado.escape
+from secret import pub_key
 
 
 class BaseHandler(RequestHandler):
@@ -20,3 +21,7 @@ class BaseHandler(RequestHandler):
         if not user_json:
             return None
         return tornado.escape.json_decode(user_json)
+
+    def render(self, *args, **kwargs):
+        kwargs['pin_public_key'] = pub_key
+        return super(BaseHandler, self).render(*args, **kwargs)

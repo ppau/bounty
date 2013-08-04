@@ -20,7 +20,7 @@ from celery_mixin import CeleryHandler
 from auth import require_staff
 
 from config import FUNDRAISERS_PER_PAGE
-
+from secret import pub_key
 #from chip.tasks import fundraiser_countdown
 #from chip.celery import celery
 
@@ -66,7 +66,7 @@ class FundraiserBase(BaseHandler):
         self.render(html_file, recent=recent,
                     total=total, page=page,
                     page_size=FUNDRAISERS_PER_PAGE,
-                    fundraiser_type=fundraiser_type)
+                    fundraiser_type=fundraiser_type,)
 
     def InnerHandler(self, fundraiser_type=None):
         page, recent, total = self.PageHandler(fundraiser_type)
@@ -74,6 +74,10 @@ class FundraiserBase(BaseHandler):
                     total=total, page=page,
                     page_size=FUNDRAISERS_PER_PAGE,
                     fundraiser_type=fundraiser_type)
+
+    def render(self, *args, **kwargs):
+        kwargs['pin_public_key'] = pub_key
+        return super(FundraiserBase, self).render(*args, **kwargs)
 
 
 class FundraiserAllHandler(FundraiserBase):

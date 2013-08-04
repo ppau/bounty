@@ -12,6 +12,10 @@ Something to keep in mind;
 - Remove requirement on Address line 2?
 - Add search for order ID
 
+DEVELOPER SETUP:
+
+1. copy secret_example.py to secret.py and configure
+
 TO DO:
 
 Each project will have:

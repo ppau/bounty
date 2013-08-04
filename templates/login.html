@@ -3,8 +3,7 @@
 {% block title %}Login{% end %}
 
 {% block body %}
-<div class='row'>
-    <div class='span6 offset2'>
+<div>
         {% if error %}
         <p>{{ error }}</p>
         {% end %}
@@ -18,6 +17,5 @@
                 <button type='submit' class='btn btn-primary'>Submit</button>
             </div>
         </form>
-    </div>
 </div>
 {% end %}

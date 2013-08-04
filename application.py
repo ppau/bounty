@@ -13,7 +13,7 @@ import re
 #from math import ceil
 from passlib.hash import pbkdf2_sha256
 
-from secret import cookie_secret
+from secret import cookie_secret, pub_key
 from config import FUNDRAISERS_PER_PAGE
 from config import DEBUG
 
@@ -75,7 +75,7 @@ class LoginHandler(BaseHandler):
     def get(self):
         error = self.get_argument('error', None)
         self.render('login.html',
-                    error=error)
+                    error=error,)
 
     @tornado.web.asynchronous
     #@gen.coroutine

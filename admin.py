@@ -7,6 +7,7 @@ from bson.objectid import ObjectId
 from auth import require_staff
 #from auth import require_admin
 from config import FUNDRAISERS_PER_PAGE
+from secret import pub_key
 
 
 class AdminBase(BaseHandler):
@@ -47,7 +48,8 @@ class AdminHandler(AdminBase):
         self.render('admin/admin.html', recent=recent,
                     total=total, page=page,
                     page_size=FUNDRAISERS_PER_PAGE,
-                    users=users)
+                    users=users,
+                    pin_public_key=pub_key)
 
 
 class AdminFundraiserHandler(AdminBase):
