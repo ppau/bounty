@@ -45,10 +45,12 @@ class CeleryHandler(BaseHandler):
 
     @asynchronous
     def fundraiser_charge(self, _id, description):
+        logging.info('Begin charge')
         charge_task = perform_charge.delay(_id, description)
 
         def check_celery_task():
             if charge_task.ready():
+                logging.info('Success')
                 #do something to mark our success here somewhere
                 #RuntimeError: Cannot write() after finish(). May be caused by using async operations
                 # without the @asynchronous decorator.

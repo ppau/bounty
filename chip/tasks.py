@@ -77,6 +77,7 @@ def fundraiser_countdown(fundraiser_id, finish_time):
 
 @celery.task
 def perform_charge(backer_id, description):
+    logger.debug('Begin charge in Celery')
     conn = pymongo.Connection()
     db = conn.bounty
     backers_db = db.backers

@@ -14,7 +14,7 @@ import re
 from passlib.hash import pbkdf2_sha256
 
 from secret import cookie_secret, pub_key
-from config import FUNDRAISERS_PER_PAGE
+#from config import FUNDRAISERS_PER_PAGE
 from config import DEBUG
 
 #Admin views

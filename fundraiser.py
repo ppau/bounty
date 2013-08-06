@@ -383,6 +383,7 @@ class FundraiserDetailHandler(FundraiserBase, CeleryHandler):
                           '_id': ObjectId.from_datetime(datetime.datetime.utcnow())}
                 self.backers.save(backer)
                 description = 'Bounty - {}'.format(fundraiser['title'])
+                logging.info('Send charge...')
                 self.fundraiser_charge(backer['_id'], description)
             elif fundraiser_type == 'Petition':
                 first_name = self.get_argument('firstname', None)

@@ -15,7 +15,7 @@
                 <label>Slug</label>
                 <input type='text' name='slug' {% if fundraiser and 'slug' in fundraiser %}value="{{ fundraiser['slug'] }}"{% end %} required>
                 <label>Type of Fundraiser</label>
-                <select name='type' {% if fundraiser and 'type' in fundraiser %}value="{{ fundraiser['type'] }}"{% end %} required>
+                <select name='fundraiser_type' {% if fundraiser and 'type' in fundraiser %}value="{{ fundraiser['type'] }}"{% end %} required>
                   <option>Fundraiser</option>
                   <option>Group Purchase</option>
                   <option>Petition</option>
