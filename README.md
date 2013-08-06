@@ -17,12 +17,12 @@ DEVELOPER SETUP:
 1. copy secret_example.py to secret.py and configure
 2. Configure python environment (2.7.x) and download requirements
 
-    pip install -r requirements.txt
+    ```pip install -r requirements.txt```
 3. Ensure MongoDB is running
-4. Ensure RabbitMQ (or other message broker service is running)
-5. To begin Celery service, cd to bounty directory add run this
+4. Ensure RabbitMQ (or other message broker service although currently configured for Rabbit) is running
+5. To begin Celery service, cd to bounty directory and run this
 
-    celery worker --app=chip -l info
+    ```celery worker --app=chip -l info```
 6. Finally run the application, cd to bounty directory
 
     ```python application.py```
@@ -53,10 +53,10 @@ Each project will have:
 
     Categories?
 
-Needs pagination too √
+    Needs pagination too √
 
-Add in user pages for Admin √
+    Add in user pages for Admin √
 
-Finish fundraiser editing handler
+    Finish fundraiser editing handler
 
-CVC doesn't get tested by PIN?
+    CVC doesn't get tested by PIN?

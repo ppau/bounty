@@ -11,7 +11,13 @@
         <a href="/fundraiser/{{fundraiser['slug']}}">{{ fundraiser['title'] }}</a>
     </div>
     <div class="tail">
+        {% if fundraiser['type'] == 'Fundraiser' %}
         <i class="icon-user"></i> <strong>{{ fundraiser['backers_count'] }}</strong> donors
+        {% elif fundraiser['type'] == 'Group Purchase' %}
+        <i class="icon-shopping-cart"></i> <strong>{{ fundraiser['backers_count'] }}</strong> backers
+        {% elif fundraiser['type'] == 'Petition' %}
+        <i class="icon-pencil"></i> <strong>{{ fundraiser['backers_count'] }}</strong> signatories
+        {% end %}
         {% if fundraiser['status'] == 'Finished '%}
         <i class="icon-stop"></i> <strong>Finished</strong>
         {% end %}
