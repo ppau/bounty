@@ -15,7 +15,7 @@ Something to keep in mind;
 DEVELOPER SETUP:
 
 1. copy secret_example.py to secret.py and configure
-2. Configure python environment and download requirements
+2. Configure python environment (2.7.x) and download requirements
 
     pip install -r requirements.txt
 3. Ensure MongoDB is running
@@ -25,7 +25,7 @@ DEVELOPER SETUP:
     celery worker --app=chip -l info
 6. Finally run the application, cd to bounty directory
 
-    python application.py
+    ```python application.py```
 
 TO DO:
 
