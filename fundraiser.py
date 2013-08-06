@@ -170,9 +170,10 @@ class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
         if description is None:
             description = ''
 
-        #deadline = datetime.datetime.strptime(deadline, '%a, %d %B %Y %H:%M:%S %Z')
+        if deadline:
+            deadline = datetime.datetime.strptime(deadline, '%a, %d %B %Y %H:%M:%S %Z')
         ## TESTING ONLY
-        deadline = datetime.datetime.utcnow() + datetime.timedelta(minutes=2)
+        #deadline = datetime.datetime.utcnow() + datetime.timedelta(minutes=2)
         ##
         template_list = []
         for i in os.listdir(os.path.join(os.path.dirname(__file__), 'templates/fundraiser/user_templates'),):
