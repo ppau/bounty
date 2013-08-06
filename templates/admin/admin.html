@@ -12,9 +12,9 @@
                 <h4><a href="/admin/fundraiser/{{fundraiser['slug']}}">{{ fundraiser['title'] }}</a></h4>
             </div>
             <div class="admin_campaign">
-                <p><a class="btn btn-info" href="/fundraiser/{{ fundraiser['slug'] }}/edit">Edit</a><a class="btn btn-danger pull-right" href="/fundraiser/{{ fundraiser['slug'] }}/delete"> Delete</a></p>
+                <p><a class="btn btn-info btn-mini" href="/fundraiser/{{ fundraiser['slug'] }}/edit">Edit</a><a class="btn btn-danger pull-right btn-mini" href="/fundraiser/{{ fundraiser['slug'] }}/delete"> Delete</a></p>
                 <p>Goal: ${{ '{:.2f}'.format(fundraiser['goal']) }}{% if 'current_funding' in  fundraiser %} | Current Funding: ${{ '{:.2f}'.format(fundraiser['current_funding']) }} {% end %}</p>
-                <p>{% if 'deadline' in fundraiser %}Deadline: {{ fundraiser['deadline'] }}{% end %}</p>
+                {% if 'deadline' in fundraiser %}<p>Deadline: {{ fundraiser['deadline'] }}</p>{% end %}
             </div>
         </div>
         {% end %}

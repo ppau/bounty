@@ -252,6 +252,8 @@ class FundraiserEditHandler(FundraiserBase):
         template = self.get_argument('template', None)
         status = self.get_argument('statusRadios', None)
         fundraiser_type = self.get_argument('fundraiser_type', None)
+        backers_count = self.get_argument('backers_count', None)
+        current_funding = self.get_argument('current_funding', None)
 
         slug = unicodedata.normalize('NFKD', slug).encode('ascii', 'ignore')
         slug = re.sub(r'[^\w]+', ' ', slug)
@@ -273,6 +275,10 @@ class FundraiserEditHandler(FundraiserBase):
                 fundraiser['template'] = template
             if fundraiser_type:
                 fundraiser['type'] = fundraiser_type
+            if backers_count:
+                fundraiser['backers_count'] = backers_count
+            if current_funding:
+                fundraiser['current_funding'] = float(current_funding)
 
             self.fundraisers.save(fundraiser)
             self.redirect('/fundraiser/{}'.format(slug))

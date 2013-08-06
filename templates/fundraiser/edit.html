@@ -31,7 +31,14 @@
                     <span class='add-on'>$</span>
                     <input type='number' name='goal' {% if fundraiser and 'goal' in fundraiser %}value="{{ fundraiser['goal'] }}"{% end %} required>
                 </div>
+                <label>Backer Count</label>
+                <input type='number' name='backers_count' {% if fundraiser and 'backers_count' in fundraiser %}value="{{ fundraiser['backers_count'] }}"{% end %} required>
                 <input type='text' id='deadline' name='deadline' style='display:none'>
+                <label>Current Funding</label>
+                <div class='input-prepend'>
+                    <span class='add-on'>$</span>
+                    <input type='number' name='current_funding' {% if fundraiser and 'current_funding' in fundraiser %}value="{{ fundraiser['current_funding'] }}"{% end %} required>
+                </div>
                 <!--
                 <label>Description</label>
                 <textarea class="span5" rows="8" name='description' required>{% if fundraiser and 'description' in fundraiser %}{{ fundraiser['description'] }}{% end %}</textarea> -->
