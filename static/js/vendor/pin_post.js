@@ -12,15 +12,12 @@ $(function() {
 
   var $form = $('form.pin'),
       $submitButton = $form.find(":submit"),
-      $errors = $form.find('.errors');
+      $errors = $('.pin-errors');
 
   $form.submit(function(e) {
 
     e.preventDefault();
     $errors.hide();
-
-    // Disable the submit button to prevent multiple clicks
-    $submitButton.attr({disabled: true});
 
     // Fetch details required for the createToken call to Pin
     var card = {
@@ -37,8 +34,31 @@ $(function() {
       address_country: $('#address-country').val()
     };
 
-    // Request a token for the card from Pin
-    Pin.createToken(card, handlePinResponse);
+    var hasError = false;
+
+    if ($("#amount").val() === "" || $("#amount").val() === null ||
+          parseFloat($("#amount").val()) < 5 ) {
+        hasError = true;
+        $("#amount").closest(".control-group").addClass("error");
+    }
+    else if ($("#amount").closest(".control-group").hasClass("error") &&
+      parseFloat($("#amount").val()) >= 5) {
+      $("#amount").closest(".control-group").removeClass("error");
+    hasError = false;
+    }
+
+    if (hasError === false) {
+     // Disable the submit button to prevent multiple clicks
+      $submitButton.attr({disabled: true});
+      $submitButton.val("Processing donation...");
+      $("#loading").modal('show');
+      // Request a token for the card from Pin
+      Pin.createToken(card, handlePinResponse);
+    }
+    else {
+      $(".error").first().find("input, select").focus();
+    }
+
   });
 
   function handlePinResponse(response) {
@@ -65,16 +85,35 @@ $(function() {
       $errors.find('h3').text(response.error_description);
       $errorList.empty();
 
-      if (response.messages) {
-        $.each(response.messages, function(index, errorMessage) {
-          $('<li>')
-            .text(errorMessage.param + ": " + errorMessage.message)
-            .appendTo($errorList);
-        });
-      }
+      $.each(response.messages, function(index, errorMessage) {
+        if(errorMessage.param == 'number') {
+            $('#cc-number-error').text(errorMessage.message);
+            $('#cc-number-error').show();
+            $('#cc-number-error').parents(".control-group").addClass('error');
+        }
+        else if (errorMessage.param == 'name') {
+            $('#cc-name-error').text(errorMessage.message);
+            $('#cc-name-error').show();
+            $('#cc-name-error').parents(".control-group").addClass('error');
+        }
+        else if (errorMessage.param == 'expiry_year') {
+            $('#cc-year-error').text(errorMessage.message);
+            $('#cc-year-error').show();
+            $('#cc-year-error').parents(".control-group").addClass('error');
+        }
+        else if (errorMessage.param == 'expiry_month') {
+            $('#cc-month-error').text(errorMessage.message);
+            $('#cc-month-error').show();
+            $('#cc-month-error').parents(".control-group").addClass('error');
+        }
+        else
+            $('<li>').text(errorMessage.param + ": " + errorMessage.message).appendTo($errorList);
+      });
 
       $errors.show();
       $submitButton.removeAttr('disabled');
+      $submitButton.val("Donate now");
+      $("#loading").modal('hide');
     }
-  };
+  }
 });
