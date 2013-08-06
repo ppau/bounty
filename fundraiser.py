@@ -170,8 +170,6 @@ class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
         if description is None:
             description = ''
 
-        if deadline:
-            deadline = datetime.datetime.strptime(deadline, '%a, %d %B %Y %H:%M:%S %Z')
         ## TESTING ONLY
         #deadline = datetime.datetime.utcnow() + datetime.timedelta(minutes=2)
         ##
@@ -181,7 +179,7 @@ class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
                 template_list.append(i)
 
         fundraiser = {'title': title, 'slug': slug,
-                      'goal': float(goal), 'deadline': deadline,
+                      'goal': float(goal),
                       'description': description,
                       'status': status, 'template': template,
                       'type': fundraiser_type}
@@ -198,6 +196,9 @@ class FundraiserCreateHandler(FundraiserBase, CeleryHandler):
             self.render('fundraiser/create.html', fundraiser=fundraiser,
                         template_list=template_list, error=3)
 
+        if deadline:
+            deadline = datetime.datetime.strptime(deadline, '%a, %d %B %Y %H:%M:%S %Z')
+            fundraiser['deadline'] = deadline
         fundraiser['launched'] = datetime.datetime.utcnow()
         #fundraiser['status'] = 'Live'
         fundraiser['current_funding'] = 0.0

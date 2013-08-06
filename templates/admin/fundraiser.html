@@ -14,9 +14,11 @@
             <div class="span3">
                 <strong>Launched</strong>: {{ fundraiser['launched'] }}
             </div>
+            {% if 'deadline' in fundraiser %}
             <div class="span3">
                 <strong>Deadline</strong>: {{ fundraiser['deadline'] }}
             </div>
+            {% end %}
         </div>
         <div class="row">
             <div class="span3">

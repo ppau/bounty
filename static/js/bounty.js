@@ -2,22 +2,26 @@ $(function() {
     $('#datetimepicker1').datetimepicker({
       pickTime: false
     });
+    // for some reason without this setLocalDate defaults to today when you call it later on...
+    var $date_picker = $('#datetimepicker1').data('datetimepicker');
+    if ($date_picker)
+    {
+        $date_picker.setLocalDate(null);
+    }
     var $create_form = $('form.create_fundraiser');
 
     $create_form.submit(function(e) {
 
         e.preventDefault();
-        //var picker = $('#datetimepicker1');
         var picker_date = $('#datetimepicker1').data('datetimepicker').getLocalDate();
-        //console.log(picker_date);
-        var now = new Date();
-        //console.log(now);
-        //var outStr = now.getHours()+':'+now.getMinutes()+':'+now.getSeconds();
-        var full_date = new Date(picker_date.getFullYear(), picker_date.getMonth(), picker_date.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
-        var utcDate = full_date.toUTCString();
-        $('#deadline').val(utcDate);
+        if (picker_date)
+        {
+            var now = new Date();
+            var full_date = new Date(picker_date.getFullYear(), picker_date.getMonth(), picker_date.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
+            var utcDate = full_date.toUTCString();
+            $('#deadline').val(utcDate);
+        };
         $create_form.get(0).submit();
-        //console.log(utcDate);
         //picker.setDate(utcDate);
 
     });

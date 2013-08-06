@@ -10,7 +10,9 @@
         <strong>You've successfully backed this fundraiser!</strong>
         {% end %}
         <p>Launched: {{ fundraiser['launched'] }}</p>
+        {% if 'deadline' in fundraiser %}
         <p>Deadline: {{ fundraiser['deadline'] }}</p>
+        {% end %}
         <p>Goal: ${{ fundraiser['goal'] }}</p>
         <p>Current Funding: ${{ fundraiser['current_funding'] }}</p>
         <p>Backers: {{ fundraiser['backers_count'] }}</p>
