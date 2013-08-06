@@ -20,30 +20,19 @@ DEVELOPER SETUP:
     ```pip install -r requirements.txt```
 3. Ensure MongoDB is running
 4. Ensure RabbitMQ (or other message broker service although currently configured for Rabbit) is running
-5. To begin Celery service, cd to bounty directory and run this
+5. To setup the Admin user, cd to bounty directory and run setup
+
+    ```python setup.py```
+6. To begin Celery service, cd to bounty directory and run this
 
     ```celery worker --app=chip -l info```
-6. Finally run the application, cd to bounty directory
+7. Finally run the application, cd to bounty directory
 
     ```python application.py```
 
 TO DO:
 
 Each project will have:
-
-    Admin?
-
-    Goal √
-
-    Launched √
-
-    Deadline √
-
-    Current funding √
-
-    Number of backers/sponsors √
-
-    Description √
 
     Backer rewards?
 
@@ -53,10 +42,11 @@ Each project will have:
 
     Categories?
 
-    Needs pagination too √
 
-    Add in user pages for Admin √
+Finish fundraiser editing handler
 
-    Finish fundraiser editing handler
+CVC doesn't get tested by PIN?
 
-    CVC doesn't get tested by PIN?
+Allow changes to Status by staff and the option to send messages to the Backer
+
+Keep history of status changes and messages. Keep this independent?
