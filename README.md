@@ -15,6 +15,14 @@ Something to keep in mind;
 DEVELOPER SETUP:
 
 1. copy secret_example.py to secret.py and configure
+2. Configure python environment and download requirements
+    pip install -r requirements.txt
+3. Ensure MongoDB is running
+4. Ensure RabbitMQ (or other message broker service is running)
+5. To begin Celery service, cd to bounty directory add run this
+    celery worker --app=chip -l info
+6. Finally run the application, cd to bounty directory
+    python application.py
 
 TO DO:
 

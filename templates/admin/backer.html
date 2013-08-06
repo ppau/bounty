@@ -24,13 +24,10 @@
             </address>
             <address>
                 <strong style="text-decoration: underline">Email</strong><br>
-                <a href="mailto:#">{{ backer['email'] }}</a>
+                <a href="mailto:{{ backer['email'] }}">{{ backer['email'] }}</a>
             </address>
         </div>
         <div class="row">
-            {% if 'status' in backer %}
-            <p><strong>Status</strong>: {{ backer['status'] }}</p>
-            {% end %}
             {% if 'amount' in backer %}
             <p><strong>Donation Amount</strong>: ${{ '{:.2f}'.format(backer['amount']) }}</p>
             {% end %}
@@ -51,7 +48,14 @@
                 <strong>Error Message:</strong>: {{ backer['error_message'] }}
             </div>
             {% end %}
+            {% if 'status' in backer %}
+            <p><strong>Status</strong>: {{ backer['status'] }}</p>
+            {% end %}
+            <p><strong>Message to backer:</strong></p>
+            <textarea class="span5" rows="8" name='message'>{% if 'message' in backer %}{{ backer['message'] }}{% end %}</textarea>
         </div>
-
+        <div class="row">
+        <p><a class="btn btn-primary" href=""> Save</a></p>
+        </div>
     </div>
 {% end %}
