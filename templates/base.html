@@ -27,6 +27,18 @@
     <!--<div class="navbar navbar-fixed-top">
       <div class="navbar-inner"> -->
         <div class="container">
+        
+<div style="min-height: 80px">
+<h1>
+<a class="logo" href="/">
+<span>
+<span class="logo-bold-blue">pirate</span>party
+</span>
+<span class="logo-australia">Bounty</span>
+</a>
+</h1>
+</div>
+        
           <!--<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -47,6 +59,8 @@
                 <a href="{{ '/login?next=' + url_escape(request.uri) }}">Login</a>
             </p>
             {% end %}
+            
+            {#
             <ul class="nav nav-tabs">
               <li id="campaigns_tab" class="">
                 <a href="/">Campaigns</a>
@@ -66,9 +80,20 @@
                 <a href="/admin">Admin Panel</a>
               </li>
               {% end %}
-            </ul>
+            </ul> #}
           </div>
           
+          
+        <div class="well" style="padding: 10px;">
+            <div id="nav_buttons" class="btn-group">
+                {# <button id="load_all" class="btn active">All</a> #}
+                <a id="load_fundraisers" class="btn" href="/fundraiser" >Fundraisers</a>
+                {#
+                <a id="load_petitions" class="btn">Petitions</a>
+                <a id="load_group" class="btn">Group Purchases</a>
+                 #}
+            </div>
+        </div>
           
 		    {% block body %}
 		    {% end %}
