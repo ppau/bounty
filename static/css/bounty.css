@@ -173,6 +173,20 @@ body {
 	margin-top: 15px;
 }
 
+.candidate-images li {
+    -moz-box-sizing: border-box;
+    display: block;
+    float: left;
+    margin-left: 0 !important;
+    margin-right: 1.8% !important;
+    min-height: 30px;
+    width: 99%;
+}
+
+.candidate-images img {
+	margin-top: 15px;
+}
+
 .container-fluid {
 	padding: 0;
 }
