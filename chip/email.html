@@ -210,35 +210,24 @@ Email on Acid - http://www.emailonacid.com/blog/details/C18/doctype_-_the_black_
 <body>
     <!-- Wrapper/Container Table: Use a wrapper table to control the width and the background color consistently of your email. Use this approach instead of setting attributes on the body tag. -->
     <table cellpadding="0" cellspacing="0" border="0" id="backgroundTable">
-    <tr>
-        <td>
-            <h1>Thank you from the Australia Pirate Party</h1>
-        </td>
-        <td>
-
-        <!-- Tables are the most common way to format your email consistently. Set your table widths inside cells and in most cases reset cellpadding, cellspacing, and border to zero. Use nested tables as a way to space effectively in your message. -->
-        <table cellpadding="0" cellspacing="0" border="0" align="center">
-            <tr>
-                <td width="200" valign="top">Donation Date: {{ donation_date }}</td>
-                <td width="200" valign="top">Fundraiser: {{ fundraiser_name }}</td>
-                <td width="200" valign="top"></td>
-            </tr>
-        </table>
-
-        <!-- End example table -->
-
-        <!-- Yahoo Link color fix updated: Simply bring your link styling inline. -->
-        <a href="http://htmlemailboilerplate.com" target ="_blank" title="Styling Links" style="color: orange; text-decoration: none;">Coloring Links appropriately</a>
-
-        <!-- Gmail/Hotmail image display fix: Gmail and Hotmail unwantedly adds in an extra space below images when using non IE browsers.  This can be especially painful when you putting images on top of each other or putting back together an image you spliced for formatting reasons.  Either way, you can add the 'image_fix' class to remove that space below the image.  Make sure to set alignment (don't use float) on your images if you are placing them inline with text.-->
-        <img class="image_fix" src="full path to image" alt="Your alt text" title="Your title text" width="x" height="x" />
-
-        <!-- Step 2: Working with telephone numbers (including sms prompts).  Use the "mobile_link" class with a span tag to control what number links and what doesn't in mobile clients. -->
-        <span class="mobile_link">123-456-7890</span>
-
-        </td>
-    </tr>
+        <tr>
+            <td>
+            <!-- Tables are the most common way to format your email consistently. Set your table widths inside cells and in most cases reset cellpadding, cellspacing, and border to zero. Use nested tables as a way to space effectively in your message. -->
+                <table cellpadding="0" cellspacing="0" border="0" align="center">
+                    <tr>
+                        <td><h1>Thank you from the Australia Pirate Party</h1></td>
+                    </tr>
+                    <tr>
+                        <td>Donation Date: {{ donation_date }}</td>
+                        <td>Fundraiser: <a href="">{{ fundraiser_name }}</a></td>
+                    </tr>
+                    <tr>
+                        <td>Donation Amount: {{ donation_date }}</td>
+                    </tr>
+                    <tr>
+                </table>
+            </td>
+        </tr>
     </table>
-    <!-- End of wrapper table -->
 </body>
 </html>
