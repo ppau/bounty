@@ -98,7 +98,7 @@ def perform_charge(backer_id, description):
             backer['status'] = 'Charged'
             backer['charged_when'] = datetime.utcnow()
             backers_db.save(backer)
-            send_receipt(backer['email'], description[9:], backer['amount'], backer['charged_when'])
+            send_receipt(backer['email'], description[9:], backer['amount'], backer['charged_when'], backer['_id'])
             send_thanks(backer['email'], description[9:], backer['amount'], backer['charged_when'])
     else:
         backer['status'] = 'Error'

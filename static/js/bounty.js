@@ -85,10 +85,6 @@ $(function() {
         {
             highlightError($('#address-line1'));
         }
-        else if ( !$('#address-line2').val() )
-        {
-            highlightError($('#address-line2'));
-        }
         else if ( !$('#address-city').val() )
         {
             highlightError($('#address-city'));

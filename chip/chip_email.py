@@ -22,7 +22,7 @@ def send(to_address, from_address, message):
     server.quit()
 
 
-def send_receipt(recepient, fundraiser_name, amount, donation_date):
+def send_receipt(recepient, fundraiser_name, amount, donation_date, db_id):
 
     # bit messy, make this cleaner
     donation_date = (donation_date + timedelta(hours=10)).strftime('%H:%M:%S %Y-%m-%d  AEST')
@@ -37,10 +37,10 @@ DONATION DETAILS
 Email: {}
 Fundraiser: {}
 Date: {}
-Donation ID:
+Donation ID: {}
 Amount: ${}
 
-""".format(recepient, fundraiser_name, donation_date, '{:.2f}'.format(amount)))
+""".format(recepient, fundraiser_name, donation_date, db_id, '{:.2f}'.format(amount)))
 
     message['Subject'] = '{} - Donation Receipt'.format(fundraiser_name)
     message['From'] = FROM

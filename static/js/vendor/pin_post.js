@@ -11,7 +11,7 @@ $(function() {
   // it to the server
 
   var $form = $('form.pin'),
-      $submitButton = $('#submit'); //$form.find(":submit"),
+      $submitButton = $form.find(":submit"),
       $errors = $('.pin-errors');
 
   $form.submit(function(e) {
