@@ -62,7 +62,8 @@ def send_thanks(recepient, fundraiser_name, amount, donation_date):
     t = Template(raw_template)
     parsed_template = t.generate(title='{} - Thank you'.format(fundraiser_name),
                                  donation_date=donation_date,
-                                 fundraiser_name=fundraiser_name)
+                                 fundraiser_name=fundraiser_name,
+                                 donation_amount=amount)
 
     message = MIMEMultipart('related')
     msg_html = MIMEText(parsed_template, 'html')
