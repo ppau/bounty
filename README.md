@@ -12,6 +12,8 @@ Something to keep in mind;
 - Remove requirement on Address line 2?
 - Add search for order ID
 
+At the moment Tornado serves the static files... probably not a good idea to leave in when this goes live
+
 DEVELOPER SETUP:
 
 1. copy secret_example.py to secret.py and configure
