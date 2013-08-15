@@ -57,9 +57,9 @@
             <h2>Meet the candidates</h2>
 
 		<div class="row-fluid">
-		
+
 			<p>For full candidate details <a href="http://pirateparty.org.au/candidates/">read more here</a> (main website).</p>
-		
+
             <ul class="thumbnails candidate-images">
                     <li class="span3 centre" style="padding-top:15px;">
                         <div class="thumbnail">
@@ -152,19 +152,19 @@
             <div class="row-fluid">
             	<div class="well">
 	                <h2><strong>{{ fundraiser['backers_count'] }}</strong></h2>
-	
+
 	                <p>donors have funded</p>
-	
+
 	                <h2><strong>${{ fundraiser['current_funding'] }}</strong></h2>
-	
+
 	                <p>towards candidate registration expenses.</p>
-	
+
 	                {% if fundraiser['status'] != 'Finished '%}
-	                <div class='pin-errors' style='display:none'>
-	                    <h3></h3>
+	                <div class='pin-errors' style='display:none;color:red;'>
+	                    <h4></h4>
 	                    <ul></ul>
 	                </div>
-	
+
 	                <div id='loading' class='modal hide fade'>
 	                  <div class='modal-header'>
 	                    <h3>Processing transaction...</h3>
@@ -176,7 +176,7 @@
 	                    </div>
 	                  </div>
 	                </div>
-	
+
 	                <div class="accordion" id="accordion2">
 	                    <form action='' style="margin-bottom: 0;" class='pin' method='post'>
 	                        {% module xsrf_form_html() %}
@@ -185,11 +185,11 @@
 	                                <div class="accordion-inner">
 	                                    <h3>Billing Details</h3>
 	                                    <div class="controls">
-	                                        <input type="text" name="firstname" placeholder="First name" class="input-small">
-	                                        <input type="text" name="lastname" placeholder="Last name" class="input-small">
+	                                        <input type="text" id="firstname" name="firstname" placeholder="First name" class="input-small">
+	                                        <input type="text" id="lastname" name="lastname" placeholder="Last name" class="input-small">
 	                                    </div>
 	                                    <div class="controls">
-	                                        <input type="email" name="email" placeholder="Email" class="input-block-level">
+	                                        <input type="email" id="email" name="email" placeholder="Email" class="input-block-level">
 	                                    </div>
 	                                    <div class="controls">
 	                                        <input type="text" name="address-line1" id='address-line1' placeholder="Address Line 1" class="input-block-level" required>
@@ -211,7 +211,7 @@
 	                                        </select>
 	                                    </div>
 	                                    <div class="controls">
-	                                        <input type="text" pattern="[0-9]{4}" name="postcode" id="postcode" placeholder="Postcode" class="input-small" id='address-postcode' required>
+	                                        <input type="text" name="postcode" placeholder="Postcode" class="input-small" id='address-postcode' required>
 	                                        <input type="text" placeholder="Country" id='address-country' class="input-small" value="Australia" required>
 	                                    </div>
 	                                    <div class="control-group">
@@ -224,12 +224,12 @@
 	                                                <input type="radio" name="australian_citizen" id="australian_citizen_no" value="no"> No
 	                                            </label>
 	                                        </div>
-	
+
 	                                    </div>
 	                                    <span id='citizen-error' class='help-inline' style='display:none;color:red'>At this stage donations can only be accepted by Australian citizens or Permanent Residents.</span>
 	                                </div>
 	                                <div class="centre">
-	                                    <button id="to_payments_button" type="button" class="btn btn-info" data-toggle="collapse" data-parent="#accordion2" data-target="#collapseTwo">
+	                                    <button id="to_payments_button" type="button" class="btn btn-info" data-parent="#accordion2" >
 	                                        Next
 	                                    </button>
 	                                </div>
@@ -252,7 +252,7 @@
 	                                </div>
 	                                <div class='control-group'>
 	                                  <div class='controls'>
-	                                    <select id="cc-expiry-month" class="input-small">
+	                                    <select id="cc-expiry-month" class="input-small" required>
 	                                      <option value="">Month</option>
 	                                      <option value="01">01</option>
 	                                      <option value="02">02</option>
@@ -279,7 +279,7 @@
 	                                    <input type='text' placeholder="CVC" id='cc-cvc' class="input-small" required>
 	                                  </div>
 	                                </div>
-	
+
 	                                <div class="control-group {% if message %}{% if message == 'amount' %}error{% end %}{% end %}">
 	                                    <label for="quant" class="inline">Amount:</label>
 	                                    <div class="input-prepend">
@@ -295,11 +295,11 @@
 	                                </div>
 	                                <div class="accordion-inner">
 	                                    <div class="centre">
-	                                        <button type="button" class="btn btn-info" data-toggle="collapse" data-parent="#accordion2" data-target="#collapseOne">
+	                                        <button id="to_previous_button" type="button" class="btn btn-info" data-parent="#accordion2">
 	                                            Previous
 	                                        </button>
 	                                    </div>
-	                                    <p style="margin-top: 15px;"><button type="submit" class="btn btn-primary btn-large btn-block">Donate now <i class="icon-chevron-right icon-white"></i></button></p>
+	                                    <p style="margin-top: 15px;"><button type="submit" id="submit" class="btn btn-primary btn-large btn-block">Donate now <i class="icon-chevron-right icon-white"></i></button></p>
 	                                </div>
 	                            </div>
 	                        </div>
@@ -307,7 +307,7 @@
 	                </div>
 	                {% end %}
 	            </div>
-	
+
 	            {% if fundraiser_backers.count() > 0 %}
 	            <h4>Recent donators</h4>
 	            <table class="table table-striped">

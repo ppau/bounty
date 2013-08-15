@@ -11,7 +11,7 @@ $(function() {
   // it to the server
 
   var $form = $('form.pin'),
-      $submitButton = $form.find(":submit"),
+      $submitButton = $('#submit'); //$form.find(":submit"),
       $errors = $('.pin-errors');
 
   $form.submit(function(e) {
@@ -82,7 +82,7 @@ $(function() {
     } else {
       var $errorList = $errors.find('ul');
 
-      $errors.find('h3').text(response.error_description);
+      $errors.find('h4').text(response.error_description);
       $errorList.empty();
 
       $.each(response.messages, function(index, errorMessage) {
