@@ -37,16 +37,16 @@
       <div class="navbar-inner"> -->
         <div class="container">
 
-<div style="min-height: 80px">
-<h1>
-<a class="logo" href="/">
-<span>
-<span class="logo-bold-blue">pirate</span>party
-</span>
-<span class="logo-australia">Bounty</span>
-</a>
-</h1>
-</div>
+          <div style="min-height: 80px">
+            <h1>
+              <a class="logo" href="/">
+                <span>
+                  <span class="logo-bold-blue">pirate</span>party
+                </span>
+                <span class="logo-australia">Bounty</span>
+              </a>
+            </h1>
+          </div>
 
           <!--<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
             <span class="icon-bar"></span>
@@ -54,8 +54,8 @@
             <span class="icon-bar"></span>
           </button> -->
           <!-- <a class="brand" href="/">Bounty</a> -->
-          <div class="nav-collapse collapse">
-            {#
+          {#<div class="nav-collapse collapse">
+
             {% if current_user %}
             <p class="navbar-text pull-right">
                 <a href="/logout">Logout</a>
@@ -91,13 +91,13 @@
                 <a href="/admin">Admin Panel</a>
               </li>
               {% end %}
-            </ul> #}
-          </div>
+            </ul>
+          </div> #}
 
 
         <div class="well" style="padding: 10px;">
             <div id="nav_buttons" class="btn-group">
-                {# <button id="load_all" class="btn active">All</a> #}
+                {# <a id="load_all" class="btn active">All</a> #}
                 <a id="load_fundraisers" class="btn" href="/fundraiser" >Fundraisers</a>
                 {#
                 <a id="load_petitions" class="btn">Petitions</a>
@@ -110,8 +110,9 @@
                 <a class="btn" href="/admin">Admin</a>
                 {% end %}
                 <a class="btn" href="/logout">Logout</a>
-                {% end %}
+
             </div>
+                {% end %}
 
         </div>
 
