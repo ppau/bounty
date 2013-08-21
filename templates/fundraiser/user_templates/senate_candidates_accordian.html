@@ -1,7 +1,13 @@
 {% extends "../../base.html" %}
 
-{% block extra_js %}<script src='https://test-api.pin.net.au/pin.js' type='text/javascript'></script>
-<script type="text/javascript" src="{{ static_url("js/vendor/pin_post.js") }}"></script>{% end %}
+{% block extra_js %}
+    <script src='https://test-api.pin.net.au/pin.js' type='text/javascript'></script>
+    {% if DEBUG %}
+    <script type="text/javascript" src="{{ static_url("js/vendor/pin_post.js") }}"></script>
+    {% else %}
+    <script type="text/javascript" src="/static/js/vendor/pin_post.js"></script>
+    {% end %}
+{% end %}
 
 {% block title %}{{ fundraiser['title'] }} - Bounty{% end %}
 
@@ -23,7 +29,11 @@
             </div>
         {% end %}
     {% end %}
-            <div class="banner-bg" style="background-image: url({{ static_url('img/user_upload/cand.jpg') }});">
+            {% if DEBUG %}
+            <div class="banner-bg" style="background-image: url('{{ static_url('img/user_upload/cand.jpg') }});">
+            {% else %}
+            <div class="banner-bg" style="background-image: url('/static/img/user_upload/cand.jpg');">
+            {% end %}
                 <div class="banner banner-opaq">
                     <h1 class="centre" style="margin: 15px 0;">We need your help to run candidates this election!</h1>
                 </div>
@@ -33,7 +43,7 @@
 
             <h2>Senate candidates funded: 0 of 8</h2>
 
-            <div style="overflow:auto; margin-right: 8px;">
+            <div style="overflow:auto; ">
                 <div class="progress" style="margin-bottom: 0;">
                     <div class="bar" style="width: {{ percentage }}%;"></div>
                 </div>
@@ -63,7 +73,11 @@
             <ul class="thumbnails candidate-images">
                     <li class="span3 centre" style="padding-top:15px;">
                         <div class="thumbnail">
+                            {% if DEBUG %}
                             <img src="{{ static_url("img/candidates/melanie-thomas.png") }}">
+                            {% else %}
+                            <img src="/static/img/candidates/melanie-thomas.png">
+                            {% end %}
 
                             <div class="caption">
                                 <h4>Melanie<br>Thomas</h4>
@@ -73,7 +87,11 @@
                     </li>
                     <li class="span3 centre" style="padding-top:15px;">
                         <div class="thumbnail">
+                            {% if DEBUG %}
                             <img src="{{ static_url("img/candidates/liam-pomfret.png") }}">
+                            {% else %}
+                            <img src="/static/img/candidates/liam-pomfret.png">
+                            {% end %}
 
                             <div class="caption">
                                 <h4>Liam<br>Pomfret</h4>
@@ -83,7 +101,11 @@
                     </li>
                     <li class="span3 centre" style="padding-top:15px;">
                         <div class="thumbnail">
+                            {% if DEBUG %}
                             <img src="{{ static_url("img/candidates/brendan-molloy.png") }}">
+                            {% else %}
+                            <img src="/static/img/candidates/brendan-molloy.png">
+                            {% end %}
 
                             <div class="caption">
                                 <h4>Brendan<br>Molloy</h4>
@@ -94,7 +116,11 @@
 
                     <li class="span3 centre" style="padding-top:15px;">
                         <div class="thumbnail">
+                            {% if DEBUG %}
                             <img src="{{ static_url("img/candidates/david-campbell.png") }}">
+                            {% else %}
+                            <img src="/static/img/candidates/david-campbell.png">
+                            {% end %}
 
                             <div class="caption">
                                 <h4>David William<br>Campbell</h4>
@@ -105,7 +131,11 @@
 
                     <li class="span3 centre" style="padding-top:15px;">
                         <div class="thumbnail">
+                            {% if DEBUG %}
                             <img src="{{ static_url("img/candidates/thomas-randle.png") }}">
+                            {% else %}
+                            <img src="/static/img/candidates/thomas-randle.png">
+                            {% end %}
 
                             <div class="caption">
                                 <h4>Thomas<br>Randle</h4>
@@ -115,7 +145,11 @@
                     </li>
                     <li class="span3 centre" style="padding-top:15px;">
                         <div class="thumbnail">
+                            {% if DEBUG %}
                             <img src="{{ static_url("img/candidates/thomas-storey.png") }}">
+                            {% else %}
+                            <img src="/static/img/candidates/thomas-storey.png">
+                            {% end %}
 
                             <div class="caption">
                                 <h4>Thomas<br>Story</h4>
@@ -125,7 +159,11 @@
                     </li>
                     <li class="span3 centre" style="padding-top:15px;">
                         <div class="thumbnail">
+                            {% if DEBUG %}
                             <img src="{{ static_url("img/candidates/joseph-miles.png") }}">
+                            {% else %}
+                            <img src="/static/img/candidates/joseph-miles.png">
+                            {% end %}
 
                             <div class="caption">
                                 <h4>Joseph<br>Miles</h4>
@@ -135,7 +173,11 @@
                     </li>
                     <li class="span3 centre" style="padding-top:15px;">
                         <div class="thumbnail">
+                            {% if DEBUG %}
                             <img src="{{ static_url("img/candidates/geoff-hammett.png") }}">
+                            {% else %}
+                            <img src="/static/img/candidates/geoff-hammett.png">
+                            {% end %}
 
                             <div class="caption">
                                 <h4>Geoffrey<br>Hammett</h4>

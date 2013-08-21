@@ -2,6 +2,7 @@ import pymongo
 from tornado.web import RequestHandler
 import tornado.escape
 from secret import pub_key
+from config import DEBUG
 
 
 class BaseHandler(RequestHandler):
@@ -24,4 +25,5 @@ class BaseHandler(RequestHandler):
 
     def render(self, *args, **kwargs):
         kwargs['pin_public_key'] = pub_key
+        kwargs['DEBUG'] = DEBUG
         return super(BaseHandler, self).render(*args, **kwargs)

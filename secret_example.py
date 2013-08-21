@@ -8,7 +8,7 @@ pub_key = ''  # Your Pin.js Publishable API Key
 
 priv_key = ''  # Your Pin.js secret API Key
 
-charge_url = 'https://test-api.pin.net.au/1/charges'
+charge_url = 'https://api.pin.net.au/1/charges'
 dev_charge_url = 'https://test-api.pin.net.au/1/charges'
 
 cookie_secret = ''
