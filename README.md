@@ -3,6 +3,10 @@
 
 A funding platform for PPAU
 
+## Development Branch ##
+
+Created a development branch to keep working on things. Master branch is considered _fairly_ stable at this point.
+
 Something to keep in mind;
 - "If a card token is not used within 1 month it is automatically expired."
 - Considering the merchant fee charged, increase the goal to absorb it?
@@ -52,3 +56,4 @@ CVC doesn't get tested by PIN?
 Allow changes to Status by staff and the option to send messages to the Backer
 
 Keep history of status changes and messages. Keep these independent from one another?
+
