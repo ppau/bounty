@@ -3,6 +3,8 @@
 
 A funding platform for PPAU
 
+Development work will continue in the Development Branch. Master is considered _fairly_ stable.
+
 Something to keep in mind;
 - "If a card token is not used within 1 month it is automatically expired."
 - Considering the merchant fee charged, increase the goal to absorb it?
