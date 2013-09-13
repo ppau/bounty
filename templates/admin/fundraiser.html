@@ -62,7 +62,7 @@
                       <td><a href="/admin/backer/{{ backer['_id'] }}">{{ backer['user'] }}</a></td>
                       <td>{{ backer['ip_address'] }}</td>
                       {% if fundraiser['type'] != 'Petition' %}
-                      <td>${{ backer['amount'] }}</td>
+                      <td>${{ '{:.2f}'.format(backer['amount']) }}</td>
                       {% end %}
                       <td>{{ backer['created_at'] }}</td>
                       <td>{{ backer['status'] }}</td>

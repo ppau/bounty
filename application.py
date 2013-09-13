@@ -48,7 +48,6 @@ from error_handler import ErrorHandler
 
 import uimodules.pagination
 
-
 # class IndexHandler(BaseHandler):
 
 #     def get(self):
@@ -143,7 +142,7 @@ class Application(tornado.web.Application):
                     (r'/', FundraiserAllHandler),
                     (r'/login', LoginHandler),
                     (r'/logout', LogoutHandler),
-                    (r'/create', CreateUserHandler),
+                    #(r'/create', CreateUserHandler),
                     (r'/admin', AdminHandler),
                     (r'/admin/user_list', AdminUserListHandler),
                     (r'/admin/user/([^/]+)', AdminUserEditHander),

@@ -57,3 +57,4 @@ Allow changes to Status by staff and the option to send messages to the Backer
 
 Keep history of status changes and messages. Keep these independent from one another?
 
+Admin Fundraiser/Petition/Group Purchase list views need to be added
