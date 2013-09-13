@@ -48,6 +48,25 @@
                 <strong>Error Message:</strong>: {{ backer['error_message'] }}
             </div>
             {% end %}
+            <table class="table table-striped">
+                <thead>
+                    <tr colspan="3">
+                        <th>Message Log</th>
+                    </tr>
+                    <tr>
+                      <th>Date</th>
+                      <th>Status</th>
+                      <th>Message</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
             {% if 'status' in backer %}
             <p><strong>Status</strong>: {{ backer['status'] }}</p>
             {% end %}
