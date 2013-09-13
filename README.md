@@ -3,13 +3,9 @@
 
 A funding platform for PPAU
 
-<<<<<<< HEAD
 ## Development Branch ##
 
-Created a development branch to keep working on things. Master branch is considered _fairly_ stable at this point.
-=======
 Development work will continue in the Development Branch. Master is considered _fairly_ stable.
->>>>>>> 9aba94f9f03cb9d5715ffd799d3f2c9a3222a00a
 
 Something to keep in mind;
 - "If a card token is not used within 1 month it is automatically expired."
