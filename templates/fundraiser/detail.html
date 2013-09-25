@@ -18,10 +18,10 @@
         <p>Backers: {{ fundraiser['backers_count'] }}</p>
         <p>{{ fundraiser['description'] }}</p>
         {% if fundraiser['status'] == 'Live' %}
-		<h4><a href="/fundraiser/back/{{fundraiser['slug']}}">Back this Fundraiser</a></h4>
+        <h4><a href="/fundraiser/back/{{fundraiser['slug']}}">Back this Fundraiser</a></h4>
         {% elif fundraiser['status'] == 'Finished' %}
         <p>This fundraiser has finished.</p>
         {% end %}
-	</div>
+    </div>
 </div>
 {% end %}

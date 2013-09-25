@@ -387,7 +387,9 @@ class FundraiserDetailHandler(FundraiserBase, CeleryHandler):
                           'ip_address': ip_address,
                           'amount': float(amount),
                           'created_at': datetime.datetime.utcnow(),
-                          'status': 'Pending',
+                          #'status': 'Pending',
+                          'messages': [{'date': datetime.datetime.utcnow(),
+                                        'status': 'Pending', 'message': ''}],
                           '_id': ObjectId.from_datetime(datetime.datetime.utcnow())}
                 self.backers.save(backer)
                 description = 'Bounty - {}'.format(fundraiser['title'])
@@ -409,7 +411,9 @@ class FundraiserDetailHandler(FundraiserBase, CeleryHandler):
                           'city': city,
                           'ip_address': self.request.remote_ip,
                           'created_at': datetime.datetime.utcnow(),
-                          'status': 'Petition',
+                          #'status': 'Signed',
+                          'messages': [{'date': datetime.datetime.utcnow(),
+                                        'status': 'Signed', 'message': ''}],
                           '_id': ObjectId.from_datetime(datetime.datetime.utcnow())}
                 self.backers.save(backer)
             #do charge here
@@ -448,7 +452,10 @@ class FundraiserBackHandler(FundraiserBase):
                       'ip_address': ip_address,
                       'amount': float(amount),
                       'created_at': datetime.datetime.utcnow(),
-                      'status': 'Pending'}
+                      #'status': 'Pending'
+                      'messages': [{'date': datetime.datetime.utcnow(),
+                                    'status': 'Pending', 'message': ''}],
+                      '_id': ObjectId.from_datetime(datetime.datetime.utcnow())}
             self.backers.save(backer)
             self.redirect(u'/fundraiser/{}?message=success'.format(fundraiser_slug))
         else:

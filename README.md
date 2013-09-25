@@ -1,6 +1,11 @@
 ﻿Bounty
 ================================
 
+Moved to the ppau repo
+
+https://github.com/ppau/bounty
+
+
 A funding platform for PPAU
 
 ## Development Branch ##
@@ -48,13 +53,12 @@ Each project will have:
 
     Categories?
 
-
 Finish fundraiser editing handler
 
 CVC doesn't get tested by PIN?
 
 Allow changes to Status by staff and the option to send messages to the Backer
 
-Keep history of status changes and messages. Keep these independent from one another?
+Keep history of status changes and messages. Keep these independent from one another? - Add staff to the dict?
 
 Admin Fundraiser/Petition/Group Purchase list views need to be added

@@ -33,7 +33,7 @@
           <td>-</td>
           {% end %}
           <td>{{ backer['created_at'] }}</td>
-          <td>{{ backer['status'] }}</td>
+          <td>{{ backer['messages'][-1]['status'] }}</td>
           {% if 'status_message' in backer or 'error_message' in backer %}
             {% if 'status_message' in backer %}
                 <td>{{ backer['status_message'] }}</td>

@@ -60,16 +60,18 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for i in backer['messages'] %}
                     <tr>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
+                        <td>i['date']</td>
+                        <td>i['status']</td>
+                        <td>i['message']</td>
                     </tr>
+                    {% end %}
                 </tbody>
             </table>
-            {% if 'status' in backer %}
+            {# {% if 'status' in backer %}
             <p><strong>Status</strong>: {{ backer['status'] }}</p>
-            {% end %}
+            {% end %} #}
             <p><strong>Message to backer:</strong></p>
             <textarea class="span5" rows="8" name='message'>{% if 'message' in backer %}{{ backer['message'] }}{% end %}</textarea>
         </div>
