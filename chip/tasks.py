@@ -31,7 +31,8 @@ def charge(backer, backers_db, description):
         if r_json['response']['success'] is True:
             #backer['status'] = 'Charged'
             backer['messages'].append({'date': datetime.datetime.utcnow(),
-                                       'status': 'Charged', 'messages': ''})
+                                       'status': 'Charged', 'messages': '',
+                                       'staff': 'System'})
             backer['charged_when'] = datetime.utcnow()
             backers_db.save(backer)
             send_receipt(backer['email'], description[9:], backer['amount'], backer['charged_when'], backer['_id'])
@@ -39,7 +40,8 @@ def charge(backer, backers_db, description):
     else:
         #backer['status'] = 'Error'
         backer['messages'].append({'date': datetime.datetime.utcnow(),
-                                   'status': 'Error', 'messages': ''})
+                                   'status': 'Error', 'messages': '',
+                                   'staff': 'System'})
         if r_json['response']['status_message']:
             backer['status_message'] = r_json['response']['status_message']
         if r_json['response']['error_message']:

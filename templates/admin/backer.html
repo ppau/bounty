@@ -57,6 +57,7 @@
                       <th>Date</th>
                       <th>Status</th>
                       <th>Message</th>
+                      <th>Staff</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -65,15 +66,19 @@
                         <td>i['date']</td>
                         <td>i['status']</td>
                         <td>i['message']</td>
+                        <td>i['staff']</td>
                     </tr>
                     {% end %}
                 </tbody>
             </table>
-            {# {% if 'status' in backer %}
-            <p><strong>Status</strong>: {{ backer['status'] }}</p>
-            {% end %} #}
+
             <p><strong>Message to backer:</strong></p>
-            <textarea class="span5" rows="8" name='message'>{% if 'message' in backer %}{{ backer['message'] }}{% end %}</textarea>
+            <select name='status' class="input-small" required>
+                <option value="">Status</option>
+                <option>Shipped</option>
+                <option></option>
+            </select>
+            <textarea class="span5" rows="8" name='message'></textarea>
         </div>
         <div class="row">
         <p><a class="btn btn-primary" href=""> Save</a></p>

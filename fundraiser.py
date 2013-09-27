@@ -389,7 +389,8 @@ class FundraiserDetailHandler(FundraiserBase, CeleryHandler):
                           'created_at': datetime.datetime.utcnow(),
                           #'status': 'Pending',
                           'messages': [{'date': datetime.datetime.utcnow(),
-                                        'status': 'Pending', 'message': ''}],
+                                        'status': 'Pending', 'message': '',
+                                        'staff': 'System'}],
                           '_id': ObjectId.from_datetime(datetime.datetime.utcnow())}
                 self.backers.save(backer)
                 description = 'Bounty - {}'.format(fundraiser['title'])
@@ -413,7 +414,8 @@ class FundraiserDetailHandler(FundraiserBase, CeleryHandler):
                           'created_at': datetime.datetime.utcnow(),
                           #'status': 'Signed',
                           'messages': [{'date': datetime.datetime.utcnow(),
-                                        'status': 'Signed', 'message': ''}],
+                                        'status': 'Signed', 'message': '',
+                                        'staff': 'System'}],
                           '_id': ObjectId.from_datetime(datetime.datetime.utcnow())}
                 self.backers.save(backer)
             #do charge here
@@ -454,7 +456,8 @@ class FundraiserBackHandler(FundraiserBase):
                       'created_at': datetime.datetime.utcnow(),
                       #'status': 'Pending'
                       'messages': [{'date': datetime.datetime.utcnow(),
-                                    'status': 'Pending', 'message': ''}],
+                                    'status': 'Pending', 'message': '',
+                                    'staff': 'System'}],
                       '_id': ObjectId.from_datetime(datetime.datetime.utcnow())}
             self.backers.save(backer)
             self.redirect(u'/fundraiser/{}?message=success'.format(fundraiser_slug))

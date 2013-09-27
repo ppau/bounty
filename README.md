@@ -60,5 +60,6 @@ CVC doesn't get tested by PIN?
 Allow changes to Status by staff and the option to send messages to the Backer
 
 Keep history of status changes and messages. Keep these independent from one another? - Add staff to the dict?
+After using JS to POST new messages, update the HTML table as well?
 
 Admin Fundraiser/Petition/Group Purchase list views need to be added

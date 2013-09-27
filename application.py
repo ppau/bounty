@@ -25,6 +25,7 @@ from admin import AdminBackerDeleteHandler
 from admin import AdminBackerDetailHandler
 from admin import AdminUserListHandler
 from admin import AdminBackerListHandler
+from admin import AdminBackerPostMessageHandler
 
 from base import BaseHandler
 
@@ -149,6 +150,7 @@ class Application(tornado.web.Application):
                     (r'/admin/backer_list', AdminBackerListHandler),
                     (r'/admin/backer/([^/]+)', AdminBackerDetailHandler),
                     (r'/admin/backer/([^/]+)/delete', AdminBackerDeleteHandler),
+                    (r'/a/admin/backer/message', AdminBackerPostMessageHandler),
                     (r'/admin/fundraiser/([^/]+)', AdminFundraiserHandler),
                     (r'/a/all', FundraiserInnerAllHandler),
                     (r'/fundraiser', FundraiserIndexHandler),

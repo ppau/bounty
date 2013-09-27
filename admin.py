@@ -141,3 +141,19 @@ class AdminBackerDetailHandler(AdminBase):
                         fundraiser=fundraiser)
         else:
             raise HTTPError(404)
+
+class AdminBackerPostMessageHandler(AdminBase):
+
+    @authenticated
+    @require_staff
+    def post(self):
+        backer_id = self.get_argument('backer_id', None)
+        status = self.get_argument('status', None)
+        message = self.get_argument('message', None)
+        backer = self.backers.find_one({'_id': ObjectId(_id)})
+        if backer:
+            backer['messages'].append({'status': status,
+                                       'message': message,
+                                       'staff': self.get_current_user(),
+                                       'date': datetime.datetime.utcnow(),})
+            self.backers.save(backer)
